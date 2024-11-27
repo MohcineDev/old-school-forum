@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Old School Forum</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .navbar {
+            background-color: #008080;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .navbar a {
+            color: white;
+            margin: 10px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        .post-list {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .post-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .post-item:last-child {
+            border-bottom: none;
+        }
+
+        .post-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #000080;
+        }
+
+        .post-author {
+            font-size: 14px;
+            color: #808080;
+        }
+
+        .post-date {
+            font-size: 12px;
+            color: #808080;
+        }
+
+        .post-content {
+            font-size: 16px;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        .post-stats {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .post-stats span {
+            margin-right: 15px;
+        }
+
+        .likes,
+        .dislikes,
+        .comments {
+            font-weight: bold;
+            color: #000080;
+        }
+
+        .likes:hover,
+        .dislikes:hover,
+        .comments:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #000080;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Old School Forum</h1>
+        <p>Welcome to the vintage forum experience!</p>
+    </header>
+
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">New Topic</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    </div>
+
+    <div class="container">
+        <div id="post-list" class="post-list">
+            <!-- Posts will be loaded here -->
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2024 Old School Forum - <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+
+    <script>
+        // Fetch the posts from the JSON file and display them
+        fetch('./public/posts.json')
+            .then(response => {
+                // Ensure the response is in JSON format
+                return response.json();
+            })
+            .then(posts => {
+                // Check if posts is an array before calling forEach
+                if (Array.isArray(posts)) {
+                    const postList = document.getElementById('post-list');
+
+                    posts.forEach(post => {
+                        const postItem = document.createElement('div');
+                        postItem.classList.add('post-item');
+
+                        postItem.innerHTML = `
+                    <div class="post-title">${post.title}</div>
+                    <div class="post-author">Posted by: ${post.author}</div>
+                    <div class="post-date">Date: ${post.date}</div>
+                    <div class="post-content">
+                        <p>${post.content}</p>
+                    </div>
+                    <div class="post-stats">
+                        <span class="likes">Likes: ${post.likes}</span>
+                        <span class="dislikes">Dislikes: ${post.dislikes}</span>
+                        <span class="comments">Comments: ${post.comments}</span>
+                    </div>
+                `;
+                        postList.appendChild(postItem);
+                    });
+                } else {
+                    console.error('Expected an array of posts, but received:', posts);
+                }
+            })
+            .catch(error => {
+                console.error('Error loading posts:', error);
+            });
+
+    </script>
+</body>
+
+</html>

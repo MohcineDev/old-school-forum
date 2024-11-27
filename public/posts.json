@@ -1,0 +1,65 @@
+[
+    {
+        "title": "How to Create Your First Website?",
+        "author": "JohnDoe",
+        "date": "11/27/2024",
+        "likes": 120,
+        "dislikes": 15,
+        "comments": 25,
+        "content": "This is the first post on our vintage forum! Here you can discuss how to create simple websites and share coding tips."
+    },
+    {
+        "title": "Is HTML Still Relevant in 2024?",
+        "author": "JaneSmith",
+        "date": "11/25/2024",
+        "likes": 80,
+        "dislikes": 5,
+        "comments": 12,
+        "content": "In the age of modern JavaScript frameworks, is HTML still as important as it once was? Let’s discuss!"
+    },
+    {
+        "title": "What Is Your Favorite Web Browser?",
+        "author": "TechGuy",
+        "date": "11/22/2024",
+        "likes": 200,
+        "dislikes": 10,
+        "comments": 50,
+        "content": "Firefox? Internet Explorer? Chrome? Everyone has a favorite. Let’s see what the forum thinks!"
+    },
+    {
+        "title": "The Basics of HTML",
+        "author": "AliceWonder",
+        "date": "11/27/2024",
+        "likes": 320,
+        "dislikes": 10,
+        "comments": 45,
+        "content": "HTML is the foundation of web development. Let's explore the basic structure of an HTML document and how you can use it to create your first webpage."
+    },
+    {
+        "title": "Why CSS is Important for Web Design",
+        "author": "BobBuilder",
+        "date": "11/25/2024",
+        "likes": 250,
+        "dislikes": 5,
+        "comments": 32,
+        "content": "CSS (Cascading Style Sheets) helps to control the layout and appearance of your website. This post covers why CSS is crucial for modern web design."
+    },
+    {
+        "title": "Introduction to JavaScript for Beginners",
+        "author": "CodeMaster",
+        "date": "11/22/2024",
+        "likes": 450,
+        "dislikes": 20,
+        "comments": 70,
+        "content": "JavaScript is one of the most widely used programming languages on the web. In this post, we'll walk through some basic concepts that every beginner should know."
+    },
+    {
+        "title": "Best Practices for SEO in 2024",
+        "author": "SEOExpert",
+        "date": "11/20/2024",
+        "likes": 180,
+        "dislikes": 8,
+        "comments": 15,
+        "content": "Search Engine Optimization (SEO) is critical for getting your website noticed. This post covers the best practices in SEO for 2024 that will help improve your website's visibility."
+    }
+]
