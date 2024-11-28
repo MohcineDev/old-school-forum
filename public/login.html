@@ -107,11 +107,12 @@
         <form action="/login" method="POST">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" id="email" value="daz@daz" name="email" required placeholder="Enter your email">
+                <input type="text" id="email" value="da@da" name="email" required placeholder="Enter your email">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" value="d1z3a" id="password" name="password" required placeholder="Enter your password">
+                <input type="password" value="da5dz5a" id="password" name="password" required
+                    placeholder="Enter your password">
             </div>
             <button type="submit">Login</button>
         </form>
@@ -133,8 +134,19 @@
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),
             })
-                .then((response) => response.json())
-                .then((data) => console.log(data))
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Invalid credentials");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data.message); // For debugging purposes
+                    // Redirect to the home page
+                    localStorage.setItem("user_id", data.user.id); // Example
+                    localStorage.setItem("username", data.user.username);
+                    window.location.href = "/";
+                })
                 .catch((error) => console.error(error));
         })
     </script>

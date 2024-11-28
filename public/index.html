@@ -4,195 +4,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Old School Forum</title>
+    <title>Forum Home</title>
     <style>
+        /* Old-school styling */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-            color: #000;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
         }
 
-        header {
-            background-color: #000080;
-            color: white;
+        header,
+        footer {
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        nav {
+            background-color: #444;
             padding: 10px;
             text-align: center;
         }
 
-        h1 {
-            font-size: 36px;
-            margin: 0;
-        }
-
-        .navbar {
-            background-color: #008080;
-            padding: 8px;
-            text-align: center;
-        }
-
-        .navbar a {
-            color: white;
-            margin: 10px;
+        nav a {
+            color: #fff;
             text-decoration: none;
-            font-size: 18px;
+            margin: 0 15px;
+            padding: 5px 10px;
         }
 
-        .navbar a:hover {
-            text-decoration: underline;
+        nav a:hover {
+            background-color: #333;
         }
 
-        .container {
-            width: 90%;
-            margin: 20px auto;
+        main {
+            padding: 20px;
         }
 
-        .post-list {
-            background-color: #ffffff;
+        .post {
             border: 1px solid #ddd;
-            padding: 15px;
-            margin-top: 20px;
-        }
-
-        .post-item {
-            border-bottom: 1px solid #ddd;
+            margin: 10px 0;
             padding: 10px;
-            margin-bottom: 10px;
+            background: #fff;
         }
 
-        .post-item:last-child {
-            border-bottom: none;
+        .post h3 {
+            margin: 0;
+            padding: 0 0 10px 0;
         }
 
-        .post-title {
-            font-size: 20px;
+        button {
+            padding: 5px 10px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        form {
+            border: 1px solid #000;
+            padding: 10px;
+            margin-top: 20px;
+            background: #eee;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
             font-weight: bold;
-            color: #000080;
         }
 
-        .post-author {
-            font-size: 14px;
-            color: #808080;
-        }
-
-        .post-date {
-            font-size: 12px;
-            color: #808080;
-        }
-
-        .post-content {
-            font-size: 16px;
-            color: #333;
-            margin-top: 10px;
-        }
-
-        .post-stats {
-            margin-top: 10px;
-            font-size: 14px;
-            color: #333;
-        }
-
-        .post-stats span {
-            margin-right: 15px;
-        }
-
-        .likes,
-        .dislikes,
-        .comments {
-            font-weight: bold;
-            color: #000080;
-        }
-
-        .likes:hover,
-        .dislikes:hover,
-        .comments:hover {
-            text-decoration: underline;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 15px;
-            background-color: #000080;
-            color: white;
-            position: fixed;
+        form input[type="text"],
+        form textarea {
             width: 100%;
-            bottom: 0;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            background: #fff;
         }
 
-        .footer a {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
+        form button {
+            padding: 5px 10px;
+            background: #ddd;
+            border: 1px solid #aaa;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background: #ccc;
         }
     </style>
 </head>
 
 <body>
+    <!-- Header -->
     <header>
-        <h1>Old School Forum</h1>
-        <p>Welcome to the vintage forum experience!</p>
+        <h1>Welcome to the Forum</h1>
     </header>
 
-    <div class="navbar">
-        <a href="#">Home</a>
-        <a href="#">New Topic</a>
-        <a href="#">FAQ</a>
-        <a href="#">Contact</a>
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
-    </div>
+    <!-- Navbar -->
+    <nav>
+        <a href="/">Home</a>
+        <a href="/login" id="loginLink" style="display: none;">Login</a>
+        <a href="/register" id="registerLink" style="display: none;">Register</a>
+        <a href="#" id="logoutButton" style="display: none;">Logout</a>
+    </nav>
 
-    <div class="container">
-        <div id="post-list" class="post-list">
-            <!-- Posts will be loaded here -->
+
+    <!-- Main Content -->
+    <main>
+        <div id="postsContainer">
+            <!-- Posts will be loaded dynamically -->
         </div>
-    </div>
 
-    <div class="footer">
-        <p>© 2024 Old School Forum - <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
-    </div>
+        <div id="postFormContainer">
+            <!-- Post form will appear if user is logged in -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Forum Platform. All rights reserved.</p>
+    </footer>
 
     <script>
-        // Fetch the posts from the JSON file and display them
-        fetch('./public/posts.json')
-            .then(response => {
-                // Ensure the response is in JSON format
-                return response.json();
-            })
-            .then(posts => {
-                // Check if posts is an array before calling forEach
-                if (Array.isArray(posts)) {
-                    const postList = document.getElementById('post-list');
+        
+        // Check if user is logged in
+        const userId = localStorage.getItem("user_id");
+        const logoutButton = document.getElementById("logoutButton");
+        // Check if user is logged in
 
-                    posts.forEach(post => {
-                        const postItem = document.createElement('div');
-                        postItem.classList.add('post-item');
+        const loginLink = document.getElementById("loginLink");
+        const registerLink = document.getElementById("registerLink");
 
-                        postItem.innerHTML = `
-                    <div class="post-title">${post.title}</div>
-                    <div class="post-author">Posted by: ${post.author}</div>
-                    <div class="post-date">Date: ${post.date}</div>
-                    <div class="post-content">
-                        <p>${post.content}</p>
-                    </div>
-                    <div class="post-stats">
-                        <span class="likes">Likes: ${post.likes}</span>
-                        <span class="dislikes">Dislikes: ${post.dislikes}</span>
-                        <span class="comments">Comments: ${post.comments}</span>
-                    </div>
-                `;
-                        postList.appendChild(postItem);
-                    });
-                } else {
-                    console.error('Expected an array of posts, but received:', posts);
-                }
-            })
-            .catch(error => {
-                console.error('Error loading posts:', error);
+
+        logoutButton.addEventListener("click", function () {
+    // Clear user data from localStorage
+    localStorage.clear();
+
+    // Redirect to the login page
+    window.location.href = "/";
+  });
+        if (userId) {
+            // Hide Login and Register, show Logout
+            loginLink.style.display = "none";
+            registerLink.style.display = "none";
+            logoutButton.style.display = "inline-block";
+            // Show logout button
+            logoutButton.style.display = "inline-block";
+
+            // Add post form for logged-in users
+            document.getElementById("postFormContainer").innerHTML = `
+        <h2>Create a Post</h2>
+        <form id="createPostForm">
+          <label for="title">Title:</label><br>
+          <input type="text" id="title" name="title" required><br><br>
+          <label for="content">Content:</label><br>
+          <textarea id="content" name="content" required></textarea><br><br>
+          <button type="submit">Submit Post</button>
+        </form>
+      `;
+
+            // Handle post submission
+            document.getElementById("createPostForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                const title = document.getElementById("title").value.trim();
+                const content = document.getElementById("content").value.trim();
+
+                fetch("http://localhost:5000/create-post", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ user_id: userId, title, content }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        alert(data.message);
+                        window.location.reload();
+                    })
+                    .catch((error) => alert("Error creating post: " + error.message));
             });
 
+            // Logout functionality
+            logoutButton.addEventListener("click", function () {
+                localStorage.clear();
+                window.location.reload();
+            });
+        }
+        else {
+            // Show Login and Register, hide Logout
+            loginLink.style.display = "inline-block";
+            registerLink.style.display = "inline-block";
+            logoutButton.style.display = "none";
+        }
+        // Fetch and display posts
+        fetch("http://localhost:5000/posts")
+            .then((response) => response.json())
+            .then((posts) => {
+                const postsContainer = document.getElementById("postsContainer");
+                postsContainer.innerHTML = posts.length
+                    ? posts
+                        .map(
+                            (post) => `
+              <div class="post">
+                <h3>${post.title}</h3>
+                <p>${post.content}</p>
+                <p>
+                  <strong>Likes:</strong> ${post.likes} | 
+                  <strong>Dislikes:</strong> ${post.dislikes} | 
+                  <strong>Comments:</strong> ${post.comments}
+                </p>
+                ${userId
+                                    ? `<button onclick="interact('like', ${post.id})">Like</button>
+                       <button onclick="interact('dislike', ${post.id})">Dislike</button>`
+                                    : ""
+                                }
+              </div>
+            `
+                        )
+                        .join("")
+                    : "<p>No posts available. Be the first to create one!</p>";
+            });
+
+        // Interaction functions for like/dislike
+        function interact(action, postId) {
+            fetch(`http://localhost:5000/${action}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: userId, post_id: postId }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    alert(data.message);
+                    window.location.reload();
+                })
+                .catch((error) => alert("Error interacting with post: " + error.message));
+        }
     </script>
 </body>
 
