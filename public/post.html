@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Details - Classic Forum</title>
+    <link rel="stylesheet" href="/css/post.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Classic Forum</h1>
+    </header>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="links">
+            <a href="/">Home</a>
+            <a href="/login" id="loginLink" style="display: none;">Login</a>
+            <a href="/register" id="registerLink" style="display: none;">Register</a>
+            <a href="#" id="logoutButton" style="display: none;">Logout</a>
+        </div>
+        <div class="profile">
+            <p></p>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="post-container">
+            <h2>{{postTitle}}</h2>
+            <p><em>Posted by {{author}} on {{createdAt}}</em></p>
+            <div class="post-content">
+                <p>{{postContent}}</p>
+            </div>
+
+            <div class="post-details">
+                <p><strong>Likes: </strong>{{likes}}</p>
+                <p><strong>Dislikes: </strong>{{dislikes}}</p>
+                <p><strong>Comments: </strong>{{comments}}</p>
+            </div>
+        </div>
+
+        <!-- Comment Section -->
+        <div id="commentSection">
+            <h3>Comments</h3>
+            <div id="commentsContainer">
+                <!-- Comments will be loaded dynamically -->
+            </div>
+
+            <div id="commentFormContainer">
+                <!-- Comment form will appear if user is logged in -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Classic Forum. All rights reserved.</p>
+    </footer>
+<script>
+const userId = localStorage.getItem("user_id");
+const profile = document.querySelector('.profile')
+const logoutButton = document.getElementById("logoutButton");
+
+if (userId) {
+  logoutButton.style.display = "inline-block";
+  profile.querySelector('p').textContent = localStorage.getItem("username");
+}
+</script>
+</body>
+
+</html>

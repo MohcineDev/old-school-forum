@@ -13,13 +13,13 @@ const getPosts = require("./controllers/posts")
 const getCategories = require("./controllers/categories")
 
 const handleLikeDislike = require("./controllers/likeDislike");
-
+const getPostDetails = require("./controllers/postDetails");
 // Initialize the database tables
 initializeDatabase()
 
 // Create the server
 const server = http.createServer(async (req, res) => {
-  const staticFiles = ["css", "js", "images"];
+  const staticFiles = ["css", "js", "imgs"];
   for (const fileType of staticFiles) {
     const fileRegex = new RegExp(`^\/${fileType}\/(.*)`);
     const match = req.url.match(fileRegex);
@@ -65,7 +65,15 @@ const server = http.createServer(async (req, res) => {
   else if (req.method === "GET" && req.url === "/posts") {
     getPosts(req, res)
   }
-
+  ///for single post
+  else if (req.method === "GET" && req.url.startsWith("/post/")) {
+    // Extract post ID from the URL
+    const postId = req.url.split("/post/")[1];
+  
+    // Fetch and serve the post details
+    getPostDetails(req, res, postId);
+  }
+  
   else if (req.method === "GET" && req.url === "/register") {
     const filePath = path.join(__dirname, "public", "register.html")
 

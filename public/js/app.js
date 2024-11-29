@@ -5,7 +5,7 @@ const logoutButton = document.getElementById("logoutButton");
 
 const loginLink = document.getElementById("loginLink");
 const registerLink = document.getElementById("registerLink");
-
+const profile = document.querySelector('.profile')
 
 logoutButton.addEventListener("click", function () {
     // Clear user data from localStorage
@@ -15,6 +15,8 @@ logoutButton.addEventListener("click", function () {
     window.location.href = "/";
 });
 if (userId) {
+    ///set the usrename
+    profile.querySelector('p').textContent = localStorage.getItem("username");
     // Hide Login and Register, show Logout
     loginLink.style.display = "none";
     registerLink.style.display = "none";
@@ -28,15 +30,15 @@ if (userId) {
 <h2>Create a Post</h2>
 <form id="createPostForm">
   <label for="title">Title:</label><br>
-  <input type="text" id="title" name="title" required><br><br>
+  <input type="text" id="title" name="title" required><br>
 
   <label for="content">Content:</label><br>
-  <textarea id="content" name="content" required></textarea><br><br>
+  <textarea id="content" name="content" required></textarea><br>
 
   <label for="categories">Categories:</label><br>
   <select id="categories" name="categories" multiple required>
   
-  </select><br><br>
+  </select><br>
 
   <button type="submit">Submit Post</button>
 </form>
@@ -98,6 +100,7 @@ else {
 // Import formatDistanceToNow from date-fns
 
 // Fetch and display posts
+
 fetch("http://localhost:5000/posts")
     .then((response) => response.json())
     .then((posts) => {
@@ -110,10 +113,10 @@ fetch("http://localhost:5000/posts")
 
                     return `
                <div class="post">
-                   <h3>${post.title}</h3>
-                   <p>By ${post.username}</p>
+                   <h3><a href="/post/${post.id}">${post.title}</a></h3>
+
                    <p>${post.content}</p>
-                   <p><em>Posted ${post.created_at}</em></p> 
+                   <p><em>Posted By ${post.username} ON ${post.created_at}</em></p> 
                    <p><em> ${post.categories != null ? `categories : ${post.categories}` : `-`}</em></p> 
                         
                    <p>
