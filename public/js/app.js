@@ -50,7 +50,7 @@ if (userId) {
         .then(categories => {
             const categoriesSelect = document.getElementById("categories");
             console.log(categories);
-            
+
             categories.forEach(category => {
                 const option = document.createElement("option");
                 option.value = category.id;
@@ -113,10 +113,10 @@ fetch("http://localhost:5000/posts")
 
                     return `
                <div class="post">
+               <p class="author"><em>Posted By ${post.username} ON ${post.created_at}</em></p> 
                    <h3><a href="/post/${post.id}">${post.title}</a></h3>
 
                    <p>${post.content}</p>
-                   <p><em>Posted By ${post.username} ON ${post.created_at}</em></p> 
                    <p><em> ${post.categories != null ? `categories : ${post.categories}` : `-`}</em></p> 
                         
                    <p>
@@ -125,8 +125,17 @@ fetch("http://localhost:5000/posts")
                        <strong>Comments:</strong> ${post.comments}
                    </p>
                    ${userId
-                            ? `<button onclick="interact('like', ${post.id})">Like</button>
-                          <button onclick="interact('dislike', ${post.id})">Dislike</button>`
+                            ? `<div class="btns">
+                            <div>
+                            <button onclick="interact('like', ${post.id})">Like</button>
+                            <button onclick="interact('dislike', ${post.id})">Dislike</button>                          
+                          </div>
+                            <div> ${post.user_id == userId ? `
+                                <button onclick="interact('delete', ${post.id})">Delete</button>`
+                                : ""}
+                          </div>
+                          
+                          </div>`
                             : ""
                         }
                </div>
@@ -140,15 +149,33 @@ fetch("http://localhost:5000/posts")
 
 // Interaction functions for like/dislike
 function interact(action, postId) {
-    fetch(`http://localhost:5000/${action}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id: userId, post_id: postId }),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            alert(data.message);
-            window.location.reload();
+    if (action === 'delete') {
+
+        fetch(`http://localhost:5000/post_delete/${postId}`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: userId, post_id: postId }),
         })
-        .catch((error) => alert("Error interacting with post: " + error.message));
+            .then((response) => response.json())
+            .then((data) => {
+                alert(data.message);
+                window.location.reload();
+            })
+            .catch((error) => alert("Error interacting with post: " + error.message));
+
+    } else {
+
+        fetch(`http://localhost:5000/${action}`, {
+            method: action == 'delete' ? "DELETE" : "POST",
+
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: userId, post_id: postId }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                alert(data.message);
+                window.location.reload();
+            })
+            .catch((error) => alert("Error interacting with post: " + error.message));
+    }
 }

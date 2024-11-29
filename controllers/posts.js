@@ -4,17 +4,17 @@ const getPosts = (req, res) => {
   const query = `
     SELECT posts.id, posts.title, posts.content, posts.user_id, posts.created_at,
            users.username, 
-           GROUP_CONCAT(categories.name) AS categories,  -- Concatenate category names
-           COUNT(likes.id) AS likes,
-           COUNT(dislikes.id) AS dislikes,
-           COUNT(comments.id) AS comments
+           GROUP_CONCAT(DISTINCT categories.name) AS categories,  -- Use DISTINCT to avoid duplicated categories
+           COUNT(DISTINCT likes.id) AS likes,  -- Count unique likes
+           COUNT(DISTINCT dislikes.id) AS dislikes,  -- Count unique dislikes
+           COUNT(DISTINCT comments.id) AS comments  -- Count unique comments
     FROM posts
     LEFT JOIN users ON posts.user_id = users.id  -- Join posts with users table to get the username
     LEFT JOIN likes ON posts.id = likes.post_id
     LEFT JOIN dislikes ON posts.id = dislikes.post_id
     LEFT JOIN comments ON posts.id = comments.post_id
-    LEFT JOIN post_categories ON posts.id = post_categories.post_id  -- Join with post_categories to link posts to categories
-    LEFT JOIN categories ON post_categories.category_id = categories.id  -- Join with categories table to get category names
+    LEFT JOIN post_categories ON posts.id = post_categories.post_id  
+    LEFT JOIN categories ON post_categories.category_id = categories.id
     GROUP BY posts.id
   `;
   

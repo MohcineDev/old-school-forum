@@ -1,4 +1,4 @@
-const { db } = require("../db/init"); // Import the db from the database initialization
+const { db } = require("../../db/init"); 
 
 const loginUser = (req, res) => {
     if (req.headers["content-type"] !== "application/json") {

@@ -161,3 +161,16 @@ a:hover {
 input, textarea{
     box-sizing: border-box;
 }
+
+.author{
+    margin: 0;
+    background: #dcdddd;
+    border-bottom: 3px solid #b2b6c4;
+    color: #555;
+    padding: 0 5px;
+}
+
+.btns{
+    display: flex;
+    justify-content: space-between;
+}

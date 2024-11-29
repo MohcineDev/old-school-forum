@@ -175,3 +175,23 @@ a:hover {
 input, textarea {
     box-sizing: border-box;
 }
+
+.comment{
+    background: #41597b;
+  color: #fff;
+  padding: 5px;
+  margin: 5px 0;
+}
+.comment .author{
+    font-size: 14px;
+  font-weight: 800;
+  border-bottom: 1px solid #f1f1f1;
+  display: inline-block;
+}
+.comment>p{
+    color: #fff;
+}
+.comment span{
+    font-size: 12px;
+
+}

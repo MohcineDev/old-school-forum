@@ -6,14 +6,14 @@ const path = require("path")
 
 // Import the database initialization and the db instance
 const { db, initializeDatabase } = require("./db/init")
-const registerUser = require("./auth/register")
-const loginUser = require("./auth/login")
+const authRoutes = require("./routes/authRoutes");
 const createPost = require("./controllers/createPost")
 const getPosts = require("./controllers/posts")
-const getCategories = require("./controllers/categories")
-
-const handleLikeDislike = require("./controllers/likeDislike");
+const categoryRoutes = require("./routes/categoryRoutes");
+const likeDislikeRoutes = require("./routes/likeDislikeRoutes");
 const getPostDetails = require("./controllers/postDetails");
+const deletePost = require("./controllers/handlePostDelete");
+
 // Initialize the database tables
 initializeDatabase()
 
@@ -69,11 +69,11 @@ const server = http.createServer(async (req, res) => {
   else if (req.method === "GET" && req.url.startsWith("/post/")) {
     // Extract post ID from the URL
     const postId = req.url.split("/post/")[1];
-  
+
     // Fetch and serve the post details
     getPostDetails(req, res, postId);
   }
-  
+
   else if (req.method === "GET" && req.url === "/register") {
     const filePath = path.join(__dirname, "public", "register.html")
 
@@ -103,23 +103,28 @@ const server = http.createServer(async (req, res) => {
     })
   }
   //auth register
-  else if (req.method === "POST" && req.url === "/register") {
-    registerUser(req, res) // Use the register logic 
-  }
-  else if (req.method === "POST" && req.url === "/login") {
-    loginUser(req, res) // Use the login logic
+  // else if (req.method === "POST" && req.url === "/register") {
+  //   registerUser(req, res) // Use the register logic 
+  // }
+  // else if (req.method === "POST" && req.url === "/login") {
+  //   loginUser(req, res) // Use the login logic
+  // }
+  else if (req.url.startsWith("/register") || req.url.startsWith("/login")) {
+    authRoutes(req, res);
   }
   else if (req.method === "POST" && req.url === "/create-post") {
     createPost(req, res) // Call the createPost function
   }
-  else if (req.method === "GET" && req.url === "/categories") {
-    getCategories(req, res); // Call the controller to fetch categories
+  else if (req.url === "/categories") {
+    categoryRoutes(req, res);
   }
-  else if (req.method === "POST" && (req.url === "/like" || req.url === "/dislike")) {
-    handleLikeDislike(req, res);
+  else if (req.url === "/like" || req.url === "/dislike") {
+    likeDislikeRoutes(req, res);
   }
-
-
+  else if (req.method === 'DELETE' && req.url.startsWith("/post_delete")) {
+    deletePost(req, res);  // Call the deletePost function
+  }
+ 
   else {
     res.writeHead(404, { "Content-Type": "application/json" })
     res.end(JSON.stringify({ message: "Endpoint not found" }))

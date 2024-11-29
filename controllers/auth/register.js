@@ -1,4 +1,4 @@
-const { db } = require("../db/init"); // Import the db from the database initialization
+const { db } = require("../../db/init");
 
 const registerUser = (req, res) => {
     let body = "";
