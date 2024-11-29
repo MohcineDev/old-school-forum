@@ -25,7 +25,7 @@ header, footer {
     color: #fff;
     text-align: center;
     max-width: var(--m-width);
-    margin: auto;
+    margin: auto 40px;
 }
 
 h1 {
@@ -40,7 +40,7 @@ nav {
     text-align: center;
     font-family: 'Arial', sans-serif;
     max-width: var(--m-width);
-    margin: auto;
+    margin: auto 40px;
     display: flex;
     justify-content: space-between;
 }
@@ -61,9 +61,8 @@ nav a:hover {
 
 /* Post Card Styles */
 main {
-    padding: 20px;
     max-width: var(--m-width);
-    margin: auto;
+    margin: auto 40px;
 
 }
 
@@ -174,3 +173,6 @@ input, textarea{
     display: flex;
     justify-content: space-between;
 }
+ hr{
+    border-color: #fff;
+ }

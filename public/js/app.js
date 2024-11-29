@@ -124,6 +124,7 @@ fetch("http://localhost:5000/posts")
                        <strong>Dislikes:</strong> ${post.dislikes} | 
                        <strong>Comments:</strong> ${post.comments}
                    </p>
+                   <hr/>
                    ${userId
                             ? `<div class="btns">
                             <div>
