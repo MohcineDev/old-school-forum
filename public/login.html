@@ -5,91 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Forum</title>
-    <link rel="stylesheet" href="login.css">
-    <style>
-        /* Global styles */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-
-        .container {
-            width: 60%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Header styles */
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            border-radius: 5px;
-        }
-
-        header h1 {
-            font-size: 2rem;
-        }
-
-        header nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-
-        /* Form styles */
-        h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1rem;
-            border-radius: 5px;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        /* Link styles */
-        a {
-            color: #4CAF50;
-        }
-
-        a:hover {
-            color: #45a049;
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="css/login.css">
+   
 </head>
 
 <body>
@@ -118,38 +35,10 @@
         </form>
         <p>Don't have an account? <a href="register">Register here</a>.</p>
     </div>
-
-    <script>
-        const form = document.querySelector("form")
-        form.addEventListener("submit", function (event) {
-            event.preventDefault();
-
-
-            // Capture form data
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-
-            fetch("http://localhost:5000/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error("Invalid credentials");
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    console.log(data.message); // For debugging purposes
-                    // Redirect to the home page
-                    localStorage.setItem("user_id", data.user.id); // Example
-                    localStorage.setItem("username", data.user.username);
-                    window.location.href = "/";
-                })
-                .catch((error) => console.error(error));
-        })
-    </script>
+    <footer>
+        <p>&copy; 2024 Classic Forum. All rights reserved.</p>
+        </footer>
+<script src="js/login.js"></script>
 </body>
 
 </html>

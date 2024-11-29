@@ -5,107 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum Home</title>
-    <style>
-        /* Old-school styling */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-
-        header,
-        footer {
-            background-color: #222;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-        }
-
-        nav {
-            background-color: #444;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 15px;
-            padding: 5px 10px;
-        }
-
-        nav a:hover {
-            background-color: #333;
-        }
-
-        main {
-            padding: 20px;
-        }
-
-        .post {
-            border: 1px solid #ddd;
-            margin: 10px 0;
-            padding: 10px;
-            background: #fff;
-        }
-
-        .post h3 {
-            margin: 0;
-            padding: 0 0 10px 0;
-        }
-
-        button {
-            padding: 5px 10px;
-            margin-top: 5px;
-            cursor: pointer;
-        }
-
-        footer p {
-            margin: 0;
-            font-size: 0.9em;
-        }
-
-        form {
-            border: 1px solid #000;
-            padding: 10px;
-            margin-top: 20px;
-            background: #eee;
-        }
-
-        form label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        form input[type="text"],
-        form textarea {
-            width: 100%;
-            padding: 5px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            background: #fff;
-        }
-
-        form button {
-            padding: 5px 10px;
-            background: #ddd;
-            border: 1px solid #aaa;
-            cursor: pointer;
-        }
-
-        form button:hover {
-            background: #ccc;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
     <!-- Header -->
     <header>
-        <h1>Welcome to the Forum</h1>
+        <h1>Classic Forum</h1>
     </header>
 
     <!-- Navbar -->
@@ -117,136 +23,24 @@
     </nav>
 
 
+
     <!-- Main Content -->
     <main>
-        <div id="postsContainer">
-            <!-- Posts will be loaded dynamically -->
-        </div>
 
         <div id="postFormContainer">
             <!-- Post form will appear if user is logged in -->
         </div>
+        <div id="postsContainer">
+            <!-- Posts will be loaded dynamically -->
+        </div>
+
     </main>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Forum Platform. All rights reserved.</p>
-    </footer>
-
-    <script>
-        
-        // Check if user is logged in
-        const userId = localStorage.getItem("user_id");
-        const logoutButton = document.getElementById("logoutButton");
-        // Check if user is logged in
-
-        const loginLink = document.getElementById("loginLink");
-        const registerLink = document.getElementById("registerLink");
-
-
-        logoutButton.addEventListener("click", function () {
-    // Clear user data from localStorage
-    localStorage.clear();
-
-    // Redirect to the login page
-    window.location.href = "/";
-  });
-        if (userId) {
-            // Hide Login and Register, show Logout
-            loginLink.style.display = "none";
-            registerLink.style.display = "none";
-            logoutButton.style.display = "inline-block";
-            // Show logout button
-            logoutButton.style.display = "inline-block";
-
-            // Add post form for logged-in users
-            document.getElementById("postFormContainer").innerHTML = `
-        <h2>Create a Post</h2>
-        <form id="createPostForm">
-          <label for="title">Title:</label><br>
-          <input type="text" id="title" name="title" required><br><br>
-          <label for="content">Content:</label><br>
-          <textarea id="content" name="content" required></textarea><br><br>
-          <button type="submit">Submit Post</button>
-        </form>
-      `;
-
-            // Handle post submission
-            document.getElementById("createPostForm").addEventListener("submit", function (event) {
-                event.preventDefault();
-
-                const title = document.getElementById("title").value.trim();
-                const content = document.getElementById("content").value.trim();
-
-                fetch("http://localhost:5000/create-post", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ user_id: userId, title, content }),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        alert(data.message);
-                        window.location.reload();
-                    })
-                    .catch((error) => alert("Error creating post: " + error.message));
-            });
-
-            // Logout functionality
-            logoutButton.addEventListener("click", function () {
-                localStorage.clear();
-                window.location.reload();
-            });
-        }
-        else {
-            // Show Login and Register, hide Logout
-            loginLink.style.display = "inline-block";
-            registerLink.style.display = "inline-block";
-            logoutButton.style.display = "none";
-        }
-        // Fetch and display posts
-        fetch("http://localhost:5000/posts")
-            .then((response) => response.json())
-            .then((posts) => {
-                const postsContainer = document.getElementById("postsContainer");
-                postsContainer.innerHTML = posts.length
-                    ? posts
-                        .map(
-                            (post) => `
-              <div class="post">
-                <h3>${post.title}</h3>
-                <p>${post.content}</p>
-                <p>
-                  <strong>Likes:</strong> ${post.likes} | 
-                  <strong>Dislikes:</strong> ${post.dislikes} | 
-                  <strong>Comments:</strong> ${post.comments}
-                </p>
-                ${userId
-                                    ? `<button onclick="interact('like', ${post.id})">Like</button>
-                       <button onclick="interact('dislike', ${post.id})">Dislike</button>`
-                                    : ""
-                                }
-              </div>
-            `
-                        )
-                        .join("")
-                    : "<p>No posts available. Be the first to create one!</p>";
-            });
-
-        // Interaction functions for like/dislike
-        function interact(action, postId) {
-            fetch(`http://localhost:5000/${action}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ user_id: userId, post_id: postId }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    alert(data.message);
-                    window.location.reload();
-                })
-                .catch((error) => alert("Error interacting with post: " + error.message));
-        }
-    </script>
+        <p>&copy; 2024 Classic Forum. All rights reserved.</p>
+        </footer>
+    <script src="/js/app.js"></script>
 </body>
 
 </html>

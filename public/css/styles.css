@@ -1,0 +1,138 @@
+/* Global Styles */
+body {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    color: #333;
+    line-height: 1.6;
+}
+
+header, footer {
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Navbar Styles */
+nav {
+    background-color: #444;
+    text-align: center;
+    padding: 10px 0;
+    font-family: 'Arial', sans-serif;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 20px;
+    padding: 5px 10px;
+    font-size: 1.1em;
+    text-transform: uppercase;
+}
+
+nav a:hover {
+    background-color: #666;
+}
+
+/* Post Card Styles */
+main {
+    padding: 20px;
+}
+
+.post {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post h3 {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.post p {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.post em {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Form Styles */
+form {
+    background-color: #fafafa;
+    padding: 15px;
+    border: 1px solid #ccc;
+    margin-top: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+form input[type="text"], form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 1em;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+form button {
+    background-color: #555;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+}
+
+form button:hover {
+    background-color: #333;
+}
+
+/* Footer Styles */
+footer p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+/* Button Styles */
+button {
+    background-color: #444;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    text-transform: uppercase;
+    margin-top: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #222;
+}
+
+/* Miscellaneous */
+a:visited {
+    color: #aaa;
+}
+
+a:hover {
+    color: #ddd;
+}
