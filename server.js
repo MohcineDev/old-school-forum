@@ -3,6 +3,7 @@ const http = require("http")
 const fs = require("fs")
 const path = require("path")
 
+const PORT = process.env.PORT || 5000;
 
 // Import the database initialization and the db instance
 const { db, initializeDatabase } = require("./db/init")
@@ -161,7 +162,6 @@ const server = http.createServer(async (req, res) => {
 })
 
 // Start the server
-const PORT = 5000
 server.listen(PORT, () => {
   console.log(`API running on http://localhost:${PORT}`)
 })
