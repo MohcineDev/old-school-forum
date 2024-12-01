@@ -1,0 +1,16 @@
+h1{
+    color: #fff;
+}
+#profileContainer{
+background-color: var(--blue);
+color: #fff;
+padding: 20px;
+}
+
+input{
+    background-color: var(--blue);
+    border: 1px solid #eee;
+    color: #fff;
+    outline: none;
+    padding: 4px;
+}

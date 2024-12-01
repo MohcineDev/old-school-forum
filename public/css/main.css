@@ -1,0 +1,70 @@
+/* Global Styles */
+:root {
+    --m-width: 1200px;
+    --blue:#456282;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #222;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+
+header {
+    background: url('../imgs/golden-gate-bridge-bay-sunset.jpg.webp') center center no-repeat;
+    background-size: cover;
+    padding: 50px 0;
+}
+
+
+header, footer {
+    color: #fff;
+    text-align: center;
+    max-width: var(--m-width);
+    margin: auto;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+
+/* Navbar Styles */
+nav {
+    background-color: var(--blue);
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    max-width: var(--m-width);
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav p,
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 20px;
+    padding: 5px 10px;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+ 
+
+@media screen and (max-width:1200px) {
+    body {
+        padding: 0 20px;
+    }
+}

@@ -13,7 +13,8 @@ const categoryRoutes = require("./routes/categoryRoutes");
 const likeDislikeRoutes = require("./routes/likeDislikeRoutes");
 const getPostDetails = require("./controllers/postDetails");
 const deletePost = require("./controllers/handlePostDelete");
-
+const profileRoute = require('./routes/profileRoute');
+const updateUser = require("./controllers/updateUser");
 // Initialize the database tables
 initializeDatabase()
 
@@ -65,7 +66,9 @@ const server = http.createServer(async (req, res) => {
   else if (req.method === "GET" && req.url === "/posts") {
     getPosts(req, res)
   }
+  //
   ///for single post
+  //
   else if (req.method === "GET" && req.url.startsWith("/post/")) {
     // Extract post ID from the URL
     const postId = req.url.split("/post/")[1];
@@ -102,6 +105,29 @@ const server = http.createServer(async (req, res) => {
       res.end(data)
     })
   }
+  ///
+  ////serve profile pega
+  ///
+  else if (req.method === "GET" && req.url === "/profile") {
+    const filePath = path.join(__dirname, "public", "profile.html")
+    fs.readFile(filePath, "utf8", (err, data) => {
+      if (err) {
+        res.writeHead(500, { "Content-Type": "text/plain" })
+        res.end("Internal Server Error")
+        return
+      }
+
+      res.writeHead(200, { "Content-Type": "text/html" })
+      res.end(data)
+    })
+  }
+  else if (req.url.startsWith('/user/')) {
+    // Handle fetching user profile
+    const userId = req.url.split("/user/")[1];
+
+    profileRoute(req, res, userId)
+
+  }
   //auth register
   // else if (req.method === "POST" && req.url === "/register") {
   //   registerUser(req, res) // Use the register logic 
@@ -124,7 +150,10 @@ const server = http.createServer(async (req, res) => {
   else if (req.method === 'DELETE' && req.url.startsWith("/post_delete")) {
     deletePost(req, res);  // Call the deletePost function
   }
- 
+  ///update user
+  else if (req.method === 'POST' && req.url.startsWith("/update")) {
+    updateUser(req, res);  // 
+  }
   else {
     res.writeHead(404, { "Content-Type": "application/json" })
     res.end(JSON.stringify({ message: "Endpoint not found" }))

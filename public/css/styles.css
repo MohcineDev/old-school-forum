@@ -1,74 +1,16 @@
-/* Global Styles */
-:root{
-    --m-width: 1200px;
-}
-a{
-    text-decoration: none;
-    color: inherit;
-}
-body {
-    font-family: 'Courier New', Courier, monospace;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    background-color: #222;
-    line-height: 1.6;
-}
 
-header {
-    background: url('../imgs/golden-gate-bridge-bay-sunset.jpg.webp') center center no-repeat ;
-    background-size: cover ;
-    padding: 50px 0;
-}
-
-header, footer {
-    color: #fff;
-    text-align: center;
-    max-width: var(--m-width);
-    margin: auto 40px;
-}
-
-h1 {
-    font-size: 2.5em;
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-}
-
-/* Navbar Styles */
-nav {
-    background-color: #456282;
-    text-align: center;
-    font-family: 'Arial', sans-serif;
-    max-width: var(--m-width);
-    margin: auto 40px;
-    display: flex;
-    justify-content: space-between;
-}
- 
-nav p ,
-    nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 20px;
-    padding: 5px 10px;
-    font-size: 15px;
-    text-transform: uppercase;
-}
-
-nav a:hover {
-    background-color: #666;
-}
 
 /* Post Card Styles */
 main {
     max-width: var(--m-width);
-    margin: auto 40px;
+    margin: auto;
 
 }
 
-main h2{
+main h2 {
     color: #eee;
 }
+
 .post {
     background-color: #fff;
     border-top: 15px solid #41597b;
@@ -148,20 +90,12 @@ button {
 button:hover {
     background-color: #222;
 }
-
-/* Miscellaneous */
-a:visited {
-    color: #aaa;
-}
-
-a:hover {
-    color: #ddd;
-}
-input, textarea{
+  
+input, textarea {
     box-sizing: border-box;
 }
 
-.author{
+.author {
     margin: 0;
     background: #dcdddd;
     border-bottom: 3px solid #b2b6c4;
@@ -169,10 +103,11 @@ input, textarea{
     padding: 0 5px;
 }
 
-.btns{
+.btns {
     display: flex;
     justify-content: space-between;
 }
- hr{
+
+hr {
     border-color: #fff;
- }
+}

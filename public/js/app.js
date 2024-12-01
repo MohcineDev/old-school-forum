@@ -1,30 +1,4 @@
-// Check if user is logged in
-const userId = localStorage.getItem("user_id");
-const logoutButton = document.getElementById("logoutButton");
-// Check if user is logged in
-
-const loginLink = document.getElementById("loginLink");
-const registerLink = document.getElementById("registerLink");
-const profile = document.querySelector('.profile')
-
-logoutButton.addEventListener("click", function () {
-    // Clear user data from localStorage
-    localStorage.clear();
-
-    // Redirect to the login page
-    window.location.href = "/";
-});
 if (userId) {
-    ///set the usrename
-    profile.querySelector('p').textContent = localStorage.getItem("username");
-    // Hide Login and Register, show Logout
-    loginLink.style.display = "none";
-    registerLink.style.display = "none";
-    logoutButton.style.display = "inline-block";
-    // Show logout button
-    logoutButton.style.display = "inline-block";
-
-    // Add post form for logged-in users
     // Add post form for logged-in users
     document.getElementById("postFormContainer").innerHTML = `
 <h2>Create a Post</h2>
@@ -92,10 +66,9 @@ if (userId) {
     });
 }
 else {
-    // Show Login and Register, hide Logout
-    loginLink.style.display = "inline-block";
-    registerLink.style.display = "inline-block";
-    logoutButton.style.display = "none";
+
+    console.log('What...!!')
+
 }
 // Import formatDistanceToNow from date-fns
 

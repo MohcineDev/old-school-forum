@@ -8,7 +8,7 @@
     <link rel="icon" href="./imgs/apple-touch-icon-mz9nytnj.webp">
     <!-- general style -->
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/profile.css">
 </head>
 
 <body>
@@ -30,25 +30,31 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main>
+    <h1>Your Profile</h1>
 
-        <div id="postFormContainer">
-            <!-- Post form will appear if user is logged in -->
+    <div id="profileContainer">
+        <div>
+
+            <input type="checkbox"  id="edit"> <label for="edit">Edit Infos</label>
         </div>
-        <div id="postsContainer">
-            <!-- Posts will be loaded dynamically -->
+        <div class="wrapper">
+
+            <p> Username: <input readonly type="text" value="" id="username" > </p>
+            <p> Email: <input readonly type="text" value="" id="email"> </p>
+            <p> password: <input readonly type="text" value="" id="password"> </p>
+
+            <p id="posts"> Posts: <span></span> </p>
         </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer>
+        <button class="save">Save Info</button>
+      <!-- User details will be loaded dynamically -->
+    </div>
+      <!-- Footer -->
+      <footer>
         <p>&copy; 2024 Classic Forum. All rights reserved.</p>
     </footer>
+    <script src="./js/main.js"></script> 
+    <script src="./js/profile.js"></script> 
 
-    <script src="/js/main.js"></script>
-    <script src="/js/app.js"></script>
 </body>
 
 </html>
