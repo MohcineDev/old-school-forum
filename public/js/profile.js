@@ -44,7 +44,6 @@ edit.addEventListener('change', (e) => {
 })
 
 save.onclick = () => {
-
     ////for now only the username can change
     ///TODO : add other fields  
     let name = document.querySelector('#username').value
