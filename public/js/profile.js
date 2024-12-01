@@ -44,13 +44,20 @@ edit.addEventListener('change', (e) => {
 })
 
 save.onclick = () => {
+
+    ////for now only the username can change
+    ///TODO : add other fields  
     let name = document.querySelector('#username').value
     console.log(name)
-    fetch(`/update/${userId}`,{
-        method:"POST",
-        body:JSON.stringify({newName:name})
+    fetch(`/update/${userId}`, {
+        method: "POST",
+        body: JSON.stringify({ newName: name })
     })
         .then(res => res.json())
-        .then(data => alert(data.message))
+        .then(data => {
+            localStorage.setItem('username', name)
+            alert(data.message)
+        }
+        )
 }
 

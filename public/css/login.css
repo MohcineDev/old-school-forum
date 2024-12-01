@@ -31,12 +31,9 @@
 }
 
 .form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #fafafa;
     font-size: 1.1em;
-    font-family: 'Courier New', Courier, monospace;
+    width: 100%;
+
 }
 
 button {

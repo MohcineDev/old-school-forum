@@ -13,6 +13,8 @@ if (userId) {
   <select id="categories" name="categories" multiple required>
   
   </select><br>
+  <div class="category-tags"> 
+    </div>
 
   <button type="submit">Submit Post</button>
 </form>
@@ -23,6 +25,7 @@ if (userId) {
         .then(response => response.json())
         .then(categories => {
             const categoriesSelect = document.getElementById("categories");
+            const categoryTags = document.querySelector(".category-tags");
             console.log(categories);
 
             categories.forEach(category => {
@@ -30,7 +33,19 @@ if (userId) {
                 option.value = category.id;
                 option.textContent = category.name;
                 categoriesSelect.appendChild(option);
+
+                const label = document.createElement('label')
+                label.setAttribute("for", category.name)
+                label.textContent = category.name
+
+                const check = document.createElement('input')
+                check.type = "checkbox"
+                check.id = category.name
+                check.value = category.name
+                categoryTags.appendChild(check)
+                categoryTags.appendChild(label)
             });
+
         })
         .catch(error => console.error("Error fetching categories:", error));
 
@@ -59,11 +74,7 @@ if (userId) {
     });
 
 
-    // Logout functionality
-    logoutButton.addEventListener("click", function () {
-        localStorage.clear();
-        window.location.reload();
-    });
+
 }
 else {
 
@@ -92,11 +103,11 @@ fetch("/posts")
                    <p>${post.content}</p>
                    <p><em> ${post.categories != null ? `categories : ${post.categories}` : `-`}</em></p> 
                         
-                   <p>
+                   <div class="stats">
                        <strong>Likes:</strong> ${post.likes} | 
                        <strong>Dislikes:</strong> ${post.dislikes} | 
                        <strong>Comments:</strong> ${post.comments}
-                   </p>
+                   </div>
                    <hr/>
                    ${userId
                             ? `<div class="btns">

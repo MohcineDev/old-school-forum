@@ -14,3 +14,7 @@ input{
     outline: none;
     padding: 4px;
 }
+.wrapper span{
+    display: inline-block;
+    min-width: 100px;
+}
