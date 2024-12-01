@@ -8,7 +8,7 @@ if (!userId) {
     const profileContainer = document.querySelector('#profileContainer .wrapper')
     console.log("from profile.js ")
     // Fetch user details
-    fetch(`http://localhost:5000/user/${userId}`, {
+    fetch(`/user/${userId}`, {
         method: "post"
     })
         .then(response => response.json())
@@ -46,7 +46,7 @@ edit.addEventListener('change', (e) => {
 save.onclick = () => {
     let name = document.querySelector('#username').value
     console.log(name)
-    fetch(`http://localhost:5000/update/${userId}`,{
+    fetch(`/update/${userId}`,{
         method:"POST",
         body:JSON.stringify({newName:name})
     })

@@ -8,7 +8,7 @@ const form = document.querySelector("form")
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
-            fetch("http://localhost:5000/register", {
+            fetch("/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({username, email, password }),

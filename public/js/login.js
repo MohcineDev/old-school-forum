@@ -7,13 +7,14 @@ form.addEventListener("submit", function (event) {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    fetch("http://localhost:5000/login", {
+    fetch("/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
     })
         .then((response) => {
             if (!response.ok) {
+                alert('Invalid credentials')
                 throw new Error("Invalid credentials");
             }
             return response.json();

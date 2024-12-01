@@ -19,7 +19,7 @@ if (userId) {
 `;
 
     // Fetch categories from the backend and populate the dropdown
-    fetch('http://localhost:5000/categories')
+    fetch('/categories')
         .then(response => response.json())
         .then(categories => {
             const categoriesSelect = document.getElementById("categories");
@@ -45,7 +45,7 @@ if (userId) {
 
         const userId = localStorage.getItem("user_id");
 
-        fetch("http://localhost:5000/create-post", {
+        fetch("/create-post", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ user_id: userId, title, content, categories: selectedCategories })
@@ -74,7 +74,7 @@ else {
 
 // Fetch and display posts
 
-fetch("http://localhost:5000/posts")
+fetch("/posts")
     .then((response) => response.json())
     .then((posts) => {
         console.log(posts);
@@ -125,7 +125,7 @@ fetch("http://localhost:5000/posts")
 function interact(action, postId) {
     if (action === 'delete') {
 
-        fetch(`http://localhost:5000/post_delete/${postId}`, {
+        fetch(`/post_delete/${postId}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ user_id: userId, post_id: postId }),
@@ -139,7 +139,7 @@ function interact(action, postId) {
 
     } else {
 
-        fetch(`http://localhost:5000/${action}`, {
+        fetch(`/${action}`, {
             method: action == 'delete' ? "DELETE" : "POST",
 
             headers: { "Content-Type": "application/json" },

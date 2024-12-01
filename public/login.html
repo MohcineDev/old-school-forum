@@ -6,40 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./imgs/apple-touch-icon-mz9nytnj.webp">
     <title>Login - Forum</title>
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/login.css">
-   
+
 </head>
 
 <body>
     <header>
-        <h1>Welcome to the Forum</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="register">Register</a>
-            <a href="login">Login</a>
-        </nav>
+        <h1>Classic Forum</h1>
     </header>
 
+    <nav>
+        <div class="links">
+            <nav>
+                <a href="/">Home</a>
+                <a href="register">Register</a>
+            </nav>
+        </div>
+        <div class="">
+            <a href="#" id="logoutButton" style="display: none;">Logout</a>
+        </div>
+    </nav>
+
+
     <div class="container">
-        <h2>Login</h2>
-        <form action="/login" method="POST">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" id="email" value="da@da" name="email" required placeholder="Enter your email">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" value="da5dz5a" id="password" name="password" required
-                    placeholder="Enter your password">
-            </div>
-            <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <a href="register">Register here</a>.</p>
+        <div class="wrapper">
+
+            <h2>Login</h2>
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" value="da@da" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" value="da5dz5a" id="password" name="password" required
+                        placeholder="Enter your password">
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="register">Register here</a>.</p>
+        </div>
     </div>
     <footer>
         <p>&copy; 2024 Classic Forum. All rights reserved.</p>
-        </footer>
-<script src="js/login.js"></script>
+    </footer>
+    <script src="js/login.js"></script>
 </body>
 
 </html>

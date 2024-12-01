@@ -1,58 +1,20 @@
-/* Global Styles */
-body {
-    font-family: 'Courier New', Courier, monospace;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
-    color: #333;
-    line-height: 1.6;
-}
 
-header {
-    background-color: #222;
-    color: #fff;
-    text-align: center;
-    padding: 20px 0;
-}
-
-header h1 {
-    font-size: 2.5em;
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-}
-
-/* Navbar Styles */
-nav {
-    background-color: #444;
-    text-align: center;
-    padding: 10px 0;
-    font-family: 'Arial', sans-serif;
-}
-
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 20px;
-    padding: 5px 10px;
-    font-size: 1.1em;
-    text-transform: uppercase;
-}
-
-nav a:hover {
-    background-color: #666;
-}
 
 /* Container for the registration form */
 .container {
+
+    min-height: 100vh;
+
+}
+.wrapper{
     width: 100%;
     max-width: 400px;
     margin: 50px auto;
     padding: 20px;
     background-color: #fff;
     border: 1px solid #ddd;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(245, 209, 209, 0.1);
 }
-
 .register-form h2 {
     text-align: center;
     font-size: 1.8em;
@@ -94,16 +56,7 @@ button {
 button:hover {
     background-color: #222;
 }
-
-/* Footer */
-footer p {
-    margin: 0;
-    font-size: 0.9em;
-    text-align: center;
-    padding: 10px;
-    background-color: #222;
-    color: #fff;
-}
+ 
 
 p a {
     color: #444;
