@@ -4,36 +4,26 @@ if (userId) {
 <h2>Create a Post</h2>
 <form id="createPostForm">
   <label for="title">Title:</label><br>
-  <input type="text" id="title" name="title" required><br>
+  <input type="text" id="title" name="title" placeholder="Post Title" required><br>
 
   <label for="content">Content:</label><br>
-  <textarea id="content" name="content" required></textarea><br>
+  <textarea id="content" name="content" rows="4" placeholder="Post Content" required></textarea><br>
 
   <label for="categories">Categories:</label><br>
-  <select id="categories" name="categories" multiple required>
-  
-  </select><br>
   <div class="category-tags"> 
     </div>
 
-  <button type="submit">Submit Post</button>
+  <button type="submit " class="btn">Submit Post</button>
 </form>
-`;
+`
 
-    // Fetch categories from the backend and populate the dropdown
+    // Fetch categories from the backend
     fetch('/categories')
         .then(response => response.json())
         .then(categories => {
-            const categoriesSelect = document.getElementById("categories");
-            const categoryTags = document.querySelector(".category-tags");
-            console.log(categories);
+            const categoryTags = document.querySelector(".category-tags")
 
             categories.forEach(category => {
-                const option = document.createElement("option");
-                option.value = category.id;
-                option.textContent = category.name;
-                categoriesSelect.appendChild(option);
-
                 const label = document.createElement('label')
                 label.setAttribute("for", category.name)
                 label.textContent = category.name
@@ -41,24 +31,30 @@ if (userId) {
                 const check = document.createElement('input')
                 check.type = "checkbox"
                 check.id = category.name
-                check.value = category.name
+                check.value = category.id
                 categoryTags.appendChild(check)
                 categoryTags.appendChild(label)
-            });
+            })
 
         })
-        .catch(error => console.error("Error fetching categories:", error));
+        .catch(error => console.error("Error fetching categories:", error))
+    console.log(document.querySelectorAll('.category-tags'))
+    console.log(document.querySelectorAll('#categories'))
 
+    //
+    ////create post 
     // Handle post submission
+    //
     document.getElementById("createPostForm").addEventListener("submit", function (event) {
-        event.preventDefault();
+        event.preventDefault()
 
-        const title = document.getElementById("title").value.trim();
-        const content = document.getElementById("content").value.trim();
-        const categoriesSelect = document.getElementById("categories");
-        const selectedCategories = Array.from(categoriesSelect.selectedOptions).map(option => option.value);
 
-        const userId = localStorage.getItem("user_id");
+        const title = document.getElementById("title").value.trim()
+        const content = document.getElementById("content").value.trim()
+        const categoriesSelect = document.getElementById("categories")
+        const selectedCategories = Array.from(document.querySelectorAll('input[type=checkbox]:checked'), elem => elem.value)
+
+        const userId = localStorage.getItem("user_id")
 
         fetch("/create-post", {
             method: "POST",
@@ -67,18 +63,18 @@ if (userId) {
         })
             .then((response) => response.json())
             .then((data) => {
-                alert(data.message);
-                window.location.reload();
+                alert(data.message)
+                window.location.reload()
             })
-            .catch((error) => alert("Error creating post: " + error.message));
-    });
+            .catch((error) => alert("Error creating post: " + error.message))
+    })
 
 
 
 }
 else {
 
-    console.log('What...!!')
+    console.log('Whaaat...!!')
 
 }
 // Import formatDistanceToNow from date-fns
@@ -88,13 +84,11 @@ else {
 fetch("/posts")
     .then((response) => response.json())
     .then((posts) => {
-        console.log(posts);
 
-        const postsContainer = document.getElementById("postsContainer");
+        const postsContainer = document.getElementById("postsContainer")
         postsContainer.innerHTML = posts.length
             ? posts
                 .map((post) => {
-
                     return `
                <div class="post">
                <p class="author"><em>Posted By ${post.username} ON ${post.created_at}</em></p> 
@@ -112,11 +106,11 @@ fetch("/posts")
                    ${userId
                             ? `<div class="btns">
                             <div>
-                            <button onclick="interact('like', ${post.id})">Like</button>
-                            <button onclick="interact('dislike', ${post.id})">Dislike</button>                          
+                            <button class="btn" onclick="interact('like', ${post.id})">Like</button>
+                            <button class="btn" onclick="interact('dislike', ${post.id})">Dislike</button>                          
                           </div>
                             <div> ${post.user_id == userId ? `
-                                <button onclick="interact('delete', ${post.id})">Delete</button>`
+                                <button class="btn" onclick="interact('delete', ${post.id})">Delete</button>`
                                 : ""}
                           </div>
                           
@@ -124,12 +118,12 @@ fetch("/posts")
                             : ""
                         }
                </div>
-               `;
+               `
                 })
                 .join("")
-            : "<p>No posts available. Be the first to create one!</p>";
+            : "<p>No posts available. Be the first to create one!</p>"
     })
-    .catch((error) => console.error("Error fetching posts:", error));
+    .catch((error) => console.error("Error fetching posts:", error))
 
 
 // Interaction functions for like/dislike
@@ -143,10 +137,10 @@ function interact(action, postId) {
         })
             .then((response) => response.json())
             .then((data) => {
-                alert(data.message);
-                window.location.reload();
+                alert(data.message)
+                window.location.reload()
             })
-            .catch((error) => alert("Error interacting with post: " + error.message));
+            .catch((error) => alert("Error interacting with post: " + error.message))
 
     } else {
 
@@ -158,9 +152,9 @@ function interact(action, postId) {
         })
             .then((response) => response.json())
             .then((data) => {
-                alert(data.message);
-                window.location.reload();
+                alert(data.message)
+                window.location.reload()
             })
-            .catch((error) => alert("Error interacting with post: " + error.message));
+            .catch((error) => alert("Error interacting with post: " + error.message))
     }
 }

@@ -5,6 +5,7 @@ if (!userId) {
     alert('You must be logged in to access this page')
     window.location.href = '/'
 } else {
+    document.title = `${localStorage.getItem('username')} Profile`
     const profileContainer = document.querySelector('#profileContainer .wrapper')
     console.log("from profile.js ")
     // Fetch user details
@@ -25,11 +26,8 @@ if (!userId) {
             alert('Error loading profile details')
         })
 
-    // Logout functionality
-    document.getElementById('logoutButton').addEventListener('click', () => {
-        localStorage.clear()
-        window.location.href = '/'
-    })
+
+    
 }
 
 edit.addEventListener('change', (e) => {

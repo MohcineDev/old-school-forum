@@ -25,6 +25,7 @@ if (userId) {
     profileLink.style.display = 'none'
 }
 
+    // Logout functionality
 
 logoutButton.addEventListener("click", function () {
     // Clear user data from localStorage
