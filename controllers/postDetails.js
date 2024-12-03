@@ -1,14 +1,15 @@
 const { db } = require("../db/init");
 const fs = require("fs");
-const path = require("path");
+const path = require('path')
 
 const getPostDetails = (req, res, postId) => {
+  console.log("controller : q", postId)
   const query = `
     SELECT posts.id, posts.title, posts.content, posts.created_at, 
            users.username, 
-           COUNT(likes.id) AS likes,
-           COUNT(dislikes.id) AS dislikes,
-           COUNT(comments.id) AS comments
+           COUNT(DISTINCT likes.id) AS likes,
+           COUNT(DISTINCT dislikes.id) AS dislikes,
+           COUNT(DISTINCT comments.id) AS comments
     FROM posts
     LEFT JOIN users ON posts.user_id = users.id
     LEFT JOIN likes ON posts.id = likes.post_id
@@ -39,7 +40,7 @@ const getPostDetails = (req, res, postId) => {
       LEFT JOIN users ON comments.user_id = users.id
       WHERE comments.post_id = ?
     `;
-    
+
     db.all(commentsQuery, [postId], (err, comments) => {
       if (err) {
         console.error("Error fetching comments:", err);
@@ -48,41 +49,13 @@ const getPostDetails = (req, res, postId) => {
         return;
       }
 
-      // Read the post.html template file
-      const templatePath = path.join(__dirname, "../public", "post.html");
-      fs.readFile(templatePath, "utf8", (err, template) => {
-        if (err) {
-          res.writeHead(500, { "Content-Type": "text/plain" });
-          res.end("Error reading template");
-          return;
-        }
-
-        // Generate the comments HTML
-        let commentsHtml = "";
-        comments.forEach(comment => {
-          commentsHtml += `
-            <div class="comment">
-            <p class="author">${comment.username}</p>
-            <p>${comment.content}</p>
-            <span>${comment.created_at}</span>
-            </div>
-          `;
-        });
-
-        // Replace placeholders with actual data
-        const filledTemplate = template
-          .replaceAll("{{postTitle}}", row.title)
-          .replace("{{author}}", row.username)
-          .replace("{{createdAt}}", row.created_at)
-          .replace("{{likes}}", row.likes)
-          .replace("{{dislikes}}", row.dislikes)
-          .replace("{{comments}}", commentsHtml)  // Inject the comments HTML here
-          .replace("{{postContent}}", row.content);
-
-        // Send the HTML with the injected content as the response
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(filledTemplate);
-      });
+      // Send the HTML with the injected content as the response
+      res.writeHead(200, { 'Content-Type': 'application/json' })
+      let allData = {
+        post: row,
+        comment: comments
+      }
+      res.end(JSON.stringify(allData));
     });
   });
 };

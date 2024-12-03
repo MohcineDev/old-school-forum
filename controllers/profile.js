@@ -2,7 +2,6 @@ const { db } = require("../db/init");
 
 const handleProfile = (req, res, id) => {
 
-    console.log("userId  : ", id);
     const query = `SELECT * FROM users WHERE id = ?`
     db.get(
         query,

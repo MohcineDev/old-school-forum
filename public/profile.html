@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forum Home</title>
+    <title>Profile</title>
     <link rel="icon" href="./imgs/apple-touch-icon-mz9nytnj.webp">
     <!-- general style -->
     <link rel="stylesheet" href="/css/main.css">
@@ -29,31 +29,34 @@
             <a href="#" id="logoutButton" style="display: none;">Logout</a>
         </div>
     </nav>
+    <section class="container">
 
-    <h1>Your Profile</h1>
+        <h1>Your Profile</h1>
 
-    <div id="profileContainer">
-        <div>
+        <div id="profileContainer">
+            <div>
 
-            <input type="checkbox"  id="edit"> <label for="edit">Edit Infos</label>
+                <input type="checkbox" id="edit"> <label for="edit">Edit Infos</label>
+            </div>
+            <div class="wrapper">
+
+                <p><span> Username:</span> <input readonly type="text" value="" id="username"> </p>
+                <p><span> Email:</span> <input readonly type="text" value="" id="email"> </p>
+                <p><span> password:</span> <input readonly type="text" value="" id="password"> </p>
+
+                <p id="posts"> Posts: <span></span> </p>
+            </div>
+            <button class="save btn">Save Info</button>
+            <!-- User details will be loaded dynamically -->
         </div>
-        <div class="wrapper">
+    </section>
 
-            <p><span> Username:</span> <input readonly type="text" value="" id="username" > </p>
-            <p><span> Email:</span> <input readonly type="text" value="" id="email"> </p>
-            <p><span> password:</span> <input readonly type="text" value="" id="password"> </p>
-
-            <p id="posts"> Posts: <span></span> </p>
-        </div>
-        <button class="save">Save Info</button>
-      <!-- User details will be loaded dynamically -->
-    </div>
-      <!-- Footer -->
-      <footer>
+    <!-- Footer -->
+    <footer>
         <p>&copy; 2024 Classic Forum. All rights reserved.</p>
     </footer>
-    <script src="./js/main.js"></script> 
-    <script src="./js/profile.js"></script> 
+    <script src="./js/main.js"></script>
+    <script src="./js/profile.js"></script>
 
 </body>
 

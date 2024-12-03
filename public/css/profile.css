@@ -1,20 +1,24 @@
-h1{
+h1 {
     color: #fff;
 }
-#profileContainer{
-background-color: var(--blue);
-color: #fff;
-padding: 20px;
+
+#profileContainer {
+    background-color: var(--blue);
+    padding: 20px;
+    color: #fff;
+
 }
 
-input{
+input {
     background-color: var(--blue);
     border: 1px solid #eee;
     color: #fff;
     outline: none;
     padding: 4px;
+    user-select: none;
 }
-.wrapper span{
+
+.wrapper span {
     display: inline-block;
     min-width: 100px;
 }

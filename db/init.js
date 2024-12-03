@@ -2,7 +2,10 @@ const sqlite3 = require("sqlite3").verbose();
 
 // Initialize the database and create tables
 const db = new sqlite3.Database("database.db");
-
+/*
+.mode column
+sqlite3 database.db
+*/
 
 // Initialize tables 
 

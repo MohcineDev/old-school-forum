@@ -1,5 +1,7 @@
 const post = document.querySelector('.post-container')
 const postId = document.location.pathname.split('/post/')[1]
+const addComment = document.querySelector('.add-comment button')
+const textarea = document.querySelector('.add-comment textarea')
 
 fetch(`/get-post/${postId}`)
     .then(res => res.json())
@@ -20,6 +22,7 @@ function injectData(data) {
 
       // Generate the comments HTML
       const commentSection = document.querySelector('#commentSection')
+      data.comment.length>0 ?
       data.comment.forEach(com => {
         commentSection.innerHTML += `
           <div class="comment">
@@ -27,7 +30,25 @@ function injectData(data) {
           <p>${com.content}</p>
           <span>${com.created_at}</span>
           </div>
-        `;
-      });
+        `
+    }) :commentSection.innerHTML = "<span>no comments!!</span>"
 
 }
+
+addComment.addEventListener('click', ()=>{
+    if (textarea.value) {
+        console.log("1000")
+        fetch("/add-comment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId, content : textarea.value, postId })
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                alert(data.message)
+               window.location.reload()
+            })
+            .catch((error) => alert("add comment Error : " + error.message))
+    }
+    
+})

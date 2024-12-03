@@ -34,6 +34,12 @@ header, footer {
     margin: auto;
 }
 
+section.container {
+    max-width: var(--m-width);
+    margin: auto;
+    min-height: 100vh;
+}
+
 h1 {
     font-size: 2.5em;
     margin: 0;
@@ -52,6 +58,11 @@ nav {
     justify-content: space-between;
 }
 
+.links {
+    display: flex;
+    align-items: center;
+}
+
 nav p,
 nav a {
     color: #fff;
@@ -60,6 +71,10 @@ nav a {
     padding: 5px 10px;
     font-size: 15px;
     text-transform: uppercase;
+}
+
+nav a:hover {
+    background: #375577;
 }
 
 input, textarea {
@@ -71,12 +86,95 @@ input, textarea {
     padding: 10px;
 }
 
-footer {
-    margin-top: 50px;
+textarea{
+    resize: none;
 }
 
+.bxtn {
+    background-color: #555;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+}
+
+
+/* Button Styles */
+.btn {
+    background-color: #444;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    text-transform: uppercase;
+    border: 2px solid #fafafa;  
+    margin-top: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+    background-color: #222;
+}
+
+footer {
+    margin-top: 50px;
+    font-size: 12px;
+    user-select: none;
+}
+
+/* Footer Styling */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .footer-links {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+  
+  .footer-links li {
+    display: inline;
+    margin-right: 20px;
+    font-size: 14px;
+  }
+  
+  .footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-links a:hover {
+    color: #ffcc00; /* Highlight color */
+  }
+  
+  footer p {
+    font-size: 14px;
+    margin-top: 10px;
+    color: #bbb; /* Lighter text for the copyright */
+  }
+  
 @media screen and (max-width:1200px) {
     body {
         padding: 0 20px;
     }
 }
+

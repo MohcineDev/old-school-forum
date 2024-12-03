@@ -1,72 +1,9 @@
-/* Global Styles */
-:root {
-    --m-width: 1200px;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-body {
-    font-family: 'Courier New', Courier, monospace;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    background-color: #222;
-    line-height: 1.6;
-}
-
-header {
-    background: url('../imgs/golden-gate-bridge-bay-sunset.jpg.webp') center center no-repeat;
-    background-size: cover;
-    padding: 50px 0;
-}
-
-header, footer {
-    color: #fff;
-    text-align: center;
-    max-width: var(--m-width);
-    margin: auto;
-}
-
 h1 {
     font-size: 2.5em;
     margin: 0;
     font-family: 'Arial', sans-serif;
 }
 
-/* Navbar Styles */
-nav {
-    background-color: #456282;
-    text-align: center;
-    font-family: 'Arial', sans-serif;
-    max-width: var(--m-width);
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-}
-
-nav p,
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 20px;
-    padding: 5px 10px;
-    font-size: 15px;
-    text-transform: uppercase;
-}
-
-nav a:hover {
-    background-color: #666;
-}
-
-/* Post Page Styles */
-main {
-    padding: 20px;
-    max-width: var(--m-width);
-    margin: auto;
-}
 
 .post-container {
     background-color: #fff;
@@ -81,10 +18,11 @@ main {
     color: #333;
 }
 
-.post-container p {
-    color: #666;
-    margin-bottom: 15px;
+.author {
+    font-size: 13px;
+    margin: 0;
 }
+
 
 .post-container .post-content {
     background-color: #f9f9f9;
@@ -104,6 +42,11 @@ main {
 
 .post-container .post-details p {
     margin: 5px 0;
+}
+
+.btns {
+    display: flex;
+    justify-content: space-between;
 }
 
 /* Comment Section Styles */
@@ -132,7 +75,7 @@ main {
     border-radius: 5px;
 }
 
-#commentFormContainer input[type="text"], 
+#commentFormContainer input[type="text"],
 #commentFormContainer textarea {
     width: 100%;
     padding: 10px;
@@ -157,41 +100,36 @@ main {
     background-color: #333;
 }
 
-/* Footer Styles */
-footer p {
-    margin: 0;
-    font-size: 0.9em;
-}
 
-/* Miscellaneous */
-a:visited {
-    color: #aaa;
-}
-
-a:hover {
-    color: #ddd;
-}
-
-input, textarea {
-    box-sizing: border-box;
-}
-
-.comment{
+.comment {
     background: #41597b;
-  color: #fff;
-  padding: 5px;
-  margin: 5px 0;
+    color: #fff;
+    padding: 5px;
+    margin: 5px 0;
 }
-.comment .author{
+
+.comment .author {
     font-size: 14px;
-  font-weight: 800;
-  border-bottom: 1px solid #f1f1f1;
-  display: inline-block;
+    font-weight: 800;
+    border-bottom: 1px solid #f1f1f1;
+    display: inline-block;
 }
-.comment>p{
+
+.comment>p {
     color: #fff;
 }
-.comment span{
+
+.comment span {
     font-size: 12px;
 
 }
+
+.add-comment{
+    margin-bottom: 5rem;
+}
+
+.add-comment textarea{
+    display: block;
+  width: 100%;
+}
+

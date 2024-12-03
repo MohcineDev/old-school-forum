@@ -16,6 +16,8 @@ const getPostDetails = require("./controllers/postDetails");
 const deletePost = require("./controllers/handlePostDelete");
 const profileRoute = require('./routes/profileRoute');
 const updateUser = require("./controllers/updateUser");
+const addComment = require("./controllers/addComment");
+
 // Initialize the database tables
 initializeDatabase()
 
@@ -47,6 +49,7 @@ const server = http.createServer(async (req, res) => {
       });
       return;
     }
+
   }
 
   if (req.method === "GET" && req.url === "/") {
@@ -70,14 +73,22 @@ const server = http.createServer(async (req, res) => {
   //
   ///for single post
   //
-  else if (req.method === "GET" && req.url.startsWith("/post/")) {
-    // Extract post ID from the URL
-    const postId = req.url.split("/post/")[1];
 
-    // Fetch and serve the post details
-    getPostDetails(req, res, postId);
+
+  else if (req.url.startsWith("/post/")) {
+    const filePath = path.join(__dirname, "public", "post.html")
+
+    fs.readFile(filePath, "utf8", (err, data) => {
+      if (err) {
+        res.writeHead(500, { "Content-Type": "text/plain" })
+        res.end("Internal Server Error")
+        return
+      }
+
+      res.writeHead(200, { "Content-Type": "text/html" })
+      res.end(data)
+    })
   }
-
   else if (req.method === "GET" && req.url === "/register") {
     const filePath = path.join(__dirname, "public", "register.html")
 
@@ -127,15 +138,8 @@ const server = http.createServer(async (req, res) => {
     const userId = req.url.split("/user/")[1];
 
     profileRoute(req, res, userId)
-
   }
-  //auth register
-  // else if (req.method === "POST" && req.url === "/register") {
-  //   registerUser(req, res) // Use the register logic 
-  // }
-  // else if (req.method === "POST" && req.url === "/login") {
-  //   loginUser(req, res) // Use the login logic
-  // }
+
   else if (req.url.startsWith("/register") || req.url.startsWith("/login")) {
     authRoutes(req, res);
   }
@@ -148,6 +152,14 @@ const server = http.createServer(async (req, res) => {
   else if (req.url === "/like" || req.url === "/dislike") {
     likeDislikeRoutes(req, res);
   }
+  ///req.method === "POST" && 
+  else if (req.url.startsWith("/get-post/")) {
+    // Extract post ID from the URL
+    const postId = req.url.split("/get-post/")[1];
+
+    // Fetch and serve the post details
+    getPostDetails(req, res, postId);
+  }
   else if (req.method === 'DELETE' && req.url.startsWith("/post_delete")) {
     deletePost(req, res);  // Call the deletePost function
   }
@@ -155,13 +167,17 @@ const server = http.createServer(async (req, res) => {
   else if (req.method === 'POST' && req.url.startsWith("/update")) {
     updateUser(req, res);  // 
   }
+  ///add comment
+  else if (req.method === 'POST' && req.url.startsWith("/add-comment")) {
+    addComment(req, res);  // 
+  }
   else {
     res.writeHead(404, { "Content-Type": "application/json" })
-    res.end(JSON.stringify({ message: "Endpoint not found" }))
+    res.end(JSON.stringify({ message: "---Endpoint not found" }))
   }
 })
 
 // Start the server
-server.listen(PORT,"0.0.0.0", () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log(`API running on http://localhost:${PORT}`)
 })
