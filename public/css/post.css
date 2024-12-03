@@ -11,6 +11,7 @@ h1 {
     padding: 20px;
     margin: 20px 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    
 }
 
 .post-container h2 {
@@ -18,13 +19,18 @@ h1 {
     color: #333;
 }
 
-.author {
+.post-author {
     font-size: 13px;
     margin: 0;
+    background: #dcdddd;
+    border-bottom: 3px solid #b2b6c4;
+    color: #555;
+    padding: 0 5px;
+
 }
 
 
-.post-container .post-content {
+ .post-content {
     background-color: #f9f9f9;
     padding: 15px;
     border-radius: 5px;
@@ -33,14 +39,14 @@ h1 {
     font-size: 1.1em;
 }
 
-.post-container .post-details {
+ .post-details {
     background-color: #f1f1f1;
     padding: 10px;
     border-radius: 5px;
     color: #333;
 }
 
-.post-container .post-details p {
+ .post-details p {
     margin: 5px 0;
 }
 
@@ -114,7 +120,11 @@ h1 {
     border-bottom: 1px solid #f1f1f1;
     display: inline-block;
 }
-
+.comment .author span{
+    font-style: 10px;
+    color: #bbb;
+    font-weight: 500;
+}
 .comment>p {
     color: #fff;
 }
@@ -123,13 +133,39 @@ h1 {
     font-size: 12px;
 
 }
-
-.add-comment{
+.comment .interact{
+    margin-top: 5px;
+}
+.comment .like,.comment .dislike {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+} 
+.comment .like:hover svg {
+stroke: cyan;
+}
+    .comment .dislike:hover svg {
+stroke: red;
+}
+.add-comment {
     margin-bottom: 5rem;
 }
 
-.add-comment textarea{
+.add-comment textarea {
     display: block;
-  width: 100%;
+    width: 100%;
 }
 
+@media (prefers-color-scheme: dark) {
+
+    .post-content {
+        background-color: var(--dark);
+        color: #eee;
+    }
+    .post-details {
+        color: #eee;
+        background-color: var(--dark);
+    }
+}

@@ -5,6 +5,8 @@ const db = new sqlite3.Database("database.db");
 /*
 .mode column
 sqlite3 database.db
+PRAGMA TABLE_info(dislikes);
+
 */
 
 // Initialize tables 
@@ -58,23 +60,29 @@ const initializeDatabase = () => {
         `);
 
         db.run(`
-            CREATE TABLE IF NOT EXISTS dislikes (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER NOT NULL,
-                post_id INTEGER NOT NULL,
-                FOREIGN KEY (user_id) REFERENCES users(id),
-                FOREIGN KEY (post_id) REFERENCES posts(id)
-            )
+          CREATE TABLE IF NOT EXISTS dislikes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    post_id INTEGER NOT NULL, -- Use post_id for both posts and comments
+    comment_id INTEGER, -- Add comment_id column for comments
+    is_comment INTEGER DEFAULT 0, -- 0 for posts, 1 for comments
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (post_id) REFERENCES posts(id),
+    FOREIGN KEY (comment_id) REFERENCES comments(id) -- Add foreign key reference for comments
+)
         `);
 
         db.run(`
-            CREATE TABLE IF NOT EXISTS likes (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER NOT NULL,
-                post_id INTEGER NOT NULL,
-                FOREIGN KEY (user_id) REFERENCES users(id),
-                FOREIGN KEY (post_id) REFERENCES posts(id)
-            )
+         CREATE TABLE IF NOT EXISTS likes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    post_id INTEGER NOT NULL, -- Use post_id for both posts and comments
+    comment_id INTEGER, -- Add comment_id column for comments
+    is_comment INTEGER DEFAULT 0, -- 0 for posts, 1 for comments
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (post_id) REFERENCES posts(id),
+    FOREIGN KEY (comment_id) REFERENCES comments(id) -- Add foreign key reference for comments
+)
         `);
     });
 

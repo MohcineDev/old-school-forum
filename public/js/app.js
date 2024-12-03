@@ -152,9 +152,9 @@ function interact(action, postId) {
         })
             .then((response) => response.json())
             .then((data) => {
-                alert(data.message)
+                alert(data.msg)
                 window.location.reload()
             })
-            .catch((error) => alert("Error interacting with post: " + error.message))
+            .catch((error) => alert("Error interacting with post: " + error.msg))
     }
 }
