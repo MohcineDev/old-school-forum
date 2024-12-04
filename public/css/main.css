@@ -128,6 +128,11 @@ footer {
     user-select: none;
 }
 
+
+.stats {
+    font-size: 13px;
+}
+
 /* Footer Styling */
 .footer {
     background-color: #333;

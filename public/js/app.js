@@ -158,3 +158,4 @@ function interact(action, postId) {
             .catch((error) => alert("Error interacting with post: " + error.msg))
     }
 }
+

@@ -1,31 +1,29 @@
-const post = document.querySelector('article')
+const article = document.querySelector('article')
 const postId = document.location.pathname.split('/post/')[1]
 const addComment = document.querySelector('.add-comment button')
 const textarea = document.querySelector('.add-comment textarea')
 
 fetch(`/get-post/${postId}`, {
-    method:'post',
+    method: 'post',
     body: JSON.stringify({ userId })
 })
-
     .then(res => res.json())
-
     .then(data => injectData(data))
-    .catch(err => alert(err))
+    .catch(err => alert("somethingg internal went wrong!! :(", err))
 
 function injectData(data) {
     console.log(data)
 
-    post.querySelector('.post-author em').textContent = `Posted by ${data.post.username} on ${data.post.created_at}`
-    post.querySelector('h2').textContent = data.post.title
-    post.querySelector('.post-content p').textContent = data.post.content
-    post.querySelector('.post-details>p:nth-child(1) span').textContent = data.post.likes
-    post.querySelector('.post-details>p:nth-child(2) span').textContent = data.post.dislikes
-    post.querySelector('.post-details>p:nth-child(3) span').textContent = data.post.comments
+    article.querySelector('.post-author em').textContent = `Posted by ${data.post.username} on ${data.post.created_at}`
+    article.querySelector('h2').textContent = data.post.title
+    article.querySelector('.post-content p').textContent = data.post.content
+    article.querySelector('.stats>p:nth-child(1) span').textContent = data.post.likes
+    article.querySelector('.stats>p:nth-child(2) span').textContent = data.post.dislikes
+    article.querySelector('.stats>p:nth-child(3) span').textContent = data.post.comments
     //add like onclick
-    post.querySelector('.post-details .like').setAttribute('onclick', `interact('like', ${data.post.id})`)
-    data.liked ? post.querySelector('.post-details .like').classList.add('liked') : null
-    post.querySelector('.post-details .dislike').setAttribute('onclick', `interact('dislike', ${data.post.id})`)
+    addBtns(data.post)
+    // data.liked ? article.querySelector('.post-details .like').classList.add('liked') : null
+    //    post.querySelector('.post-details .dislike').setAttribute('onclick', `interact('dislike', ${data.post.id})`)
     // onclick="interact('', post.id)"
     // Inject the comments HTML here
 
@@ -89,5 +87,25 @@ function interact(action, postId) {
             window.location.reload()
         })
         .catch((error) => alert("Error interacting with post: " + error.message))
+
+}
+
+/// inject like btns if the user logged in
+
+function addBtns(post) {
+
+    if (userId) {
+
+
+        //    article.querySelector('.post-details .like').setAttribute('onclick', `interact('like', ${data.post.id})`)
+
+        appendBtns(article.querySelector('.interact div'), 'button',
+            [{ class: [ 'like btn'] }, { onclick: [`interact('like', ${post.id})`] }], 'like')
+        article.querySelector('.interact .remove button').style.display = 'block'
+        ///dislike
+        // post.querySelector('.post-details .dislike').setAttribute('onclick', `interact('dislike', ${data.post.id})`)
+        appendBtns(article.querySelector('.interact div'), 'button',
+            [{ class: ['btn dislike'] }, { onclick: [`interact('dislike', ${post.id})`] }], 'dislike')
+    }
 
 }

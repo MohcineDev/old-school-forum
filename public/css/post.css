@@ -13,7 +13,7 @@ article {
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
-    margin:20px auto;
+    margin: 20px auto;
 }
 
 .container h2 {
@@ -48,16 +48,26 @@ article {
     color: #333;
 }
 
+.dislike {
+    margin-left: 4px;
+}
+
+.remove button {
+    display: none;
+}
+
 .post-details p {
     margin: 5px 0;
+    display: inline-block;
 }
 
 .btns {
     display: flex;
     justify-content: space-between;
 }
-.liked{
-border: 2px solid green;
+
+.liked {
+    border: 2px solid green;
 }
 
 /* Comment Section Styles */

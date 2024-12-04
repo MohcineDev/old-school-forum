@@ -25,7 +25,7 @@ if (userId) {
     profileLink.style.display = 'none'
 }
 
-    // Logout functionality
+// Logout functionality
 
 logoutButton.addEventListener("click", function () {
     // Clear user data from localStorage
@@ -37,3 +37,16 @@ logoutButton.addEventListener("click", function () {
         window.location.href = "/"
     ) : null
 })
+
+
+const appendBtns = (parent, child, attributes, txt) => {
+    const elem = document.createElement(child)
+
+    attributes.forEach(e => {
+        let key = Object.keys(e)[0]
+        elem.setAttribute(key, ...e[key])
+        
+    })
+    elem.textContent = txt
+parent.appendChild(elem)
+}

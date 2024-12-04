@@ -37,18 +37,18 @@
             </div>
 
             <div class="post-details">
-                <p><strong>Likes: </strong><span></span> </p>
-                <p><strong>Dislikes: </strong><span></span> </p>
-                <p><strong>Comments: </strong><span></span> </p>
-                <div class="btns">
+                <div class="stats">
+
+                    <p><strong>Likes: </strong><span></span> </p> |
+                    <p><strong>Dislikes: </strong><span></span> </p> |
+                    <p><strong>Comments: </strong><span></span> </p>
+                </div>
+                <div class="btns interact">
                     <div>
-                        <button class="btn like" >Like</button>
-                        <button class="btn dislike">Dislike</button>
                     </div>
-                    <div>
+                    <div class="remove">
                         <button class="btn" onclick="interact('delete', post.id)">Delete</button>
                     </div>
-
                 </div>
 
                 <!-- Comment Section -->
@@ -68,15 +68,15 @@
 
     <!-- Footer -->
     <footer>
-            <div class="footer-container">
-              <ul class="footer-links">
+        <div class="footer-container">
+            <ul class="footer-links">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
                 <li><a href="#">Terms of Service</a></li>
                 <li><a href="#">Privacy Policy</a></li>
-              </ul>
-            </div> 
+            </ul>
+        </div>
         <p>&copy; 2024 Classic Forum. All rights reserved.</p>
     </footer>
     <script src="/js/main.js"></script>
