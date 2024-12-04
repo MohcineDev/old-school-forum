@@ -29,7 +29,7 @@
 
     <!-- Main Content -->
     <main>
-        <div class="post-container">
+        <article>
             <p class="post-author"><em></em></p>
             <h2></h2>
             <div class="post-content">
@@ -46,7 +46,7 @@
                         <button class="btn dislike">Dislike</button>
                     </div>
                     <div>
-                        <button class="btn" onclick="interact('delete', post.id)">Delete</button>`
+                        <button class="btn" onclick="interact('delete', post.id)">Delete</button>
                     </div>
 
                 </div>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </article>
         <section class="add-comment">
             <textarea name="" placeholder="your comment here.." required></textarea>
             <button class="btn">submit</button>
@@ -79,8 +79,8 @@
             </div> 
         <p>&copy; 2024 Classic Forum. All rights reserved.</p>
     </footer>
-    <script src="/js/post.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/post.js"></script>
 
 
 </body>

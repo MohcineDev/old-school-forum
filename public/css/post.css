@@ -5,16 +5,18 @@ h1 {
 }
 
 
-.post-container {
+article {
+    max-width: var(--m-width);
+    box-sizing: border-box;
     background-color: #fff;
     border-top: 15px solid #41597b;
     padding: 20px;
-    margin: 20px 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    
+
+    margin:20px auto;
 }
 
-.post-container h2 {
+.container h2 {
     font-size: 2em;
     color: #333;
 }
@@ -30,7 +32,7 @@ h1 {
 }
 
 
- .post-content {
+.post-content {
     background-color: #f9f9f9;
     padding: 15px;
     border-radius: 5px;
@@ -39,20 +41,23 @@ h1 {
     font-size: 1.1em;
 }
 
- .post-details {
+.post-details {
     background-color: #f1f1f1;
     padding: 10px;
     border-radius: 5px;
     color: #333;
 }
 
- .post-details p {
+.post-details p {
     margin: 5px 0;
 }
 
 .btns {
     display: flex;
     justify-content: space-between;
+}
+.liked{
+border: 2px solid green;
 }
 
 /* Comment Section Styles */
@@ -120,11 +125,13 @@ h1 {
     border-bottom: 1px solid #f1f1f1;
     display: inline-block;
 }
-.comment .author span{
+
+.comment .author span {
     font-style: 10px;
     color: #bbb;
     font-weight: 500;
 }
+
 .comment>p {
     color: #fff;
 }
@@ -133,24 +140,31 @@ h1 {
     font-size: 12px;
 
 }
-.comment .interact{
+
+.comment .interact {
     margin-top: 5px;
 }
-.comment .like,.comment .dislike {
+
+.comment .like, .comment .dislike {
     width: 30px;
     height: 30px;
     border: none;
     background: transparent;
     cursor: pointer;
-} 
+}
+
 .comment .like:hover svg {
-stroke: cyan;
+    stroke: cyan;
 }
-    .comment .dislike:hover svg {
-stroke: red;
+
+.comment .dislike:hover svg {
+    stroke: red;
 }
+
 .add-comment {
+    margin: auto;
     margin-bottom: 5rem;
+    max-width: var(--m-width);
 }
 
 .add-comment textarea {
@@ -164,6 +178,7 @@ stroke: red;
         background-color: var(--dark);
         color: #eee;
     }
+
     .post-details {
         color: #eee;
         background-color: var(--dark);

@@ -90,7 +90,7 @@ fetch("/posts")
             ? posts
                 .map((post) => {
                     return `
-               <div class="post">
+               <article class="post">
                <p class="author"><em>Posted By ${post.username} ON ${post.created_at}</em></p> 
                    <h3><a href="/post/${post.id}">${post.title}</a></h3>
 
@@ -117,7 +117,7 @@ fetch("/posts")
                           </div>`
                             : ""
                         }
-               </div>
+               </article>
                `
                 })
                 .join("")
