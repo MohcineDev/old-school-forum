@@ -1,6 +1,6 @@
 const { db } = require("../db/init");
 
-const getPosts = (req, res) => {
+const getPosts = async (req, res) => {
   const query = `
     SELECT posts.id, posts.title, posts.content, posts.user_id, posts.created_at,
            users.username, 
@@ -17,7 +17,53 @@ const getPosts = (req, res) => {
     LEFT JOIN categories ON post_categories.category_id = categories.id
     GROUP BY posts.id
   `;
-  
+
+  ////get user ids in like table
+  const likedUsers = `select user_id, post_id from likes where is_comment = 0`
+
+
+  const getRows = (q) => {
+    return new Promise((resolve, reject) => {
+      db.all(q, (err, rows) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(rows)
+        }
+      })
+    })
+  }
+
+  try {
+
+    const posts = await getRows(query)
+    if (posts) {
+      const likesIds = await getRows(likedUsers)
+
+      console.log({ posts, likesIds })
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ posts, likesIds }))
+    }
+  } catch (err) {
+
+    console.error("JSON Parsing Error:", err.message);
+    res.writeHead(400, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ msg: "Invalid JSON format" }));
+  }
+  // db.all(query, (err, rows) => {
+  //   if (err) {
+  //     console.error("Database Error:", err);
+  //     res.writeHead(500, { "Content-Type": "application/json" });
+  //     res.end(JSON.stringify({ message: "Database error" }));
+  //     return;
+  //   }
+
+  //   res.writeHead(200, { "Content-Type": "application/json" });
+  //   res.end(JSON.stringify(rows)); // Send posts along with author username and categories as JSON
+  // });
+};
+
+/*
   db.all(query, (err, rows) => {
     if (err) {
       console.error("Database Error:", err);
@@ -29,6 +75,5 @@ const getPosts = (req, res) => {
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify(rows)); // Send posts along with author username and categories as JSON
   });
-};
-
+*/
 module.exports = getPosts;

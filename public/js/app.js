@@ -72,7 +72,7 @@ else {
 
 fetch("/posts")
     .then((response) => response.json())
-    .then((posts) => {
+    .then(({ posts, likesIds }) => {
         const postsContainer = document.getElementById("postsContainer")
         postsContainer.innerHTML = posts.length
             ? posts
@@ -92,7 +92,7 @@ fetch("/posts")
                    ${userId
                             ? `<div class="btns">
                             <div>
-                            <button class="btn" onclick="interact('like', ${post.id})">Like</button>
+                            <button class="btn" id="${likesIds.some(elem => elem.user_id == userId && elem.post_id === post.id) ? 'liked' : ''}"  onclick="interact('like', ${post.id})">Like</button>
                             <button class="btn" onclick="interact('dislike', ${post.id})">Dislike</button>                          
                           </div>
                             <div> ${post.user_id == userId ? `

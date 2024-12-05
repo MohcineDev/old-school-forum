@@ -27,12 +27,11 @@ GROUP BY posts.id
     body += chunk
   })
 
-
   req.on('end', async () => {
     const { userId } = JSON.parse(body)
     try {
-      let liked  = false
-        liked = await checkIfLikedPost(userId, postId)
+      let liked = false
+      liked = await checkIfLikedPost(userId, postId)
 
       db.get(query, [postId], (err, row) => {
         if (err) {
@@ -88,13 +87,9 @@ function checkIfLikedPost(userID, pId) {
   return new Promise((resolve, reject) => {
 
     db.get(query, [userID, pId], (err, row) => {
-      if (err) {
-        reject(err); // Reject the promise if there's an error
-      } else {
-        console.log(row);
-        
-        resolve(row ? true : false)
-      }
+      // Reject the promise if there's an error
+      err ? reject(err) : (console.log(row), resolve(row ? true : false))
+
     })
     return liked
   })

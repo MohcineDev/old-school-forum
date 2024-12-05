@@ -28,15 +28,18 @@ function injectData(data) {
     // Inject the comments HTML here
 
     // Generate the comments HTML
-    const commentSection = document.querySelector('#commentSection')
+    const commentSection = document.querySelector('#comments')
     data.comment.length > 0 ?
         data.comment.forEach(com => {
             commentSection.innerHTML += `
           <div class="comment">
+          <div>
             <div class="author"><span>${com.username}</span>
             <span>${com.created_at}</span>
             </div>
             <p>${com.content}</p>
+          </div>
+
             <div class="interact">
                 <button class="like">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" class="size-6">
@@ -51,7 +54,7 @@ function injectData(data) {
 <span></span>
                 </button>
             </div>
-          </div>
+            </div>
         `
         }) : commentSection.innerHTML = "<span>no comments!!</span>"
 }
@@ -98,8 +101,6 @@ function interact(action, postId) {
 function addBtns(post) {
 
     if (userId) {
-
-
         //    article.querySelector('.post-details .like').setAttribute('onclick', `interact('like', ${data.post.id})`)
 
         appendBtns(article.querySelector('.interact div'), 'button',

@@ -1,5 +1,7 @@
 // Check if user is logged in
 let userId = localStorage.getItem("user_id")
+console.log(userId);
+
 const profileLink = document.querySelector('.profile')
 const registerLink = document.getElementById("registerLink")
 const loginLink = document.getElementById("loginLink")
