@@ -3,6 +3,7 @@
     --m-width: 1200px;
     --blue: #456282;
     --dark: #222;
+    --like:#66f466;
 }
 
 a {
@@ -45,7 +46,7 @@ h1 {
     margin: 0;
     font-family: 'Arial', sans-serif;
     user-select: none;
-    background: linear-gradient(to right ,rgba(0,0,0,.0), rgba(0,0,0,.2) ,rgba(0,0,0,.0));
+    background: linear-gradient(to right, rgba(0, 0, 0, .0), rgba(0, 0, 0, .2), rgba(0, 0, 0, .0));
 }
 
 /* Navbar Styles */
@@ -178,6 +179,18 @@ footer p {
     /* Lighter text for the copyright */
 }
 
+
+.liked {
+    border-color: var(--like);
+    color: var(--like);
+}
+
+.disliked {
+    color: crimson;
+    border-color: crimson;
+}
+
+
 @media screen and (max-width:1200px) {
     body {
         padding: 0 20px;
@@ -185,7 +198,7 @@ footer p {
 }
 
 @media screen and(max-width:768px) {
-    
+
     nav a {
         margin: 0 10px;
     }

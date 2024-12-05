@@ -2,7 +2,7 @@ const { db } = require("../db/init")
 
 const getPostDetails = async (req, res, postId) => {
   const commentsQuery = `
-  SELECT comments.content, users.username, comments.created_at
+  SELECT comments.* , users.username
   FROM comments
   LEFT JOIN users ON comments.user_id = users.id
   WHERE comments.post_id = ?
@@ -30,8 +30,9 @@ GROUP BY posts.id
   req.on('end', async () => {
     const { userId } = JSON.parse(body)
     try {
-      let liked = false
-      liked = await checkIfLikedPost(userId, postId)
+      let liked, disliked = false
+      liked = await checkIfLikedPost('likes', userId, postId)
+      !liked ? disliked = await checkIfLikedPost('dislikes', userId, postId) : null
 
       db.get(query, [postId], (err, row) => {
         if (err) {
@@ -48,7 +49,6 @@ GROUP BY posts.id
         }
 
         // Fetch the comments for this post
-
         db.all(commentsQuery, [postId], (err, comments) => {
           if (err) {
             console.error("Error fetching comments:", err)
@@ -59,10 +59,10 @@ GROUP BY posts.id
 
           // Send the HTML with the injected content as the response
           res.writeHead(200, { 'Content-Type': 'application/json' })
-          console.log(liked);
 
           let allData = {
             liked: liked,
+            disliked: disliked,
             post: row,
             comment: comments
           }
@@ -74,21 +74,19 @@ GROUP BY posts.id
       res.writeHead(500, { "Content-Type": "application/json" })
       res.end(JSON.stringify({ message: "Error fetching comments" }))
     }
-
   })
 }
 
-function checkIfLikedPost(userID, pId) {
-  console.log("userID : ", userID);
+//just for the style
+function checkIfLikedPost(table, userID, pId) {
 
   let liked = false
-  const query = `select id from likes where user_id=? and post_id = ? and is_comment = 0`
+  const query = `select id from ${table} where user_id=? and post_id = ? and is_comment = 0`
 
   return new Promise((resolve, reject) => {
-
     db.get(query, [userID, pId], (err, row) => {
       // Reject the promise if there's an error
-      err ? reject(err) : (console.log(row), resolve(row ? true : false))
+      err ? reject(err) : (console.log("row : ", row), resolve(row ? true : null))
 
     })
     return liked

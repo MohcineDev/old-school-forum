@@ -114,16 +114,23 @@ hr {
     animation: bounce 0.3s linear;
 }
 
-#postsContainer>p{
+#postsContainer>p {
     margin: 10px 0;
     padding: 10px;
     background-color: #eee;
 
 }
-#liked{
-    border-color: aqua;
-  color: aqua;
+
+
+.up {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    bottom: 0;
+    right: 0;
 }
+
 @keyframes bounce {
     0% {
         transform: translateY(0px);

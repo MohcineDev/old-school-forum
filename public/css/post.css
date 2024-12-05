@@ -64,19 +64,14 @@ article {
     justify-content: space-between;
     margin: 20px 0;
 }
-
-.liked {
-    border: 2px solid green;
-}
-
 /* Comment Section Styles */
 #comments {
-    padding: 20px 0;
-    border-top: 1px solid #888;
+    padding-bottom: 20px;
 }
 
 #comments h2 {
     margin-top: 0;
+    font-size: 1.3rem;
 }
 
 #commentsContainer {
@@ -145,7 +140,7 @@ article {
 
 .comment p {
     color: #fff;
-    margin: 10px ;
+    margin: 10px;
 }
 
 
@@ -212,14 +207,16 @@ article {
 .add-comment textarea {
     display: block;
     width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #eee;
+    color: #eee;
 }
 
 @media (prefers-color-scheme: dark) {
 
-    .post-content {
-        background-color: var(--dark);
-        color: #eee;
-    }
+
 
     .post-details {
         color: #eee;
