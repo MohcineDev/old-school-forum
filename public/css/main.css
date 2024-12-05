@@ -2,7 +2,7 @@
 :root {
     --m-width: 1200px;
     --blue: #456282;
-    --dark:#222;
+    --dark: #222;
 }
 
 a {
@@ -20,14 +20,12 @@ body {
     min-height: 100vh;
 }
 
-
 header {
     background: url('../imgs/golden-gate-bridge-bay-sunset.jpg.webp') center center no-repeat;
     background-size: cover;
     padding: 50px 0;
     background-position: 70% 40%;
 }
-
 
 header, footer {
     color: #fff;
@@ -46,8 +44,8 @@ h1 {
     font-size: 2.5em;
     margin: 0;
     font-family: 'Arial', sans-serif;
+    user-select: none;
 }
-
 
 /* Navbar Styles */
 nav {
@@ -103,7 +101,6 @@ textarea {
     font-family: 'Arial', sans-serif;
 }
 
-
 /* Button Styles */
 .btn {
     background-color: #444;
@@ -127,7 +124,6 @@ footer {
     font-size: 12px;
     user-select: none;
 }
-
 
 .stats {
     font-size: 13px;
@@ -187,7 +183,11 @@ footer p {
     }
 }
 
-@media (prefers-color-scheme: dark) {
+@media screen and(max-width:768px) {
     
-  }
-  
+    nav a {
+        margin: 0 10px;
+    }
+}
+
+@media (prefers-color-scheme: dark) {}

@@ -12,10 +12,9 @@ if (userId) {
   <label for="categories">Categories:</label><br>
   <div class="category-tags"> 
     </div>
-
   <button type="submit " class="btn">Submit Post</button>
 </form>
-`
+`;
 
     // Fetch categories from the backend
     fetch('/categories')
@@ -35,25 +34,20 @@ if (userId) {
                 categoryTags.appendChild(check)
                 categoryTags.appendChild(label)
             })
-
         })
         .catch(error => console.error("Error fetching categories:", error))
-    console.log(document.querySelectorAll('.category-tags'))
-    console.log(document.querySelectorAll('#categories'))
 
     //
     ////create post 
     // Handle post submission
     //
+
     document.getElementById("createPostForm").addEventListener("submit", function (event) {
         event.preventDefault()
 
-
         const title = document.getElementById("title").value.trim()
         const content = document.getElementById("content").value.trim()
-        const categoriesSelect = document.getElementById("categories")
         const selectedCategories = Array.from(document.querySelectorAll('input[type=checkbox]:checked'), elem => elem.value)
-
         const userId = localStorage.getItem("user_id")
 
         fetch("/create-post", {
@@ -68,23 +62,17 @@ if (userId) {
             })
             .catch((error) => alert("Error creating post: " + error.message))
     })
-
-
-
 }
 else {
-
     console.log('Whaaat...!!')
-
 }
-// Import formatDistanceToNow from date-fns
 
+// Import formatDistanceToNow from date-fns
 // Fetch and display posts
 
 fetch("/posts")
     .then((response) => response.json())
     .then((posts) => {
-
         const postsContainer = document.getElementById("postsContainer")
         postsContainer.innerHTML = posts.length
             ? posts
@@ -93,10 +81,8 @@ fetch("/posts")
                <article class="post">
                <p class="author"><em>Posted By ${post.username} ON ${post.created_at}</em></p> 
                    <h3><a href="/post/${post.id}">${post.title}</a></h3>
-
                    <p>${post.content}</p>
                    <p><em> ${post.categories != null ? `categories : ${post.categories}` : `-`}</em></p> 
-                        
                    <div class="stats">
                        <strong>Likes:</strong> ${post.likes} | 
                        <strong>Dislikes:</strong> ${post.dislikes} | 
@@ -113,7 +99,6 @@ fetch("/posts")
                                 <button class="btn" onclick="interact('delete', ${post.id})">Delete</button>`
                                 : ""}
                           </div>
-                          
                           </div>`
                             : ""
                         }
@@ -125,11 +110,9 @@ fetch("/posts")
     })
     .catch((error) => console.error("Error fetching posts:", error))
 
-
 // Interaction functions for like/dislike
 function interact(action, postId) {
     if (action === 'delete') {
-
         fetch(`/post_delete/${postId}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
@@ -141,7 +124,6 @@ function interact(action, postId) {
                 window.location.reload()
             })
             .catch((error) => alert("Error interacting with post: " + error.message))
-
     } else {
 
         fetch(`/${action}`, {
@@ -158,4 +140,3 @@ function interact(action, postId) {
             .catch((error) => alert("Error interacting with post: " + error.msg))
     }
 }
-

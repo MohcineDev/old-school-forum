@@ -45,8 +45,8 @@ const appendBtns = (parent, child, attributes, txt) => {
     attributes.forEach(e => {
         let key = Object.keys(e)[0]
         elem.setAttribute(key, ...e[key])
-        
+
     })
     elem.textContent = txt
-parent.appendChild(elem)
+    parent.appendChild(elem)
 }

@@ -22,7 +22,7 @@ function injectData(data) {
     article.querySelector('.stats>p:nth-child(3) span').textContent = data.post.comments
     //add like onclick
     addBtns(data.post)
-    // data.liked ? article.querySelector('.post-details .like').classList.add('liked') : null
+    data.liked ? article.querySelector('.post-details .like').classList.add('liked') : null
     //    post.querySelector('.post-details .dislike').setAttribute('onclick', `interact('dislike', ${data.post.id})`)
     // onclick="interact('', post.id)"
     // Inject the comments HTML here
@@ -33,9 +33,9 @@ function injectData(data) {
         data.comment.forEach(com => {
             commentSection.innerHTML += `
           <div class="comment">
-            <p class="author">${com.username}
+            <div class="author"><span>${com.username}</span>
             <span>${com.created_at}</span>
-            </p>
+            </div>
             <p>${com.content}</p>
             <div class="interact">
                 <button class="like">
@@ -57,8 +57,11 @@ function injectData(data) {
 }
 
 addComment.addEventListener('click', () => {
-    if (textarea.value) {
-        console.log("1000")
+    if (!userId) {
+        alert('please login to add a comment!!')
+    } else if (textarea.value.trim().length < 5) {
+        alert('enter your comment!!')
+    } else {
         fetch("/add-comment", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -100,7 +103,7 @@ function addBtns(post) {
         //    article.querySelector('.post-details .like').setAttribute('onclick', `interact('like', ${data.post.id})`)
 
         appendBtns(article.querySelector('.interact div'), 'button',
-            [{ class: [ 'like btn'] }, { onclick: [`interact('like', ${post.id})`] }], 'like')
+            [{ class: ['like btn'] }, { onclick: [`interact('like', ${post.id})`] }], 'like')
         article.querySelector('.interact .remove button').style.display = 'block'
         ///dislike
         // post.querySelector('.post-details .dislike').setAttribute('onclick', `interact('dislike', ${data.post.id})`)

@@ -28,9 +28,7 @@ article {
     border-bottom: 3px solid #b2b6c4;
     color: #555;
     padding: 0 5px;
-
 }
-
 
 .post-content {
     background-color: #f9f9f9;
@@ -56,7 +54,7 @@ article {
     display: none;
 }
 
-.post-details p {
+.post-details .stats p {
     margin: 5px 0;
     display: inline-block;
 }
@@ -64,6 +62,7 @@ article {
 .btns {
     display: flex;
     justify-content: space-between;
+    margin: 20px 0;
 }
 
 .liked {
@@ -72,12 +71,12 @@ article {
 
 /* Comment Section Styles */
 #commentSection {
-    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #888;
 }
 
-#commentSection h3 {
-    font-size: 1.8em;
-    color: #eee;
+#commentSection h2 {
+    margin-top: 0;
 }
 
 #commentsContainer {
@@ -126,17 +125,17 @@ article {
     background: #41597b;
     color: #fff;
     padding: 5px;
-    margin: 5px 0;
+    margin: 15px 0;
 }
 
-.comment .author {
-    font-size: 14px;
+.comment .author span:nth-child(1) {
     font-weight: 800;
     border-bottom: 1px solid #f1f1f1;
-    display: inline-block;
+    text-transform: capitalize;
 }
 
-.comment .author span {
+.comment .author span:nth-child(2) {
+    font-size: 14px;
     font-style: 10px;
     color: #bbb;
     font-weight: 500;
@@ -146,13 +145,14 @@ article {
     color: #fff;
 }
 
-.comment span {
-    font-size: 12px;
-
-}
-
 .comment .interact {
     margin-top: 5px;
+    background-color: #222;
+    padding: 2px 18px;
+    border-radius: 26px;
+    display: flex;
+    align-items: center;
+    max-width: fit-content;
 }
 
 .comment .like, .comment .dislike {
@@ -161,6 +161,10 @@ article {
     border: none;
     background: transparent;
     cursor: pointer;
+}
+
+.comment .dislike {
+    border-left: 1px solid #888;
 }
 
 .comment .like:hover svg {
