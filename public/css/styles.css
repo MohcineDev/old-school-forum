@@ -114,7 +114,16 @@ hr {
     animation: bounce 0.3s linear;
 }
 
+#postsContainer>p{
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #eee;
 
+}
+#liked{
+    border-color: aqua;
+  color: aqua;
+}
 @keyframes bounce {
     0% {
         transform: translateY(0px);

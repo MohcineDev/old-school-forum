@@ -70,12 +70,12 @@ article {
 }
 
 /* Comment Section Styles */
-#commentSection {
+#comments {
     padding: 20px 0;
     border-top: 1px solid #888;
 }
 
-#commentSection h2 {
+#comments h2 {
     margin-top: 0;
 }
 
@@ -121,11 +121,13 @@ article {
 }
 
 
-.comment {
+.comment>div:nth-child(1) {
     background: #41597b;
     color: #fff;
     padding: 5px;
-    margin: 15px 0;
+    margin: 15px 0 0;
+    border-radius: 5px;
+
 }
 
 .comment .author span:nth-child(1) {
@@ -141,38 +143,64 @@ article {
     font-weight: 500;
 }
 
-.comment>p {
+.comment p {
     color: #fff;
+    margin: 10px ;
 }
+
 
 .comment .interact {
     margin-top: 5px;
-    background-color: #222;
-    padding: 2px 18px;
-    border-radius: 26px;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    position: relative;
+}
+
+.comment .interact::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: calc(50% - 1px);
+    width: 2px;
+    height: 100%;
+    background: #aaa;
+}
+
+.comment .interact button {
     display: flex;
     align-items: center;
     max-width: fit-content;
+    background-color: #403e3e;
+    padding: 0 15px;
+    transition: background-color 0.3s;
+}
+
+.comment .interact button:hover {
+    background: #555444;
 }
 
 .comment .like, .comment .dislike {
-    width: 30px;
-    height: 30px;
+    height: 27px;
     border: none;
     background: transparent;
     cursor: pointer;
+    border-radius: 26px;
+}
+
+.comment .like {
+    border-radius: 20px 0 0 20px;
+
 }
 
 .comment .dislike {
-    border-left: 1px solid #888;
+    border-radius: 0 20px 20px 0;
+
 }
 
-.comment .like:hover svg {
-    stroke: cyan;
-}
-
-.comment .dislike:hover svg {
-    stroke: red;
+.comment svg {
+    transition: stroke 0.3s;
+    width: 21px;
 }
 
 .add-comment {
