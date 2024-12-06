@@ -3,7 +3,7 @@
     --m-width: 1200px;
     --blue: #456282;
     --dark: #222;
-    --like:#66f466;
+    --like: #66f466;
 }
 
 a {
@@ -21,15 +21,67 @@ body {
     min-height: 100vh;
 }
 
+.theme {
+    position: absolute;
+    top: 8px;
+    height: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 20px);
+    z-index: 2;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+svg {
+    width: 20px;
+}
+
+@keyframes up {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.light svg.dark-btn {
+    transform: rotate(0deg);
+    animation-name: up;
+    animation-duration: 1s;
+}
+
+.light svg.light-btn {
+    visibility: hidden;
+}
+
+.dark svg.light-btn {
+    transform: rotate(0deg);
+    animation-name: up;
+    animation-duration: 1s;
+}
+
+.dark svg.dark-btn {
+    visibility: hidden;
+}
+
+
+
 header {
     background: url('../imgs/golden-gate-bridge-bay-sunset.jpg.webp') center center no-repeat;
     background-size: cover;
     padding: 50px 0;
     background-position: 70% 40%;
+    position: relative;
 }
 
 header, footer {
-    color: #fff;
+    color: #eee;
     text-align: center;
     max-width: var(--m-width);
     margin: auto;
@@ -58,6 +110,10 @@ nav {
     margin: auto;
     display: flex;
     justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    box-shadow: 0 0px 7px #222;
 }
 
 .links {
@@ -67,7 +123,7 @@ nav {
 
 nav p,
 nav a {
-    color: #fff;
+    color: #eee;
     text-decoration: none;
     margin: 0 20px;
     padding: 5px 10px;
@@ -82,7 +138,7 @@ nav a:hover {
 input, textarea {
     box-sizing: border-box;
     border: 1px solid #ccc;
-    background-color: #fff;
+    background-color: #eee;
     font-size: 1em;
     font-family: 'Courier New', Courier, monospace;
     padding: 10px;
@@ -94,7 +150,7 @@ textarea {
 
 .bxtn {
     background-color: #555;
-    color: #fff;
+    color: #eee;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
@@ -160,6 +216,11 @@ footer {
     font-size: 14px;
 }
 
+footer p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
 .footer-links a {
     color: white;
     text-decoration: none;
@@ -193,7 +254,7 @@ footer p {
 
 @media screen and (max-width:1200px) {
     body {
-        padding: 0 20px;
+        padding: 0 30px;
     }
 }
 
