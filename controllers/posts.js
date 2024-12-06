@@ -18,9 +18,9 @@ const getPosts = async (req, res) => {
     GROUP BY posts.id
   `;
 
-  ////get user ids in like table
+  ////get user ids in like / # table
   const likedUsers = `select user_id, post_id from likes where is_comment = 0`
-
+  const dislikedUsers = `select user_id, post_id from dislikes where is_comment = 0`
 
   const getRows = (q) => {
     return new Promise((resolve, reject) => {
@@ -39,10 +39,11 @@ const getPosts = async (req, res) => {
     const posts = await getRows(query)
     if (posts) {
       const likesIds = await getRows(likedUsers)
+      const dislikesIds = await getRows(dislikedUsers)
 
-      console.log({ posts, likesIds })
+      // console.log({ posts, likesIds })
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ posts, likesIds }))
+      res.end(JSON.stringify({ posts, likesIds, dislikesIds }))
     }
   } catch (err) {
 

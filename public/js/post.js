@@ -83,7 +83,7 @@ addComment.addEventListener('click', () => {
 
 // Interaction functions for like/dislike
 function interact(action, post_id) {
-    console.log(action, postId)
+
     fetch(`/${action}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

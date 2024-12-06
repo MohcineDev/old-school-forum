@@ -21,8 +21,14 @@ if (userId) {
         .then(response => response.json())
         .then(categories => {
             const categoryTags = document.querySelector(".category-tags")
+            const asideCategories = document.querySelector(".categories")
 
             categories.forEach(category => {
+
+                const btn = document.createElement('button')
+                btn.textContent = category.name
+                asideCategories.appendChild(btn)
+
                 const label = document.createElement('label')
                 label.setAttribute("for", category.name)
                 label.textContent = category.name
@@ -72,7 +78,7 @@ else {
 
 fetch("/posts")
     .then((response) => response.json())
-    .then(({ posts, likesIds }) => {
+    .then(({ posts, likesIds, dislikesIds }) => {
         const postsContainer = document.getElementById("postsContainer")
         postsContainer.innerHTML = posts.length
             ? posts
@@ -82,7 +88,7 @@ fetch("/posts")
                <p class="author"><em>Posted By ${post.username} ON ${post.created_at}</em></p> 
                    <h3><a href="/post/${post.id}">${post.title}</a></h3>
                    <p>${post.content}</p>
-                   <p><em> ${post.categories != null ? `categories : ${post.categories}` : `-`}</em></p> 
+                   <p><em> ${post.categories != null ? `categories : ${post.categories}` : `this still haven't been setting or in a specifiiilkk catergorieos...:) read this also m`}</em></p> 
                    <div class="stats">
                        <strong>Likes:</strong> ${post.likes} | 
                        <strong>Dislikes:</strong> ${post.dislikes} | 
@@ -92,8 +98,10 @@ fetch("/posts")
                    ${userId
                             ? `<div class="btns">
                             <div>
-                            <button class="btn ${likesIds.some(elem => elem.user_id == userId && elem.post_id === post.id) ? 'liked' : ''}"   onclick="interact('like', ${post.id})">Like</button>
-                            <button class="btn" onclick="interact('dislike', ${post.id})">Dislike</button>                          
+                            <button class="btn ${likesIds.some(elem => elem.user_id == userId && elem.post_id === post.id) ? 'liked' : ''}"   
+                            onclick="interact('like', ${post.id})">Like</button>
+                            <button class="btn ${dislikesIds.some(elem => elem.user_id == userId && elem.post_id === post.id) ? 'disliked' : ''}" 
+                             onclick="interact('dislike', ${post.id})">Dislike</button>                          
                           </div>
                             <div> ${post.user_id == userId ? `
                                 <button class="btn" onclick="interact('delete', ${post.id})">Delete</button>`

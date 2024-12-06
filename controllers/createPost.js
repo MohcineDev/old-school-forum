@@ -14,9 +14,10 @@ const createPost = (req, res) => {
       const { user_id, title, content, categories } = JSON.parse(body); // Expecting 'categories' as an array of category IDs
 
       // Validate input
-      if (!user_id || !title || !content || !Array.isArray(categories) || categories.length === 0) {
+      //|| !Array.isArray(categories) || categories.length === 0
+      if (!user_id || !title || !content ) {
         res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: "All fields (title, content, categories) are required" }));
+        res.end(JSON.stringify({ message: "All fields (title, content) are required" }));
         return;
       }
 

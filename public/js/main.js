@@ -1,5 +1,5 @@
 // Check if user is logged in
-let userId = localStorage.getItem("user_id")
+const userId = localStorage.getItem("user_id")
 console.log(userId);
 
 const profileLink = document.querySelector('.profile')
@@ -52,3 +52,32 @@ const appendBtns = (parent, child, attributes, txt) => {
     elem.textContent = txt
     parent.appendChild(elem)
 }
+
+
+///theeeeeeeme
+const light = document.querySelector('.light-btn')
+const dark = document.querySelector('.dark-btn')
+const preferedtheme = localStorage.getItem('preferedtheme')
+
+const applyDark = () => {
+    document.body.classList.add("dark")
+    document.body.classList.remove("light")
+}
+
+const applyLight = () => {
+    document.body.classList.add("light")
+    document.body.classList.remove("dark")
+}
+
+if (preferedtheme == 'light') applyLight()
+else applyDark()
+
+light.addEventListener('click', (e) => {
+    localStorage.setItem("preferedtheme", "light")
+    applyLight()
+})
+
+dark.addEventListener('click', (e) => {
+    localStorage.setItem("preferedtheme", "dark")
+    applyDark()
+})
