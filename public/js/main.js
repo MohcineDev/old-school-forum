@@ -40,7 +40,7 @@ logoutButton.addEventListener("click", function () {
     ) : null
 })
 
-
+///the att is an array of objects of attribute Name : and array values
 const appendBtns = (parent, child, attributes, txt) => {
     const elem = document.createElement(child)
 

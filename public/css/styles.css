@@ -6,7 +6,6 @@
     max-width: var(--m-width);
     margin: auto;
     padding: 25px 0;
-
 }
 
 #postFormContainer h2 {
@@ -27,12 +26,16 @@ form {
     color: #eee;
 }
 
+.dark form .category-tags label {
+    color: var(--dark);
+
+}
+
 form input[type="text"], form textarea {
     margin: 10px 0;
     width: 100%;
 
 }
-
 
 .category-tags {
     display: flex;
@@ -48,6 +51,7 @@ form input[type="text"], form textarea {
     cursor: pointer;
     padding: 5px;
     text-transform: capitalize;
+    user-select: none;
 }
 
 .category-tags input[type="checkbox"] {
@@ -75,7 +79,7 @@ main {
 main>section {
     display: flex;
     align-items: start;
-
+    justify-content: space-between;
 }
 
 .post {
@@ -91,16 +95,16 @@ main>section {
     content: "";
     position: absolute;
     width: 5px;
-    height: 90%;
-    border-left: 4px dotted #ccc;
+    height: 100%;
+    border-left: 4px dotted #aaa;
     left: 4px;
-    top: calc(50% - 45%);
+    top: 0;
 }
 
 .post h3 {
     font-family: 'Arial', sans-serif;
     font-size: 1.8em;
-    margin-bottom: 10px;
+    margin: 16px 0;
 }
 
 .post p {
@@ -115,6 +119,7 @@ main>section {
 
 #postsContainer {
     margin-right: 10px;
+    width: 100%;
 }
 
 .author {

@@ -1,3 +1,5 @@
+let asideCategories = document.querySelector(".categories")
+
 if (userId) {
     // Add post form for logged-in users
     document.getElementById("postFormContainer").innerHTML = `
@@ -16,32 +18,6 @@ if (userId) {
 </form>
 `;
 
-    // Fetch categories from the backend
-    fetch('/categories')
-        .then(response => response.json())
-        .then(categories => {
-            const categoryTags = document.querySelector(".category-tags")
-            const asideCategories = document.querySelector(".categories")
-
-            categories.forEach(category => {
-
-                const btn = document.createElement('button')
-                btn.textContent = category.name
-                asideCategories.appendChild(btn)
-
-                const label = document.createElement('label')
-                label.setAttribute("for", category.name)
-                label.textContent = category.name
-
-                const check = document.createElement('input')
-                check.type = "checkbox"
-                check.id = category.name
-                check.value = category.id
-                categoryTags.appendChild(check)
-                categoryTags.appendChild(label)
-            })
-        })
-        .catch(error => console.error("Error fetching categories:", error))
 
     //
     ////create post 
@@ -75,48 +51,45 @@ else {
 
 // Import formatDistanceToNow from date-fns
 // Fetch and display posts
+let postsData = {}
 
 fetch("/posts")
     .then((response) => response.json())
     .then(({ posts, likesIds, dislikesIds }) => {
-        const postsContainer = document.getElementById("postsContainer")
-        postsContainer.innerHTML = posts.length
-            ? posts
-                .map((post) => {
-                    return `
-               <article class="post">
-               <p class="author"><em>Posted By ${post.username} ON ${post.created_at}</em></p> 
-                   <h3><a href="/post/${post.id}">${post.title}</a></h3>
-                   <p>${post.content}</p>
-                   <p><em> ${post.categories != null ? `categories : ${post.categories}` : `this still haven't been setting or in a specifiiilkk catergorieos...:) read this also m`}</em></p> 
-                   <div class="stats">
-                       <strong>Likes:</strong> ${post.likes} | 
-                       <strong>Dislikes:</strong> ${post.dislikes} | 
-                       <strong>Comments:</strong> ${post.comments}
-                   </div>
-                   <hr/>
-                   ${userId
-                            ? `<div class="btns">
-                            <div>
-                            <button class="btn ${likesIds.some(elem => elem.user_id == userId && elem.post_id === post.id) ? 'liked' : ''}"   
-                            onclick="interact('like', ${post.id})">Like</button>
-                            <button class="btn ${dislikesIds.some(elem => elem.user_id == userId && elem.post_id === post.id) ? 'disliked' : ''}" 
-                             onclick="interact('dislike', ${post.id})">Dislike</button>                          
-                          </div>
-                            <div> ${post.user_id == userId ? `
-                                <button class="btn" onclick="interact('delete', ${post.id})">Delete</button>`
-                                : ""}
-                          </div>
-                          </div>`
-                            : ""
-                        }
-               </article>
-               `
-                })
-                .join("")
-            : "<p>No posts available. Be the first to create one!</p>"
+        postsData = { posts, likesIds, dislikesIds };
+
+        listPosts(posts)
     })
     .catch((error) => console.error("Error fetching posts:", error))
+
+
+// Fetch categories from the backend
+fetch('/categories')
+    .then(response => response.json())
+    .then(categories => {
+        const categoryTags = document.querySelector(".category-tags")
+        asideCategories = document.querySelector(".categories")
+
+        appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }], 'All')
+        categories.forEach(category => {
+            appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }], category.name)
+
+            if (userId) {
+                const label = document.createElement('label')
+                label.setAttribute("for", category.name)
+                label.textContent = category.name
+
+                const check = document.createElement('input')
+                check.type = "checkbox"
+                check.id = category.name
+                check.value = category.id
+                categoryTags.appendChild(check)
+                categoryTags.appendChild(label)
+            }
+        })
+        appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }], 'uncategorised')
+    })
+    .catch(error => console.error("Error fetching categories:", error))
 
 // Interaction functions for like/dislike
 function interact(action, postId) {
@@ -147,4 +120,66 @@ function interact(action, postId) {
             })
             .catch((error) => alert("Error interacting with post: " + error.msg))
     }
+}
+
+const btnDown = (e) => {
+    console.log("postsData : ", postsData, e);
+    //postsData.posts, postsData.likesIds, postsData.dislikesIds
+
+    // if (e.target.textContent === 'All')
+    //     listPosts(postsData)
+    // else {
+    //     let newData = {
+    //         posts: postsData.posts.filter(post => post.categories ? post.categories.includes(e.target.textContent) : null)
+    //      }
+    //     listPosts(newData)
+    // }
+
+    e.target.textContent === 'All' ?
+        listPosts(postsData.posts) : e.target.textContent === 'uncategorised' ? listPosts(postsData.posts.filter(post => post.categories == null ? post : null)) :
+            listPosts(postsData.posts.filter(post => post.categories ? post.categories.includes(e.target.textContent) : null))
+}
+const aa = () => {
+    console.log("postsData : ",);
+    //postsData.posts, postsData.likesIds, postsData.dislikesIds
+}
+
+function listPosts(posts) {
+
+    const postsContainer = document.getElementById("postsContainer")
+    postsContainer.innerHTML = ''
+    postsContainer.innerHTML = posts.length
+        ? posts
+            .map((post) => {
+                return `
+           <article class="post">
+               <p class="author"><em>Posted By ${post.username} ON ${post.created_at}</em></p> 
+               <h3><a href="/post/${post.id}">${post.title}</a></h3>
+               <p>${post.content}</p>
+               <p><em> ${post.categories != null ? `categories : ${post.categories}` : `this still haven't been setting or in a specifiiilkk catergorieos...:) read this also m`}</em></p> 
+               <div class="stats">
+                   <strong>Likes:</strong> ${post.likes} | 
+                   <strong>Dislikes:</strong> ${post.dislikes} | 
+                   <strong>Comments:</strong> ${post.comments}
+               </div>
+               <hr/>
+               ${userId
+                        ? `<div class="btns">
+                                <div>
+                                    <button class="btn ${postsData.likesIds.some(elem => elem.user_id == userId && elem.post_id === post.id) ? 'liked' : ''}"   
+                                    onclick="interact('like', ${post.id})">Like</button>
+                                    <button class="btn ${postsData.dislikesIds.some(elem => elem.user_id == userId && elem.post_id === post.id) ? 'disliked' : ''}" 
+                                    onclick="interact('dislike', ${post.id})">Dislike</button>                          
+                                </div>
+                                <div> ${post.user_id == userId ?
+                            `<button class="btn" onclick="interact('delete', ${post.id})">Delete</button>` : ""}
+                              </div>
+                          </div>`
+                        : ""
+                    }
+           </article>
+           `
+            })
+            .join("")
+        : "<p>No posts available. Be the first to create one!</p>"
 }
