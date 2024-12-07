@@ -1,28 +1,19 @@
+import { postForm } from '../components/postForm.js';
+
+const postsContainer = document.getElementById("postsContainer")
+const createPost = document.getElementById("postFormContainer")
 let asideCategories = document.querySelector(".categories")
+//scroll to top
+const scrollTop = document.querySelector('#up')
+const height = innerHeight
 
 if (userId) {
     // Add post form for logged-in users
-    document.getElementById("postFormContainer").innerHTML = `
-<h2>Create a Post</h2>
-<form id="createPostForm">
-  <label for="title">Title:</label><br>
-  <input type="text" id="title" name="title" placeholder="Post Title" required><br>
-
-  <label for="content">Content:</label><br>
-  <textarea id="content" name="content" rows="4" placeholder="Post Content" required></textarea><br>
-
-  <label for="categories">Categories:</label><br>
-  <div class="category-tags"> 
-    </div>
-  <button type="submit " class="btn">Submit Post</button>
-</form>
-`;
-
-
+    createPost.innerHTML = postForm()
     //
     ////create post 
     // Handle post submission
-    //
+    // 
 
     document.getElementById("createPostForm").addEventListener("submit", function (event) {
         event.preventDefault()
@@ -93,6 +84,8 @@ fetch('/categories')
 
 // Interaction functions for like/dislike
 function interact(action, postId) {
+    console.log('hi from interact');
+
     if (action === 'delete') {
         fetch(`/post_delete/${postId}`, {
             method: "DELETE",
@@ -121,6 +114,8 @@ function interact(action, postId) {
             .catch((error) => alert("Error interacting with post: " + error.msg))
     }
 }
+///// Make it the interact function available globally so it can be used with the onclick event
+window.interact = interact;
 
 const btnDown = (e) => {
     console.log("postsData : ", postsData, e);
@@ -139,14 +134,17 @@ const btnDown = (e) => {
         listPosts(postsData.posts) : e.target.textContent === 'uncategorised' ? listPosts(postsData.posts.filter(post => post.categories == null ? post : null)) :
             listPosts(postsData.posts.filter(post => post.categories ? post.categories.includes(e.target.textContent) : null))
 }
+
 const aa = () => {
     console.log("postsData : ",);
     //postsData.posts, postsData.likesIds, postsData.dislikesIds
 }
 
+window.btnDown = btnDown
+
 function listPosts(posts) {
 
-    const postsContainer = document.getElementById("postsContainer")
+    ///clear the prev content
     postsContainer.innerHTML = ''
     postsContainer.innerHTML = posts.length
         ? posts
@@ -156,7 +154,7 @@ function listPosts(posts) {
                <p class="author"><em>Posted By ${post.username} ON ${post.created_at}</em></p> 
                <h3><a href="/post/${post.id}">${post.title}</a></h3>
                <p>${post.content}</p>
-               <p><em> ${post.categories != null ? `categories : ${post.categories}` : `this still haven't been setting or in a specifiiilkk catergorieos...:) read this also m`}</em></p> 
+               <p><em> ${post.categories != null ? `categories : ${post.categories}` : `this still haven't been already setting or in a specifiiilkk catergorieos...:) read this also m`}</em></p> 
                <div class="stats">
                    <strong>Likes:</strong> ${post.likes} | 
                    <strong>Dislikes:</strong> ${post.dislikes} | 
@@ -183,3 +181,24 @@ function listPosts(posts) {
             .join("")
         : "<p>No posts available. Be the first to create one!</p>"
 }
+
+
+///scroll
+
+document.addEventListener('scroll', () => {
+
+    if (scrollY >= height * 2) {
+        scrollTop.style.display = 'block'
+    }
+    else
+        scrollTop.style.display = 'none'
+})
+
+scrollTop.addEventListener('click', () => {
+
+    scroll({
+        top: 0,
+        behavior: "smooth"
+    })
+
+})

@@ -23,7 +23,7 @@ initializeDatabase()
 
 // Create the server
 const server = http.createServer(async (req, res) => {
-  const staticFiles = ["css", "js", "imgs"];
+  const staticFiles = ["css", "js", "imgs", 'components'];
   for (const fileType of staticFiles) {
     const fileRegex = new RegExp(`^\/${fileType}\/(.*)`);
     const match = req.url.match(fileRegex);
@@ -40,7 +40,7 @@ const server = http.createServer(async (req, res) => {
         let contentType = "text/plain";
         if (fileType === "css") {
           contentType = "text/css";
-        } else if (fileType === "js") {
+        } else if (fileType === "js" || fileType === 'components') {
           contentType = "application/javascript";
         }
 

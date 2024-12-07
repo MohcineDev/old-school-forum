@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 #postFormContainer h2 {
     margin-top: 0;
 }
@@ -14,16 +15,22 @@
 
 
 form {
-    background-color: #fafafa;
-    padding: 15px;
     border: 1px solid #ccc;
     margin-top: 30px;
+
+}
+form, .post{
+    background-color: #fafafa;
+    transition:  background-color 0.5s;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+
 }
 
 .dark form, .dark .post {
     background-color: #101020;
     color: #eee;
+    transition:  background-color 0.5s;
 }
 
 .dark form .category-tags label {
@@ -83,11 +90,8 @@ main>section {
 }
 
 .post {
-    background-color: #fafafa;
     border-top: 15px solid #41597b;
-    padding: 15px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: relative;
 }
 
@@ -105,6 +109,7 @@ main>section {
     font-family: 'Arial', sans-serif;
     font-size: 1.8em;
     margin: 16px 0;
+    font-family: "Josefin Sans", sans-serif;
 }
 
 .post p {
@@ -197,6 +202,14 @@ hr {
     }
 }
 
-
+#up {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: no-repeat;
+    border: none;
+    cursor: pointer;
+    display: none;
+}
 
 @media (prefers-color-scheme: dark) {}

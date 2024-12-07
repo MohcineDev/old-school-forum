@@ -22,3 +22,7 @@ input {
     display: inline-block;
     min-width: 100px;
 }
+
+.todo-comment{
+    color: #90b090;
+}
