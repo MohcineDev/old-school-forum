@@ -113,9 +113,13 @@ nav {
     position: sticky;
     top: 0;
     z-index: 2;
-    box-shadow: 0 0px 7px #222;
+    box-shadow:0 0px 5px #222 inset, 0 0px 5px #222;
+    border-radius: 0 0 15px 15px;
 }
+.dark nav {
+    box-shadow:0 0px 5px #eee inset, 0 0px 5px #eee;
 
+}
 .links {
     display: flex;
     align-items: center;
@@ -162,7 +166,7 @@ textarea {
 /* Button Styles */
 .btn {
     background-color: #444;
-    color: white;
+    color:#eee;
     padding: 10px 15px;
     border: none;
     cursor: pointer;
