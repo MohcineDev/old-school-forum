@@ -48,6 +48,7 @@ fetch("/posts")
     .then((response) => response.json())
     .then(({ posts, likesIds, dislikesIds }) => {
         postsData = { posts, likesIds, dislikesIds };
+        document.getElementById('loader').style.display = 'none';
 
         listPosts(posts)
     })
@@ -58,10 +59,12 @@ fetch("/posts")
 fetch('/categories')
     .then(response => response.json())
     .then(categories => {
+        ////category Tags used in the form for post creation 
         const categoryTags = document.querySelector(".category-tags")
+        ///categories used for filtering posts
         asideCategories = document.querySelector(".categories")
 
-        appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }], 'All')
+        appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }, { class: ['active'] }], 'All')
         categories.forEach(category => {
             appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }], category.name)
 
@@ -87,17 +90,18 @@ function interact(action, postId) {
     console.log('hi from interact');
 
     if (action === 'delete') {
-        fetch(`/post_delete/${postId}`, {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: userId, post_id: postId }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                alert(data.message)
-                window.location.reload()
+        confirm("Are you sure? This post might haunt you!") ?
+            fetch(`/post_delete/${postId}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: userId, post_id: postId }),
             })
-            .catch((error) => alert("Error interacting with post: " + error.message))
+                .then((response) => response.json())
+                .then((data) => {
+                    alert(data.message)
+                    window.location.reload()
+                })
+                .catch((error) => alert("Error interacting with post: " + error.message)) : null
     } else {
 
         fetch(`/${action}`, {
@@ -118,18 +122,9 @@ function interact(action, postId) {
 window.interact = interact;
 
 const btnDown = (e) => {
-    console.log("postsData : ", postsData, e);
-    //postsData.posts, postsData.likesIds, postsData.dislikesIds
+    removeClass(asideCategories.querySelectorAll('button'))
 
-    // if (e.target.textContent === 'All')
-    //     listPosts(postsData)
-    // else {
-    //     let newData = {
-    //         posts: postsData.posts.filter(post => post.categories ? post.categories.includes(e.target.textContent) : null)
-    //      }
-    //     listPosts(newData)
-    // }
-
+    e.target.classList.add('active')
     e.target.textContent === 'All' ?
         listPosts(postsData.posts) : e.target.textContent === 'uncategorised' ? listPosts(postsData.posts.filter(post => post.categories == null ? post : null)) :
             listPosts(postsData.posts.filter(post => post.categories ? post.categories.includes(e.target.textContent) : null))
@@ -182,7 +177,10 @@ function listPosts(posts) {
         : "<p>No posts available. Be the first to create one!</p>"
 }
 
-
+///remove active category classsss
+const removeClass = (btns) => {
+    btns.forEach(btn => btn.classList.remove('active'))
+}
 ///scroll
 
 document.addEventListener('scroll', () => {
