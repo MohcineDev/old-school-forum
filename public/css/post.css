@@ -148,16 +148,7 @@ article {
     position: relative;
 }
 
-.comment .interact::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: calc(50% - 1px);
-    width: 2px;
-    height: 100%;
-    background: #aaa;
-}
-
+ 
 .comment .interact button {
     display: flex;
     align-items: center;
@@ -165,12 +156,26 @@ article {
     background-color: #403e3e;
     padding: 0 15px;
     transition: background-color 0.3s;
+    position: relative;
 }
 
 .comment .interact button:hover {
     background: #555444;
 }
-
+.comment .interact button:nth-child(1)::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -4px;
+    width: 4px;
+    height: 100%;
+    background: #333;
+}
+.comment .interact button span{
+    margin-left: 5px;
+    color: #eee;
+    font-size: 15px;
+}
 .comment .like, .comment .dislike {
     height: 27px;
     border: none;

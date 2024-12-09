@@ -21,6 +21,12 @@ LEFT JOIN comments ON posts.id = comments.post_id
 WHERE posts.id = ?
 GROUP BY posts.id
 `
+
+  const getCommentLikes = `SELECT comment_id, COUNT(*) AS like_count FROM likes WHERE is_comment = 1
+AND post_id = ? GROUP BY comment_id;`
+  const getCommentDislikes = `SELECT comment_id, COUNT(*) AS dislike_count FROM dislikes WHERE is_comment = 1
+  AND post_id = ? GROUP BY comment_id;`
+
   let body = ""
 
   req.on("data", (chunk) => {
@@ -56,17 +62,38 @@ GROUP BY posts.id
             res.end(JSON.stringify({ message: "Error fetching comments" }))
             return
           }
+          db.all(getCommentLikes, postId, (err, commnetLikes) => {
+            if (err) {
+              console.log('retrieve likes error')
+              res.writeHead(500, { 'Content-Type': 'application/json' })
+              res.end(JSON.stringify({ msg: 'internal pointer variable' }))
+              return
+            }
 
-          // Send the HTML with the injected content as the response
-          res.writeHead(200, { 'Content-Type': 'application/json' })
+            db.all(getCommentDislikes, postId, (err, commnetDislikes) => {
+              if (err) {
+                console.log('retrieve dislikes error')
+                res.writeHead(500, { 'Content-Type': 'application/json' })
+                res.end(JSON.stringify({ msg: 'internal pointer variable' }))
+                return
+              }
+console.log("commnetDislikes : ", commnetDislikes);
 
-          let allData = {
-            liked: liked,
-            disliked: disliked,
-            post: row,
-            comment: comments
-          }
-          res.end(JSON.stringify(allData))
+
+              // Send the HTML with the injected content as the response
+              res.writeHead(200, { 'Content-Type': 'application/json' })
+
+              let allData = {
+                commnetDislikes,
+                commnetLikes,
+                liked: liked,
+                disliked: disliked,
+                post: row,
+                comment: comments
+              }
+              res.end(JSON.stringify(allData))
+            })
+          })
         })
       })
     } catch (err) {

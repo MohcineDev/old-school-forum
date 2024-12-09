@@ -75,7 +75,6 @@ function interact(action, postId) {
 
         fetch(`/${action}`, {
             method: action == 'delete' ? "DELETE" : "POST",
-
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ user_id: userId, post_id: postId }),
         })

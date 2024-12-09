@@ -1,8 +1,8 @@
-const likeComment = require('../controllers/likeComment')
+const interactComment = require('../controllers/interactComment')
 
-function handleCommentInteraction(req, res) {
-    if (req.method === 'POST' && req.url.startsWith('/like-comment')) {
-        likeComment(req, res)
+const handleCommentInteraction = (req, res) => {
+    if (req.method === 'POST' && (req.url === '/like-comment' || req.url === '/dislike-comment')) {
+        interactComment(req, res, req.url)
     }
 }
 

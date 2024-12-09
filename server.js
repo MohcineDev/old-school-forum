@@ -171,7 +171,7 @@ const server = http.createServer(async (req, res) => {
   else if (req.method === 'POST' && req.url.startsWith("/add-comment")) {
     addComment(req, res);  // 
   }
-  else if (req.method === 'POST' && req.url.startsWith("/like-comment")) {
+  else if (req.method === 'POST' && (req.url.startsWith("/like-comment") || req.url.startsWith("/dislike-comment"))) {
     interactComment(req, res);  // 
   }
   else {

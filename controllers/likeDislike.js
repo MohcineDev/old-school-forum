@@ -29,6 +29,7 @@ const handleLikeDislike = (req, res) => {
       const getLikeDislikeRow = (q, data) => {
         return new Promise((resolve, reject) => {
           db.get(q, data, async (err, row) => {
+            console.log(q)
             if (err) {
               reject("internal errror: ", err)
             } else {

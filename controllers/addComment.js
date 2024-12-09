@@ -20,7 +20,7 @@ const addComment = (req, res) => {
                 return
             }
             res.writeHead(200, { "Content-Type": "application/json" })
-            res.end(JSON.stringify({ message: "comment added Successfully" }))
+            res.end(JSON.stringify({ msg: "comment added Successfully" }))
         })
     })
 }

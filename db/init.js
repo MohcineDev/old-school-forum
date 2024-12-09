@@ -6,7 +6,9 @@ const db = new sqlite3.Database("database.db");
 .mode column
 sqlite3 database.db
 PRAGMA TABLE_info(dislikes);
-
+//display exist columns // avoiding sqlite schema cache after altering the table
+PRAGMA table_info(likes);
+DROP TABLE IF EXISTS likes;
 */
 
 // Initialize tables 
