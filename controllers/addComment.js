@@ -12,17 +12,15 @@ const addComment = (req, res) => {
     req.on("end", () => {
         const { userId, postId, content } = JSON.parse(body);
 
-        db.serialize(() => {
-            db.run(postQuery, [userId, postId, content], err => {
-                if (err) {
-                    console.log("error comment!!!!")
-                    res.writeHead(500, { "Content-Type": "application/json" })
-                    res.end(JSON.stringify({ message: "somerginf went wrong!!" }))
-                    return
-                }
-                res.writeHead(200, { "Content-Type": "application/json" })
-                res.end(JSON.stringify({ message: "comment added Successfully" }))
-            })
+        db.run(postQuery, [userId, postId, content], err => {
+            if (err) {
+                console.log("comment error !!!!")
+                res.writeHead(500, { "Content-Type": "application/json" })
+                res.end(JSON.stringify({ mes: "somethin went wrong!!" }))
+                return
+            }
+            res.writeHead(200, { "Content-Type": "application/json" })
+            res.end(JSON.stringify({ message: "comment added Successfully" }))
         })
     })
 }

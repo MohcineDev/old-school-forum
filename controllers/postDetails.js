@@ -8,7 +8,7 @@ const getPostDetails = async (req, res, postId) => {
   WHERE comments.post_id = ?
 `
   const query = `
-SELECT posts.id, posts.title, posts.content, posts.created_at, 
+SELECT posts.id, posts.user_id, posts.title, posts.content, posts.created_at, 
        users.username, 
        COUNT(DISTINCT likes.id) AS likes,
        COUNT(DISTINCT dislikes.id) AS dislikes,

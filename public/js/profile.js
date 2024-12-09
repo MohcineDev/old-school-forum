@@ -14,7 +14,6 @@ if (!userId) {
     })
         .then(response => response.json())
         .then(user => {
-            console.log("user : ", user);
             profileContainer.querySelector('#username').value = user.username
             profileContainer.querySelector('#email').value = user.email
             profileContainer.querySelector('#password').value = user.password

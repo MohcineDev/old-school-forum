@@ -54,6 +54,42 @@ const appendBtns = (parent, child, attributes, txt) => {
 }
 
 
+// Interaction functions for like/dislike
+function interact(action, postId) { 
+    console.log('hi from interact');
+
+    if (action === 'delete') {
+        confirm("Are you sure? This post might haunt you!") ?
+            fetch(`/post_delete/${postId}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: userId, post_id: postId }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    alert(data.message)
+                    location.href = '/'
+                })
+                .catch((error) => alert("Error interacting with post: " + error.message)) : null
+    } else {
+
+        fetch(`/${action}`, {
+            method: action == 'delete' ? "DELETE" : "POST",
+
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: userId, post_id: postId }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                alert(data.msg)
+                window.location.reload()
+            })
+            .catch((error) => alert("Error interacting with post: " + error.msg))
+    }
+}
+
+
+
 ///theeeeeeeme
 const light = document.querySelector('.light-btn')
 const dark = document.querySelector('.dark-btn')
@@ -72,12 +108,15 @@ const applyLight = () => {
 if (preferedtheme == 'light') applyLight()
 else applyDark()
 
-light.addEventListener('click', (e) => {
+
+///this is Optional Chaining
+light ?.addEventListener('click', (e) => {
     localStorage.setItem("preferedtheme", "light")
     applyLight()
 })
 
-dark.addEventListener('click', (e) => {
+///--they call it logical and
+dark && dark.addEventListener('click', (e) => {
     localStorage.setItem("preferedtheme", "dark")
     applyDark()
 })

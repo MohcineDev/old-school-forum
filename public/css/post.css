@@ -8,7 +8,7 @@ h1 {
 article {
     max-width: var(--m-width);
     box-sizing: border-box;
-    background-color: #fff;
+    background-color: #eee;
     border-top: 15px solid #41597b;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -36,7 +36,8 @@ article {
     border-radius: 5px;
     margin-bottom: 20px;
     color: #444;
-    font-size: 1.1em;
+    font-size: 16px;
+    border: 1px dashed #ccc;
 }
 
 .post-details {
@@ -48,10 +49,6 @@ article {
 
 .dislike {
     margin-left: 4px;
-}
-
-.remove button {
-    display: none;
 }
 
 .post-details .stats p {
@@ -76,7 +73,7 @@ article {
 
 #commentsContainer {
     margin-top: 20px;
-    background-color: #fff;
+    background-color: #eee;
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -96,14 +93,14 @@ article {
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
-    background-color: #fff;
+    background-color: #eee;
     font-size: 1em;
     font-family: 'Courier New', Courier, monospace;
 }
 
 #commentFormContainer button {
     background-color: #555;
-    color: #fff;
+    color: #eee;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
@@ -115,14 +112,15 @@ article {
     background-color: #333;
 }
 
+.comment {
+    margin: 24px 0;
+}
 
 .comment>div:nth-child(1) {
     background: #41597b;
-    color: #fff;
+    color: #eee;
     padding: 5px;
-    margin: 15px 0 0;
     border-radius: 5px;
-
 }
 
 .comment .author span:nth-child(1) {
@@ -132,14 +130,12 @@ article {
 }
 
 .comment .author span:nth-child(2) {
-    font-size: 14px;
-    font-style: 10px;
+    font-size: 12px;
     color: #bbb;
-    font-weight: 500;
 }
 
 .comment p {
-    color: #fff;
+    color: #eee;
     margin: 10px;
 }
 

@@ -22,11 +22,8 @@ function injectData(data) {
     article.querySelector('.stats>p:nth-child(3) span').textContent = data.post.comments
     //add like onclick
     addBtns(data.post)
-    data.liked  ? article.querySelector('.post-details .like').classList.add('liked') : null
+    data.liked ? article.querySelector('.post-details .like').classList.add('liked') : null
     data.disliked ? article.querySelector('.post-details .dislike').classList.add('disliked') : null
-    //    post.querySelector('.post-details .dislike').setAttribute('onclick', `interact('dislike', ${data.post.id})`)
-    // onclick="interact('', post.id)"
-    // Inject the comments HTML here
 
     // Generate the comments HTML
     const commentSection = document.querySelector('#comments')
@@ -43,7 +40,7 @@ function injectData(data) {
             <p>${com.content}</p>
           </div>
             <div class="interact">
-                <button class="like" onclick=interact(like, ${1 + 1}) >
+                <button class="like" onclick="interactComment(${userId} ,${postId}, ${com.id})">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" class="size-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
 </svg>
@@ -60,7 +57,21 @@ function injectData(data) {
         `
         })) : commentSection.innerHTML = "<span>no comments!!</span>"
 }
-
+function interactComment(userId, postId, commentId) {
+    console.log(userId, postId, commentId)
+    fetch('/like-comment', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, postId, commentId })
+    })
+        .then(res => res.json())
+        .then((data) => {
+            alert(data.msg)
+            // window.location.reload()
+        })
+        .catch(err => console.log(err)
+        )
+}
 addComment.addEventListener('click', () => {
     if (!userId) {
         alert('please login to add a comment!!')
@@ -74,28 +85,13 @@ addComment.addEventListener('click', () => {
         })
             .then((response) => response.json())
             .then((data) => {
+                textarea.value = ''
                 alert(data.message)
                 window.location.reload()
             })
             .catch((error) => alert("add comment Error : " + error.message))
     }
 })
-
-// Interaction functions for like/dislike
-function interact(action, post_id) {
-
-    fetch(`/${action}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id: userId, post_id }),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            alert(data.msg)
-            window.location.reload()
-        })
-        .catch((error) => alert("Error interacting with post: " + error.message))
-}
 
 /// inject like btns if the user logged in
 
@@ -106,11 +102,16 @@ function addBtns(post) {
 
         appendBtns(article.querySelector('.interact div'), 'button',
             [{ class: ['like btn'] }, { onclick: [`interact('like', ${post.id})`] }], 'like')
-        article.querySelector('.interact .remove button').style.display = 'block'
+
         ///dislike
         // post.querySelector('.post-details .dislike').setAttribute('onclick', `interact('dislike', ${data.post.id})`)
         appendBtns(article.querySelector('.interact div'), 'button',
             [{ class: ['btn dislike'] }, { onclick: [`interact('dislike', ${post.id})`] }], 'dislike')
+
+        post.user_id === parseInt(userId) &&
+            appendBtns(article.querySelector('.interact .remove'), 'button',
+                [{ class: ['btn delete '] }, { onclick: [`interact('delete', ${post.id})`] }], 'Delete')
+
     }
 
 }

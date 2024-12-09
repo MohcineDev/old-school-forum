@@ -59,7 +59,7 @@ const handleLikeDislike = (req, res) => {
         await removeLikeDislike(removeQuery, [a.id])
 
         res.writeHead(201, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ msg: "like removed" }))
+        res.end(JSON.stringify({ msg: `${table.slice(0, -1)} removed.` }))
       } else {
         ///row not found in the table like/dislike
         //so add it

@@ -17,7 +17,7 @@ const deletePost = require("./controllers/handlePostDelete");
 const profileRoute = require('./routes/profileRoute');
 const updateUser = require("./controllers/updateUser");
 const addComment = require("./controllers/addComment");
-
+const interactComment = require('./routes/interactCommentRoutes')
 // Initialize the database tables
 initializeDatabase()
 
@@ -170,6 +170,9 @@ const server = http.createServer(async (req, res) => {
   ///add comment
   else if (req.method === 'POST' && req.url.startsWith("/add-comment")) {
     addComment(req, res);  // 
+  }
+  else if (req.method === 'POST' && req.url.startsWith("/like-comment")) {
+    interactComment(req, res);  // 
   }
   else {
     res.writeHead(404, { "Content-Type": "application/json" })

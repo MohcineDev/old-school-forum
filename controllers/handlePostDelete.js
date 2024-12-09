@@ -11,7 +11,7 @@ const deletePost = (req, res) => {
 
   // Check if the post exists
   const checkPostQuery = "SELECT id FROM posts WHERE id = ?";
-  db.get(checkPostQuery, [postId], (err, row) => {
+  db.get(checkPostQuery, [postId], async (err, row) => {
     if (err) {
       console.error("Database Error:", err);
       res.writeHead(500, { "Content-Type": "application/json" });
@@ -32,8 +32,40 @@ const deletePost = (req, res) => {
     const deletePostCategoriesQuery = "DELETE FROM post_categories WHERE post_id = ?";
     const deletePostQuery = "DELETE FROM posts WHERE id = ?";
 
-    // Delete associated likes, dislikes, comments, and categories
-    db.serialize(() => {
+
+    const runQuery = (q, data) => {
+      return new Promise((resolve, reject) => {
+        db.run(q, data, err => {
+
+          err ? reject("something went wrong", err) : resolve()
+        })
+      })
+    }
+    try {
+      // Delete associated likes, dislikes, comments, and categories
+
+      await runQuery(deleteLikesQuery, postId)
+      await runQuery(deleteDislikesQuery, postId)
+      await runQuery(deleteCommentsQuery, postId)
+      await runQuery(deletePostCategoriesQuery, postId)
+      await runQuery(deletePostQuery, postId)
+      // Respond with a success message
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: "Post deleted successfully" }));
+
+    } catch (err) {
+      console.error("Error deleting ...:", err);
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ msg: "Error deleting likes" }));
+    }
+  });
+};
+
+module.exports = deletePost;
+
+/*
+callback hell
+  db.serialize(() => {
       db.run(deleteLikesQuery, [postId], (err) => {
         if (err) {
           console.error("Error deleting likes:", err);
@@ -83,7 +115,4 @@ const deletePost = (req, res) => {
         });
       });
     });
-  });
-};
-
-module.exports = deletePost;
+*/
