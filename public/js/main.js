@@ -87,7 +87,26 @@ function interact(action, postId) {
     }
 }
 
+function interactComment(action, userId, postId, commentId) {
 
+    if (!action || !userId || !postId || !commentId) {
+        alert('Missing parameters')
+        return;
+    }
+
+    fetch(`/${action}-comment`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, postId, commentId })
+    })
+        .then(res => res.json())
+        .then(data => {
+            alert(data.msg + '\ncheck if like --> dislike or # \n\nTOOD: increment the counter without refresh')
+            //  window.location.reload()
+        })
+        .catch(err => console.log(err)
+        )
+}
 
 ///theeeeeeeme
 const light = document.querySelector('.light-btn')

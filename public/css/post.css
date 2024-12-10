@@ -16,15 +16,16 @@ article {
     margin: 20px auto;
 }
 
-.container h2 {
+article> h2 {
     font-size: 2em;
     color: #333;
+    text-align: center;
 }
 
 .post-author {
     font-size: 13px;
     margin: 0;
-    background: #dcdddd;
+    background-color: #dcdddd;
     border-bottom: 3px solid #b2b6c4;
     color: #555;
     padding: 0 5px;
@@ -54,6 +55,10 @@ article {
 .post-details .stats p {
     margin: 5px 0;
     display: inline-block;
+    background-color: #403e3e;
+    padding: 2px 18px;
+    border-radius: 30px;
+  
 }
 
 .btns {
@@ -117,7 +122,7 @@ article {
 }
 
 .comment>div:nth-child(1) {
-    background: #41597b;
+    background-color: #41597b;
     color: #eee;
     padding: 5px;
     border-radius: 5px;
@@ -157,10 +162,11 @@ article {
     padding: 0 15px;
     transition: background-color 0.3s;
     position: relative;
+    color: #eee;
 }
 
 .comment .interact button:hover {
-    background: #555444;
+    background-color: #555444;
 }
 .comment .interact button:nth-child(1)::before {
     content: "";
@@ -169,17 +175,16 @@ article {
     right: -4px;
     width: 4px;
     height: 100%;
-    background: #333;
-}
+    background-color: #333;
+} 
 .comment .interact button span{
     margin-left: 5px;
-    color: #eee;
     font-size: 15px;
 }
 .comment .like, .comment .dislike {
     height: 27px;
     border: none;
-    background: transparent;
+    background-color: transparent;
     cursor: pointer;
     border-radius: 26px;
 }
@@ -214,6 +219,19 @@ article {
     border-bottom: 1px solid #eee;
     color: #eee;
 }
+
+
+
+.liked {
+    border-color: var(--like) !important;
+    color: var(--like) !important;
+}
+
+.disliked {
+    color: var(--dislike) !important;
+    border-color: var(--dislike) !important;
+}
+
 
 @media (prefers-color-scheme: dark) {
 

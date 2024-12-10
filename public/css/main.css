@@ -4,6 +4,7 @@
     --blue: #456282;
     --dark: #222;
     --like: #66f466;
+    --dislike: crimson;
 }
 
 a {
@@ -246,13 +247,13 @@ footer p {
 
 
 .liked {
-    border-color: var(--like);
-    color: var(--like);
+    border-color: var(--like) !important;
+    color: var(--like) !important;
 }
 
 .disliked {
-    color: crimson;
-    border-color: crimson;
+    color: var(--dislike) !important;
+    border-color: var(--dislike) !important;
 }
 
 
