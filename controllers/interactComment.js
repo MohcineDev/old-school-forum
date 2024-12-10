@@ -7,10 +7,14 @@ const interactComment = (req, res, url) => {
     let body = ''
     req.on('data', chunk => body += chunk)
 
-    ///check if alreadt interacted
-    //           'INSERT INTO likes (user_id, post_id, comment_id, is_comment) values (?, ?, ?, 1)'
-    const query = `INSERT INTO ${table} (user_id, post_id, comment_id, is_comment) VALUES (?, ?, ?, 1)`
-    req.on('end', () => {
+    ///check if already interacted
+    const checkIfInteracted = `select id from ${table} where user_id = ? and comment_id = ? and is_comment = 1`
+    ///remove interaction from the opoosite table // TODO : check if exist before...
+    const removeInversInteraction = `DELETE FROM  ${table == 'likes' ? 'dislikes' : 'likes'} WHERE user_id = ? and comment_id = ? and is_comment = 1`
+    ///insert like/dislike
+    const insertQuery = `INSERT INTO ${table} (user_id, post_id, comment_id, is_comment) VALUES (?, ?, ?, 1)`
+
+    req.on('end', async () => {
         // Try-catch for safe JSON parsing
         let parsedBody;
         try {
@@ -30,41 +34,42 @@ const interactComment = (req, res, url) => {
             res.end(JSON.stringify({ msg: "Bad request. Missing parameters." }));
             return;
         }
-        db.serialize(() => {
-
-            db.get(`select id from ${table} where user_id=? and post_id= ? and comment_id =? and is_comment = 1`, [userId, postId, commentId], (err, row) => {
-                if (err) {
-                    console.log('check error')
-                    res.writeHead(500, { 'Content-Type': 'application/json' })
-                    res.end(JSON.stringify({ msg: 'something happend ', err }))
-                    return
-                }
-                if (row) {
-                    res.writeHead(200, { 'Content-Type': 'application/json' })
-                    res.end(JSON.stringify({ msg: 'already interacted!!!' }))
-                    return
+        // db.serialize(() => {
+        const execQuery = (method, q, data, r) =>
+            new Promise((resolve, reject) => {
+                if (method === "GET") {
+                    db.get(q, data, (err, row) => {
+                        err ? reject(err+" "+ r) : resolve(row)
+                    })
                 } else {
 
-                    //insert to like / dislike table
-                    db.run(query, [userId, postId, commentId], err => {
-                        if (err) {
-                            console.log('like comment error!!')
-                            res.writeHead(500, { 'Content-Type': 'application/json' })
-                            res.end(JSON.stringify({ msg: "internal server error!!" }))
-                            return
-                        }
-
-                        res.writeHead(200, { 'Content-Type': 'application/json' })
-                        res.end(JSON.stringify({ msg: "done successfully!!" }))
+                    db.all(q, data, (err, row) => {
+                        err ? reject(err+" "+ r) : resolve(row)
                     })
-
                 }
             })
 
-        })
+        try {
+            const row = await execQuery('GET', checkIfInteracted, [userId, commentId], '000')
+            ///if already interacted
+            if (row) {
+                console.log('hi from row')
+                res.writeHead(200, { 'Content-Type': 'application/json' })
+                res.end(JSON.stringify({ msg: 'already interacted!!!' }))
+                return
+                ///if not -- add it to the selected table and remove it from the opposite
+            } else {
+                await execQuery('RUN', insertQuery, [userId, postId, commentId], '111')
+                await execQuery('RUN', removeInversInteraction, [userId, commentId], '222')
+                res.writeHead(200, { 'Content-Type': 'application/json' })
+                res.end(JSON.stringify({ msg: "done successfully!!" }))
+            }
+        } catch (err) {
+            res.writeHead(500, { 'Content-Type': 'application/json' })
+            res.end(JSON.stringify({ msg: 'sometiiiing از happend '+ err }))
+
+        }
     })
-
-
 }
 
 module.exports = interactComment;

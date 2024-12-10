@@ -54,7 +54,7 @@ const appendBtns = (parent, child, attributes, txt) => {
 }
 
 
-// Interaction functions for like/dislike
+// POST  Interaction functions for like/dislike
 function interact(action, postId) { 
     console.log('hi from interact');
 
@@ -86,7 +86,7 @@ function interact(action, postId) {
             .catch((error) => alert("Error interacting with post: " + error.msg))
     }
 }
-
+///COMMENTSSS
 function interactComment(action, userId, postId, commentId) {
 
     if (!action || !userId || !postId || !commentId) {

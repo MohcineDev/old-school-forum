@@ -10,14 +10,14 @@ const getPosts = async (req, res) => {
            COUNT(DISTINCT comments.id) AS comments  -- Count unique comments
     FROM posts
     LEFT JOIN users ON posts.user_id = users.id  -- Join posts with users table to get the username
-    LEFT JOIN likes ON posts.id = likes.post_id
+    LEFT JOIN likes ON posts.id = likes.post_id  and likes.is_comment = 0
     LEFT JOIN dislikes ON posts.id = dislikes.post_id
     LEFT JOIN comments ON posts.id = comments.post_id
     LEFT JOIN post_categories ON posts.id = post_categories.post_id  
     LEFT JOIN categories ON post_categories.category_id = categories.id
     GROUP BY posts.id
   `;
-
+//TODO :  and dislike.is_comment = 0
   ////get user ids in like / # table
   const likedUsers = `select user_id, post_id from likes where is_comment = 0`
   const dislikedUsers = `select user_id, post_id from dislikes where is_comment = 0`
