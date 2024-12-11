@@ -1,5 +1,6 @@
 
 // Fetch categories from the backend
+
 fetch('/categories')
     .then(response => response.json())
     .then(cats => {

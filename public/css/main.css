@@ -90,8 +90,7 @@ header, footer {
 
 section.container {
     max-width: var(--m-width);
-    margin: auto;
-    min-height: 100vh;
+    margin: auto; 
 }
 
 h1 {

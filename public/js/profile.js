@@ -1,5 +1,6 @@
 const edit = document.querySelector('#edit')
 const save = document.querySelector('.save')
+const postsWrapper = document.querySelector('.posts .wrapper')
 
 if (!userId) {
     alert('You must be logged in to access this page')
@@ -55,4 +56,37 @@ save.onclick = () => {
 }
 
 
+function getPosts() {
+    fetch(`/get-user-posts/${userId}`, {
+        method: 'POST'
+    }).then(res => res.json())
+        .then(data => injectPosts(data))
 
+}
+
+
+
+function injectPosts(posts) {
+    posts.forEach(post => {
+
+        const card = document.createElement('div')
+        const h3 = document.createElement('h3')
+        const p = document.createElement('p')
+        const span = document.createElement('span')
+
+
+        h3.textContent = post.title
+        p.textContent = post.content
+        span.textContent = post.created_at
+
+        card.appendChild(h3)
+        card.appendChild(p)
+        card.appendChild(span)
+        card.appendChild(span)
+
+        postsWrapper.appendChild(card)
+    })
+
+}
+
+getPosts()

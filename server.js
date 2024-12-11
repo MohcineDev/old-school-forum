@@ -17,7 +17,8 @@ const deletePost = require("./controllers/handlePostDelete");
 const profileRoute = require('./routes/profileRoute');
 const updateUser = require("./controllers/updateUser");
 const addComment = require("./controllers/addComment");
-const interactComment = require('./routes/interactCommentRoutes')
+const interactComment = require('./routes/interactCommentRoutes');
+const getUserPosts = require("./routes/getUserPosts");
 // Initialize the database tables
 initializeDatabase()
 
@@ -53,7 +54,7 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (req.method === "GET" && req.url === "/") {
-    const filePath = path.join(__dirname, "public", "index.html")
+    const filePath = path.join(__dirname, "public/views", "index.html")
 
     fs.readFile(filePath, "utf8", (err, data) => {
       if (err) {
@@ -76,7 +77,7 @@ const server = http.createServer(async (req, res) => {
 
 
   else if (req.url.startsWith("/post/")) {
-    const filePath = path.join(__dirname, "public", "post.html")
+    const filePath = path.join(__dirname, "public/views", "post.html")
 
     fs.readFile(filePath, "utf8", (err, data) => {
       if (err) {
@@ -90,7 +91,7 @@ const server = http.createServer(async (req, res) => {
     })
   }
   else if (req.method === "GET" && req.url === "/register") {
-    const filePath = path.join(__dirname, "public", "register.html")
+    const filePath = path.join(__dirname, "public/views", "register.html")
 
     fs.readFile(filePath, "utf8", (err, data) => {
       if (err) {
@@ -104,7 +105,7 @@ const server = http.createServer(async (req, res) => {
     })
   }
   else if (req.method === "GET" && req.url === "/login") {
-    const filePath = path.join(__dirname, "public", "login.html")
+    const filePath = path.join(__dirname, "public/views", "login.html")
 
     fs.readFile(filePath, "utf8", (err, data) => {
       if (err) {
@@ -121,7 +122,7 @@ const server = http.createServer(async (req, res) => {
   ////serve profile pega
   ///
   else if (req.method === "GET" && req.url === "/profile") {
-    const filePath = path.join(__dirname, "public", "profile.html")
+    const filePath = path.join(__dirname, "public/views", "profile.html")
     fs.readFile(filePath, "utf8", (err, data) => {
       if (err) {
         res.writeHead(500, { "Content-Type": "text/plain" })
@@ -172,7 +173,12 @@ const server = http.createServer(async (req, res) => {
     addComment(req, res);  // 
   }
   else if (req.method === 'POST' && (req.url.startsWith("/like-comment") || req.url.startsWith("/dislike-comment"))) {
-    interactComment(req, res);  // 
+    interactComment(req, res);  //  
+
+  }
+  else if (req.method === "POST" && req.url.startsWith('/get-user-posts')){
+
+    getUserPosts(req, res)
   }
   else {
     res.writeHead(404, { "Content-Type": "application/json" })
