@@ -11,11 +11,10 @@ const createPost = (req, res) => {
 
   req.on("end", () => {
     try {
-      const { user_id, title, content, categories } = JSON.parse(body); // Expecting 'categories' as an array of category IDs
-
+      const { userId, postTitle, postDesc, categories } = JSON.parse(body); // Expecting 'categories' as an array of category IDs
       // Validate input
       //|| !Array.isArray(categories) || categories.length === 0
-      if (!user_id || !title || !content ) {
+      if (!userId || !postTitle || !postDesc) {
         res.writeHead(400, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ message: "All fields (title, content) are required" }));
         return;
@@ -23,7 +22,7 @@ const createPost = (req, res) => {
 
       // Insert into the posts table
       const postQuery = `INSERT INTO posts (user_id, title, content) VALUES (?, ?, ?)`;
-      db.run(postQuery, [user_id, title, content], function (err) {
+      db.run(postQuery, [userId, postTitle, postDesc], function (err) {
         if (err) {
           console.error("Database Error:", err);
           res.writeHead(500, { "Content-Type": "application/json" });

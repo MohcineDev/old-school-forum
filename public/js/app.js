@@ -2,57 +2,39 @@ import { postForm } from '../components/postForm.js';
 
 const postsContainer = document.getElementById("postsContainer")
 const createPost = document.getElementById("postFormContainer")
-let asideCategories = document.querySelector(".categories")
-//scroll to top
-const scrollTop = document.querySelector('#up')
-const height = innerHeight
+let asideCategories = document.querySelector("aside .categories")
+let aside = document.querySelector("aside ")
+
+
 
 if (userId) {
     // Add post form for logged-in users
-    createPost.innerHTML = postForm()
     //
     ////create post 
     // Handle post submission
+    createPost.innerHTML = postForm([])
     // 
-
-    document.getElementById("createPostForm").addEventListener("submit", function (event) {
-        event.preventDefault()
-
-        const title = document.getElementById("title").value.trim()
-        const content = document.getElementById("content").value.trim()
-        const selectedCategories = Array.from(document.querySelectorAll('input[type=checkbox]:checked'), elem => elem.value)
-        const userId = localStorage.getItem("user_id")
-
-        fetch("/create-post", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: userId, title, content, categories: selectedCategories })
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                alert(data.message)
-                window.location.reload()
-            })
-            .catch((error) => alert("Error creating post: " + error.message))
-    })
 }
 else {
     console.log('Whaaat...!!')
 }
-
 // Import formatDistanceToNow from date-fns
 // Fetch and display posts
 let postsData = {}
 
-fetch("/posts")
-    .then((response) => response.json())
-    .then(({ posts, likesIds, dislikesIds }) => {
-        postsData = { posts, likesIds, dislikesIds };
-        document.getElementById('loader').style.display = 'none';
 
-        listPosts(posts)
-    })
-    .catch((error) => console.error("Error fetching posts:", error))
+function getPosts() {
+
+    fetch("/posts")
+        .then((response) => response.json())
+        .then(({ posts, likesIds, dislikesIds }) => {
+            postsData = { posts, likesIds, dislikesIds };
+            document.getElementById('loader').style.display = 'none';
+
+            listPosts(posts)
+        })
+        .catch((error) => console.error("Error fetching posts:", error))
+}
 
 
 // Fetch categories from the backend
@@ -62,7 +44,7 @@ fetch('/categories')
         ////category Tags used in the form for post creation 
         const categoryTags = document.querySelector(".category-tags")
         ///categories used for filtering posts
-        asideCategories = document.querySelector(".categories")
+        //  asideCategories = document.querySelector(".categories")
 
         appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }, { class: ['active'] }], 'All')
         categories.forEach(category => {
@@ -84,7 +66,6 @@ fetch('/categories')
         appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }], 'uncategorised')
     })
     .catch(error => console.error("Error fetching categories:", error))
-
 // Interaction functions for like/dislike
 function interact(action, postId) {
     console.log('hi from interact');
@@ -121,13 +102,50 @@ function interact(action, postId) {
 ///// Make it the interact function available globally so it can be used with the onclick event
 window.interact = interact;
 
-const btnDown = (e) => {
-    removeClass(asideCategories.querySelectorAll('button'))
+function handleFormSubmition(z) {
+    // document.getElementById("createPostForm").addEventListener("submit", function (event) {
+    z.preventDefault()
 
+    let title = document.getElementById("title")
+    let content = document.getElementById("content")
+    const selectedCategories = Array.from(document.querySelectorAll('input[type=checkbox]:checked'), elem => elem.value)
+
+    let postTitle = title?.value.trim()
+    let postDesc = content?.value.trim()
+
+    if (!postTitle || !postDesc) {
+        alert('please enter post title and description!!')
+        return
+    }
+    fetch("/create-post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, postTitle, postDesc, categories: selectedCategories })
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            alert(data.message)
+            ///implementation of SPA
+            //window.location.reload()
+            getPosts()
+
+            title.value = ""
+            content.value = ""
+        })
+        .catch((error) => alert("Error creating post: " + error.message))
+    // })
+}
+window.handleFormSubmition = handleFormSubmition
+
+const btnDown = (e) => {
+    removeClass(aside.querySelectorAll('button'))
     e.target.classList.add('active')
-    e.target.textContent === 'All' ?
-        listPosts(postsData.posts) : e.target.textContent === 'uncategorised' ? listPosts(postsData.posts.filter(post => post.categories == null ? post : null)) :
-            listPosts(postsData.posts.filter(post => post.categories ? post.categories.includes(e.target.textContent) : null))
+
+    e.target.textContent === "ASC" ? listPosts(postsData.posts.sort((a, b) => a.likes - b.likes))
+    : e.target.textContent === "DESC" ? listPosts(postsData.posts.sort((a, b) => b.likes - a.likes))
+        : e.target.textContent === 'All' ?
+            listPosts(postsData.posts) : e.target.textContent === 'uncategorised' ? listPosts(postsData.posts.filter(post => post.categories == null ? post : null)) :
+                listPosts(postsData.posts.filter(post => post.categories ? post.categories.includes(e.target.textContent) : null))
 }
 
 const aa = () => {
@@ -138,8 +156,7 @@ const aa = () => {
 window.btnDown = btnDown
 
 function listPosts(posts) {
-
-    ///clear the prev content
+    console.log(posts)
     postsContainer.innerHTML = ''
     postsContainer.innerHTML = posts.length
         ? posts
@@ -181,22 +198,5 @@ function listPosts(posts) {
 const removeClass = (btns) => {
     btns.forEach(btn => btn.classList.remove('active'))
 }
-///scroll
 
-document.addEventListener('scroll', () => {
-
-    if (scrollY >= height * 2) {
-        scrollTop.style.display = 'block'
-    }
-    else
-        scrollTop.style.display = 'none'
-})
-
-scrollTop.addEventListener('click', () => {
-
-    scroll({
-        top: 0,
-        behavior: "smooth"
-    })
-
-})
+getPosts()

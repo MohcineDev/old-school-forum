@@ -74,6 +74,21 @@ form input[type="text"], form textarea {
     animation: bounce 0.3s linear;
 }
 
+@keyframes bounce {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(5px);
+    }
+
+    100% {
+        transform: translateY(0px);
+
+    }
+}
+
 
 form button:hover {
     background-color: #333;
@@ -155,33 +170,47 @@ hr {
 }
 
 /* ///filter */
-.categories {
-    background: var(--blue);
-    padding: 10px 0;
+aside {
     position: sticky;
     top: 10%;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     margin-top: 25px;
+
 }
 
-.active {
-    background-color: #222 !important;
-    color: #eee;
+.categories, .by-likes {
+    background: var(--blue);
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    position: relative;
 }
 
-.categories svg {
+
+aside svg {
     position: absolute;
     width: 100%;
 }
-.categories svg:nth-of-type(1) {
-    top: 0;
+
+.categories svg:nth-of-type(1),
+.by-likes svg:nth-of-type(1) {
+    top: 2px;
     transform: translateY(-100%);
 }
-.categories svg:nth-of-type(2) {
+
+.categories svg:nth-of-type(2),
+.by-likes svg:nth-of-type(2) {
     transform: translateY(100%) rotate(180deg);
-    bottom: 0;
+    bottom: 2px;
 }
-.categories button {
+
+.categories>span, .by-likes>span {
+    text-align: center;
+    display: block;
+    color: #eee;
+    border-bottom: 1px dotted #fff;
+    padding: 5px 0;
+}
+
+aside button {
     display: block;
     width: 100%;
     margin: 5px 0;
@@ -194,11 +223,21 @@ hr {
     text-transform: capitalize;
 }
 
-.categories button:hover {
+aside button:hover {
     background-color: #eee7e7;
     transform: translateX(4px);
 }
 
+.by-likes {
+    margin-top: 50px;
+}
+
+.active {
+    background-color: #222 !important;
+    color: #eee;
+}
+
+/* ///scroll */
 .up {
     position: absolute;
     width: 20px;
@@ -206,21 +245,6 @@ hr {
     background: red;
     bottom: 0;
     right: 0;
-}
-
-@keyframes bounce {
-    0% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(5px);
-    }
-
-    100% {
-        transform: translateY(0px);
-
-    }
 }
 
 #up {

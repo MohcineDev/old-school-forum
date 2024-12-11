@@ -1,11 +1,16 @@
+
 // Check if user is logged in
 const userId = localStorage.getItem("user_id")
 console.log(userId);
+//scroll to top
+const scrollTop = document.querySelector('#up')
+const height = innerHeight
 
 const profileLink = document.querySelector('.profile')
 const registerLink = document.getElementById("registerLink")
 const loginLink = document.getElementById("loginLink")
 const logoutButton = document.getElementById("logoutButton")
+
 
 if (userId) {
     ///set the usrename
@@ -55,7 +60,7 @@ const appendBtns = (parent, child, attributes, txt) => {
 
 
 // POST  Interaction functions for like/dislike
-function interact(action, postId) { 
+function interact(action, postId) {
     console.log('hi from interact');
 
     if (action === 'delete') {
@@ -89,23 +94,30 @@ function interact(action, postId) {
 ///COMMENTSSS
 function interactComment(action, userId, postId, commentId) {
 
-    if (!action || !userId || !postId || !commentId) {
-        alert('Missing parameters')
-        return;
-    }
+    if (userId && typeof (parseInt(userId)) == 'number') {
 
-    fetch(`/${action}-comment`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, postId, commentId })
-    })
-        .then(res => res.json())
-        .then(data => {
-            alert(data.msg + '\ncheck if like --> dislike or # \n\nTOOD: increment the counter without refresh')
-            //  window.location.reload()
+        if (!action || !userId || !postId || !commentId) {
+            alert('Missing parameters')
+            return;
+        }
+
+        fetch(`/${action}-comment`, {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId, postId, commentId })
         })
-        .catch(err => console.log(err)
-        )
+            .then(res => res.json())
+            .then(data => {
+                alert(data.msg + '\ncheck if like --> dislike or # \n\nTOOD: increment the counter without refresh')
+                //  window.location.reload()
+            })
+            .catch(err => console.log(err)
+            )
+    }
+    else {
+        alert(`please Login to ${action} the comment`)
+        return
+    }
 }
 
 ///theeeeeeeme
@@ -128,7 +140,7 @@ else applyDark()
 
 
 ///this is Optional Chaining
-light ?.addEventListener('click', (e) => {
+light?.addEventListener('click', (e) => {
     localStorage.setItem("preferedtheme", "light")
     applyLight()
 })
@@ -138,3 +150,26 @@ dark && dark.addEventListener('click', (e) => {
     localStorage.setItem("preferedtheme", "dark")
     applyDark()
 })
+
+
+
+///scroll
+scrollTop ?
+    document.addEventListener('scroll', () => {
+
+        if (scrollY >= height * 2) {
+            scrollTop.style.display = 'block'
+        }
+        else
+            scrollTop.style.display = 'none'
+    }) : null
+
+scrollTop?.addEventListener('click', () => {
+
+    scroll({
+        top: 0,
+        behavior: "smooth"
+    })
+
+})
+

@@ -24,9 +24,6 @@ if (!userId) {
             console.error('Error fetching profile details:', error)
             alert('Error loading profile details')
         })
-
-
-    
 }
 
 edit.addEventListener('change', (e) => {
@@ -56,4 +53,6 @@ save.onclick = () => {
         }
         )
 }
+
+
 

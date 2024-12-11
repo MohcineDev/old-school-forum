@@ -3,7 +3,8 @@
     min-height: 100vh;
 
 }
-.wrapper{
+
+.wrapper {
     width: 100%;
     max-width: 400px;
     margin: 50px auto;
@@ -11,6 +12,11 @@
     background-color: #fff;
     border: 1px solid #ddd;
     box-shadow: 0 2px 10px rgba(245, 209, 209, 0.1);
+}
+
+.wrapper #msg {
+    color: #aaa;
+    font-size: 12px;
 }
 
 .container h2 {
@@ -33,7 +39,6 @@
 .form-group input {
     font-size: 1.1em;
     width: 100%;
-
 }
 
 button {
@@ -52,6 +57,10 @@ button:hover {
     background-color: #222;
 }
 
+.wrapper>p a {
+    border-bottom: 1px solid #333;
+}
+
 /* Register link */
 p {
     text-align: center;
@@ -62,4 +71,3 @@ p a {
     color: #444;
     text-decoration: none;
 }
- 
