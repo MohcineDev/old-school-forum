@@ -1,6 +1,6 @@
 import { postForm } from '../components/postForm.js';
 
-const postsContainer = document.getElementById("postsContainer")
+const postsWrapper = document.querySelector("#postsContainer .wrapper")
 const createPost = document.getElementById("postFormContainer")
 let asideCategories = document.querySelector("aside .categories")
 let aside = document.querySelector("aside ")
@@ -75,14 +75,15 @@ function interact(action, postId) {
             fetch(`/post_delete/${postId}`, {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
+                //TODO : remove
                 body: JSON.stringify({ user_id: userId, post_id: postId }),
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    alert(data.message)
+                    alert(data.msg)
                     window.location.reload()
                 })
-                .catch((error) => alert("Error interacting with post: " + error.message)) : null
+                .catch((error) => alert("Error interacting with post: " + error.msg)) : null
     } else {
 
         fetch(`/${action}`, {
@@ -157,8 +158,8 @@ window.btnDown = btnDown
 
 function listPosts(posts) {
     console.log(posts)
-    postsContainer.innerHTML = ''
-    postsContainer.innerHTML = posts.length
+    postsWrapper.innerHTML = ''
+    postsWrapper.innerHTML = posts.length
         ? posts
             .map((post) => {
                 return `

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
 /* Global Styles */
 :root {
     --m-width: 1200px;
@@ -20,6 +22,11 @@ body {
     background-color: var(--dark);
     line-height: 1.6;
     min-height: 100vh;
+}
+
+h2, h3 {
+    font-family: "Josefin Sans", sans-serif;
+    color: #eee;
 }
 
 .theme {
@@ -90,7 +97,7 @@ header, footer {
 
 section.container {
     max-width: var(--m-width);
-    margin: auto; 
+    margin: auto;
 }
 
 h1 {
@@ -113,13 +120,15 @@ nav {
     position: sticky;
     top: 0;
     z-index: 2;
-    box-shadow:0 0px 5px #222 inset, 0 0px 5px #222;
+    box-shadow: 0 0px 5px #222 inset, 0 0px 5px #222;
     border-radius: 0 0 15px 15px;
 }
+
 .dark nav {
-    box-shadow:0 0px 5px #eee inset, 0 0px 5px #eee;
+    box-shadow: 0 0px 5px #eee inset, 0 0px 5px #eee;
 
 }
+
 .links {
     display: flex;
     align-items: center;
@@ -166,7 +175,7 @@ textarea {
 /* Button Styles */
 .btn {
     background-color: #444;
-    color:#eee;
+    color: #eee;
     padding: 10px 15px;
     border: none;
     cursor: pointer;

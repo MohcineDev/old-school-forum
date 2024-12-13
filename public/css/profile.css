@@ -1,4 +1,4 @@
-h1 {
+h2 {
     color: #fff;
 }
 
@@ -26,11 +26,13 @@ input {
 .todo-comment {
     color: #90b090;
 }
-.posts{
 
-    color: #eee ;
+.posts {
+
+    color: #eee;
 }
-.posts .wrapper{
+
+.posts .wrapper {
     max-width: var(--m-width);
     margin: auto;
     display: grid;
@@ -43,6 +45,18 @@ input {
     padding: 10px;
     border-radius: 5px;
     box-shadow: 2px 4px 6px #111;
+}
+
+.post {
+    position: relative;
+}
+
+.post svg {
+    position: absolute;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
 }
 
 .posts span {

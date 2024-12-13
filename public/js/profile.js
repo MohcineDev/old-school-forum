@@ -70,9 +70,20 @@ function injectPosts(posts) {
     posts.forEach(post => {
 
         const card = document.createElement('div')
+        card.classList.add('post')
         const h3 = document.createElement('h3')
         const p = document.createElement('p')
         const span = document.createElement('span')
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+        svg.setAttribute('fill', 'red');
+        svg.setAttribute('id', post.id);
+        svg.setAttribute('stroke', 'currentColor');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('stroke-width', '1.5');
+        svg.setAttribute('title', 'delete post');
+        svg.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>`
+
 
 
         h3.textContent = post.title
@@ -82,11 +93,35 @@ function injectPosts(posts) {
         card.appendChild(h3)
         card.appendChild(p)
         card.appendChild(span)
-        card.appendChild(span)
+        card.appendChild(svg)
 
         postsWrapper.appendChild(card)
     })
 
+    deleteEvent()
+
 }
 
 getPosts()
+
+
+const deleteEvent = () => {
+    document.querySelectorAll('.post>svg').forEach(btn => btn.addEventListener('click', (e) => {
+            if (typeof (parseInt(e.target.id)) === 'number') {
+            confirm("Are you sure? This post might haunt you!") ?
+
+                fetch(`/post_delete/${e.target.id}`, {
+                    method: 'delete'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert(data.msg)
+                        window.location.reload()
+                    })
+                    .catch(err => {
+                        alert(err.msg)
+                        // alert("something wrong! " + err.msg)
+                    }) : null
+        }
+    }))
+}

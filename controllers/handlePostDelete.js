@@ -5,7 +5,7 @@ const deletePost = (req, res) => {
 
   if (!postId) {
     res.writeHead(400, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ message: "Post ID is required" }));
+    res.end(JSON.stringify({ msg: "Post ID is required" }));
     return;
   }
 
@@ -15,13 +15,13 @@ const deletePost = (req, res) => {
     if (err) {
       console.error("Database Error:", err);
       res.writeHead(500, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ message: "Database error" }));
+      res.end(JSON.stringify({ msg: "Database error" }));
       return;
     }
 
     if (!row) {
       res.writeHead(404, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ message: "Post not found" }));
+      res.end(JSON.stringify({ msg: "Post not found" }));
       return;
     }
 
@@ -51,7 +51,7 @@ const deletePost = (req, res) => {
       await runQuery(deletePostQuery, postId)
       // Respond with a success message
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ message: "Post deleted successfully" }));
+      res.end(JSON.stringify({ msg: "Post deleted successfully" }));
 
     } catch (err) {
       console.error("Error deleting ...:", err);
