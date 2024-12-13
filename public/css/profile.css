@@ -18,7 +18,7 @@ input {
     user-select: none;
 }
 
-.wrapper span {
+.wrapper p span {
     display: inline-block;
     min-width: 100px;
 }
@@ -28,7 +28,8 @@ input {
 }
 
 .posts {
-
+    width: var(--m-width);
+    margin: auto;
     color: #eee;
 }
 
@@ -40,18 +41,34 @@ input {
     gap: 25px;
 }
 
-.posts .wrapper div {
+.posts .wrapper .post {
     background: #456282;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 2px 4px 6px #111;
-}
-
-.post {
     position: relative;
+    /* to keep the details at the bottom */
+    display: grid;
+    grid-template-rows: 1fr auto;
 }
 
-.post svg {
+.details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.details div {
+    display: flex;
+    align-items: center;
+
+}
+
+.details div span {
+    margin: 5px;
+}
+
+.post>svg {
     position: absolute;
     position: absolute;
     top: 5px;
@@ -60,6 +77,6 @@ input {
 }
 
 .posts span {
-    font-size: 12px;
-    color: #aaa;
+    font-size: 14px;
+    color: #fff;
 }

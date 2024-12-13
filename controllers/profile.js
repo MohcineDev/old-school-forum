@@ -3,6 +3,7 @@ const { db } = require("../db/init");
 const handleProfile = (req, res, id) => {
 
     const query = `SELECT * FROM users WHERE id = ?`
+
     db.get(
         query,
         [id],

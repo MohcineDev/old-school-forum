@@ -3,10 +3,15 @@ const { db } = require('../db/init')
 
 async function getUserPostsCon(req, res) {
 
-    const q = 'select * from posts where user_id = ?'
+//    const q = 'select * from posts where user_id = ?'
+
+    const query = `SELECT count(likes.id) T_likes, posts.* FROM posts left JOIN likes 
+    on posts.id = likes.post_id and likes.is_comment = 0 
+    where posts.user_id = ? group by (posts.id);`
+
     const userId = req.url.split('/')[2]
     try {
-        const rows = await getPosts(q, userId)
+        const rows = await getPosts(query, userId)
 
         res.writeHead(200, 'nadi', { 'Content-Type': 'application/json' })
         res.end(JSON.stringify(rows))
