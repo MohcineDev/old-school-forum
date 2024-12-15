@@ -4,15 +4,23 @@ const article = document.querySelector('article')
 const postId = document.location.pathname.split('/post/')[1]
 const addComment = document.querySelector('.add-comment button')
 const textarea = document.querySelector('.add-comment textarea')
+const commentSection = document.querySelector('#comments')
 
-fetch(`/get-post/${postId}`, {
-    method: 'post',
-    body: JSON.stringify({ userId })
-})
-    .then(res => res.json())
-    .then(data => injectData(data))
-    .catch(err => alert("somethingg internal went wrong!! :(", err))
+function getPost() {
 
+    fetch(`/get-post/${postId}`, {
+        method: 'post',
+        body: JSON.stringify({ userId })
+    })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('loader').style.display = 'none'
+            injectData(data)
+
+        })
+        .catch(err => alert("somethingg internal went wrong!! :(", err))
+}
+getPost()
 function injectData(data) {
     console.log(data)
     // 
@@ -29,15 +37,16 @@ function injectData(data) {
     data.disliked ? article.querySelector('.post-details .dislike').classList.add('disliked') : null
 
     // Generate the comments HTML
-    const commentSection = document.querySelector('#comments')
     data.comments.length > 0 ? (
+        commentSection.querySelector('.wrapper').innerHTML = '',
         commentSection.querySelector('span').textContent = data.comments.length,
         data.comments.forEach(com => {
-            
-            const liked = data.commentsLikedUsers.some(elem => elem.user_id == userId && elem.c_id == com.id) ? 'liked': null
+
+            ///for styling
+            const liked = data.commentsLikedUsers.some(elem => elem.user_id == userId && elem.c_id == com.id) ? 'liked' : null
             const disliked = data.commentsDislikedUsers.some(elem => elem.user_id == userId && elem.c_id == com.id) ? 'disliked' : null
 
-            commentSection.innerHTML += CommentComp(com, data.countCommnetLikes, data.countCommnetDislikes, userId, postId, liked, disliked)
+            commentSection.querySelector('.wrapper').innerHTML += CommentComp(com, data.countCommnetLikes, data.countCommnetDislikes, userId, postId, liked, disliked)
             //             commentSection.innerHTML += `
             //       <div class="comment">
             //       <div>
@@ -64,27 +73,41 @@ function injectData(data) {
             // `
         })) : commentSection.innerHTML = "<span>no comments!!</span>"
 }
+
 function interactComment(action, userId, postId, commentId) {
-    console.log(userId, postId, commentId)
 
-    if (!action || !userId || !postId || !commentId) {
-        alert('Missing parameters')
-        return;
-    }
+    if (userId && typeof (parseInt(userId)) == 'number') {
 
-    fetch(`/${action}-comment`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, postId, commentId })
-    })
-        .then(res => res.json())
-        .then(data => {
-            alert(data.msg + '\ncheck if like --> dislike or # \n\nTOOD: increment the counter without refresh')
-            //  window.location.reload()
+        if (!action || !userId || !postId || !commentId) {
+            alert('Missing parameters')
+            return;
+        }
+
+        fetch(`/${action}-comment`, {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId, postId, commentId })
         })
-        .catch(err => console.log(err)
-        )
+            .then(res => res.json())
+            .then(data => {
+                // alert(data.msg + '\ncheck if like --> dislike or # \n\nTOOD: increment the counter without refresh')
+
+                let total = document.querySelector(`.comment .${action} span`)
+                total.textContent = parseInt(total.textContent) + 1
+                getPost()
+
+                //  window.location.reload()
+            })
+            .catch(err => console.log(err)
+            )
+    }
+    else {
+        alert(`please Login to ${action} the comment`)
+        return
+    }
 }
+window.interactComment = interactComment
+
 addComment.addEventListener('click', () => {
     if (!userId) {
         alert('please login to add a comment!!')
@@ -109,7 +132,8 @@ addComment.addEventListener('click', () => {
 /// inject like btns if the user logged in
 
 function addBtns(post) {
-
+    article.querySelector('.interact div').innerHTML = ''
+    article.querySelector('.interact .remove').innerHTML = ''
     if (userId) {
         //    article.querySelector('.post-details .like').setAttribute('onclick', `interact('like', ${ data.post.id })`)
 

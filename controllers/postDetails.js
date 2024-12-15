@@ -18,7 +18,7 @@ SELECT posts.id, posts.user_id, posts.title, posts.content, posts.created_at,
 FROM posts
 LEFT JOIN users ON posts.user_id = users.id
 LEFT JOIN likes ON posts.id = likes.post_id and likes.is_comment = 0
-LEFT JOIN dislikes ON posts.id = dislikes.post_id
+LEFT JOIN dislikes ON posts.id = dislikes.post_id and dislikes.is_comment = 0
 LEFT JOIN comments ON posts.id = comments.post_id
 WHERE posts.id = ?
 GROUP BY posts.id

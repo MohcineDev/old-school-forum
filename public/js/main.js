@@ -92,33 +92,6 @@ function interact(action, postId) {
     }
 }
 ///COMMENTSSS
-function interactComment(action, userId, postId, commentId) {
-
-    if (userId && typeof (parseInt(userId)) == 'number') {
-
-        if (!action || !userId || !postId || !commentId) {
-            alert('Missing parameters')
-            return;
-        }
-
-        fetch(`/${action}-comment`, {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ userId, postId, commentId })
-        })
-            .then(res => res.json())
-            .then(data => {
-                alert(data.msg + '\ncheck if like --> dislike or # \n\nTOOD: increment the counter without refresh')
-                //  window.location.reload()
-            })
-            .catch(err => console.log(err)
-            )
-    }
-    else {
-        alert(`please Login to ${action} the comment`)
-        return
-    }
-}
 
 ///theeeeeeeme
 const light = document.querySelector('.light-btn')

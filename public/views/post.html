@@ -8,6 +8,38 @@
     <title>Post Details - Classic Forum</title>
     <link rel="stylesheet" href="/css/post.css">
     <link rel="stylesheet" href="/css/main.css">
+    <style>
+        /* Basic style for loading spinner */
+        .loader {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 8px solid #f3f3f3;
+            /* Light background */
+            border-top: 8px solid #3498db;
+            /* Blue color for spinner */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Hide the content until the posts are loaded */
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -35,7 +67,7 @@
             <div class="post-content">
                 <p></p>
             </div>
-           
+
             <div class="post-details">
                 <div class="stats">
 
@@ -56,11 +88,14 @@
                 <!-- Comment Section -->
                 <div id="comments">
                     <h2><span></span>&nbsp;Comments</h2>
+                    <div id="loader" class="loader"></div>
+                    <div class="wrapper">
 
+                    </div>
                 </div>
             </div>
         </article>
-     
+
 
     </main>
 
