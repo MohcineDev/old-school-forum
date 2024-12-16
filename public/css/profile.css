@@ -28,34 +28,45 @@ input {
 }
 
 .posts {
-    width: var(--m-width);
+    max-width: var(--m-width);
     margin: auto;
     color: #eee;
 }
 
 .posts .wrapper {
-    max-width: var(--m-width);
     margin: auto;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
     gap: 25px;
 }
 
 .posts .wrapper .post {
-    background: #456282;
-    padding: 10px;
+    background-color: #456282;
+    padding: 10px 10px 0px;
     border-radius: 10px;
-    box-shadow: 2px 4px 6px #111;
+    box-shadow: 2px 4px 6px #121b24;
     position: relative;
     /* to keep the details at the bottom */
     display: grid;
     grid-template-rows: 1fr auto;
+    transition: background-color 0.5s ease-in-out;
+    overflow: hidden;}
+
+.posts .wrapper .post:hover {
+    background-color: #283c53;
+}
+.posts .wrapper .post:hover>svg {
+    transform: rotate(180deg);
+    top: 5px;
 }
 
 .details {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #283c53;
+    padding: 0 5px;
+    border-radius: 7px 7px 0 0;
 }
 
 .details div {
@@ -70,10 +81,10 @@ input {
 
 .post>svg {
     position: absolute;
-    position: absolute;
-    top: 5px;
+    top: -20px;
     right: 5px;
     cursor: pointer;
+    transition: top 0.3s, transform 0.5s;
 }
 
 .posts span {

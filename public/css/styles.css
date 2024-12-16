@@ -170,31 +170,29 @@ aside {
     top: 10%;
     margin-top: 25px;
 
-}
-
-.categories, .by-likes {
     background: var(--blue);
-    padding: 10px 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    position: relative;
 }
-
 
 aside svg {
     position: absolute;
     width: 100%;
 }
 
-.categories svg:nth-of-type(1),
-.by-likes svg:nth-of-type(1) {
+aside svg:nth-of-type(1){
     top: 2px;
     transform: translateY(-100%);
 }
 
-.categories svg:nth-of-type(2),
-.by-likes svg:nth-of-type(2) {
+aside svg:nth-of-type(2) {
     transform: translateY(100%) rotate(180deg);
     bottom: 2px;
+}
+
+
+.categories, .by-likes {
+    padding: 10px 0;
+    position: relative;
 }
 
 .categories>span, .by-likes>span {
@@ -203,6 +201,8 @@ aside svg {
     color: #eee;
     border-bottom: 1px dotted #fff;
     padding: 5px 0;
+    font-weight: 700;
+
 }
 
 aside button {
@@ -222,11 +222,7 @@ aside button:hover {
     background-color: #eee7e7;
     transform: translateX(4px);
 }
-
-.by-likes {
-    margin-top: 50px;
-}
-
+ 
 .active {
     background-color: #222 !important;
     color: #eee;
