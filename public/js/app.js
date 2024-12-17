@@ -66,6 +66,8 @@ fetch('/categories')
         appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }], 'uncategorised')
     })
     .catch(error => console.error("Error fetching categories:", error))
+
+//TODO : remove
 // Interaction functions for like/dislike
 function interact(action, postId) {
     console.log('hi from interact');
@@ -101,7 +103,7 @@ function interact(action, postId) {
     }
 }
 ///// Make it the interact function available globally so it can be used with the onclick event
-window.interact = interact;
+//window.interact = interact;
 
 function handleFormSubmition(z) {
     // document.getElementById("createPostForm").addEventListener("submit", function (event) {
@@ -132,6 +134,7 @@ function handleFormSubmition(z) {
 
             title.value = ""
             content.value = ""
+            uncheck(document.querySelectorAll('input[type=checkbox]:checked'))
         })
         .catch((error) => alert("Error creating post: " + error.message))
     // })
@@ -143,10 +146,10 @@ const btnDown = (e) => {
     e.target.classList.add('active')
 
     e.target.textContent === "ASC" ? listPosts(postsData.posts.sort((a, b) => a.likes - b.likes))
-    : e.target.textContent === "DESC" ? listPosts(postsData.posts.sort((a, b) => b.likes - a.likes))
-        : e.target.textContent === 'All' ?
-            listPosts(postsData.posts) : e.target.textContent === 'uncategorised' ? listPosts(postsData.posts.filter(post => post.categories == null ? post : null)) :
-                listPosts(postsData.posts.filter(post => post.categories ? post.categories.includes(e.target.textContent) : null))
+        : e.target.textContent === "DESC" ? listPosts(postsData.posts.sort((a, b) => b.likes - a.likes))
+            : e.target.textContent === 'All' ?
+                listPosts(postsData.posts) : e.target.textContent === 'uncategorised' ? listPosts(postsData.posts.filter(post => post.categories == null ? post : null)) :
+                    listPosts(postsData.posts.filter(post => post.categories ? post.categories.includes(e.target.textContent) : null))
 }
 
 const aa = () => {
@@ -157,7 +160,6 @@ const aa = () => {
 window.btnDown = btnDown
 
 function listPosts(posts) {
-    console.log(posts)
     postsWrapper.innerHTML = ''
     postsWrapper.innerHTML = posts.length
         ? posts
@@ -169,9 +171,9 @@ function listPosts(posts) {
                <p>${post.content}</p>
                <p><em> ${post.categories != null ? `categories : ${post.categories}` : `this still haven't been already setting or in a specifiiilkk catergorieos...:) read this also m`}</em></p> 
                <div class="stats">
-                   <strong>Likes:</strong> ${post.likes} | 
-                   <strong>Dislikes:</strong> ${post.dislikes} | 
-                   <strong>Comments:</strong> ${post.comments}
+                   <strong title="total likes">Likes:</strong> ${post.likes} | 
+                   <strong title="total dislikes">Dislikes:</strong> ${post.dislikes} | 
+                   <strong title="total comments">Comments:</strong> ${post.comments}
                </div>
                <hr/>
                ${userId
@@ -199,5 +201,7 @@ function listPosts(posts) {
 const removeClass = (btns) => {
     btns.forEach(btn => btn.classList.remove('active'))
 }
-
+const uncheck = (boxes) => {
+    boxes.forEach(box => box.checked = false)
+}
 getPosts()

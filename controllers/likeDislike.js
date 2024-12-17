@@ -10,7 +10,6 @@ function getRow(q, data) {
 
 const handleLikeDislike = (req, res) => {
   const table = req.url === "/like" ? "likes" : "dislikes"; // Determine which table to insert into
-  console.log("table :", table);
 
   const likeDislikePostQuery = `INSERT INTO  ${table}  (user_id, post_id, is_comment) VALUES (?, ?, 0)`; // is_comment = 0 for post
   ///checck if the user already liked the post
@@ -29,7 +28,6 @@ const handleLikeDislike = (req, res) => {
       const getLikeDislikeRow = (q, data) => {
         return new Promise((resolve, reject) => {
           db.get(q, data, async (err, row) => {
-            console.log(q)
             if (err) {
               reject("internal errror: ", err)
             } else {

@@ -61,7 +61,7 @@ const appendBtns = (parent, child, attributes, txt) => {
 
 // POST  Interaction functions for like/dislike
 function interact(action, postId) {
-    console.log('hi from interact');
+    console.log('hi from interact / main');
 
     if (action === 'delete') {
         confirm("Are you sure? This post might haunt you!") ?
@@ -79,12 +79,12 @@ function interact(action, postId) {
     } else {
 
         fetch(`/${action}`, {
-            method: action == 'delete' ? "DELETE" : "POST",
+            method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ user_id: userId, post_id: postId }),
         })
-            .then((response) => response.json())
-            .then((data) => {
+            .then(response => response.json())
+            .then(data => {
                 alert(data.msg)
                 window.location.reload()
             })

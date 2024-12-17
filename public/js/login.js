@@ -2,6 +2,7 @@ const form = document.querySelector("form")
 form.addEventListener("submit", function (event) {
     event.preventDefault();
 
+    console.log('1231')
 
     // Capture form data
     const email = document.getElementById("email").value;
@@ -22,8 +23,8 @@ form.addEventListener("submit", function (event) {
         .then((data) => {
             console.log(data.message); // For debugging purposes
             // Redirect to the home page
-            localStorage.setItem("user_id", data.user.id); // Example
-            localStorage.setItem("username", data.user.username);
+           localStorage.setItem("user_id", data.user.id); // Example
+           localStorage.setItem("username", data.user.username);
             window.location.href = "/";
         })
         .catch((error) => console.error(error));
