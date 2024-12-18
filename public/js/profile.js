@@ -41,18 +41,17 @@ edit.addEventListener('change', (e) => {
 save.onclick = () => {
     ////for now only the username can change
     ///TODO : add other fields  
-    let name = document.querySelector('#username').value
-    console.log(name)
+    let newName = document.querySelector('#username').value
+
     fetch(`/update/${userId}`, {
-        method: "POST",
-        body: JSON.stringify({ newName: name })
+        method: "PUT",
+        body: JSON.stringify({ newName })
     })
         .then(res => res.json())
         .then(data => {
-            localStorage.setItem('username', name)
+            localStorage.setItem('username', newName)
             alert(data.message)
-        }
-        )
+        })
 }
 
 
@@ -64,6 +63,7 @@ function getPosts() {
 
 }
 
+////only user posts
 function injectPosts(posts) {
     console.log(posts);
 
@@ -123,7 +123,7 @@ function injectPosts(posts) {
 
 getPosts()
 
-
+///delete a post
 const deleteEvent = () => {
     document.querySelectorAll('.post>svg').forEach(btn => btn.addEventListener('click', (e) => {
         if (typeof (parseInt(e.target.id)) === 'number') {

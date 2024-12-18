@@ -15,7 +15,6 @@ const likeDislikeRoutes = require("./routes/likeDislikeRoutes");
 const getPostDetails = require("./controllers/postDetails");
 const deletePost = require("./controllers/handlePostDelete");
 const profileRoute = require('./routes/profileRoute');
-const updateUser = require("./controllers/updateUser");
 const addComment = require("./controllers/addComment");
 const interactComment = require('./routes/interactCommentRoutes');
 const getUserPosts = require("./routes/getUserPosts");
@@ -23,7 +22,7 @@ const getUserPosts = require("./routes/getUserPosts");
 initializeDatabase()
 
 // Create the server
-const server = http.createServer(async (req, res) => {
+const server = http.createServer((req, res) => {
   const staticFiles = ["css", "js", "imgs", 'components'];
   for (const fileType of staticFiles) {
     const fileRegex = new RegExp(`^\/${fileType}\/(.*)`);
@@ -67,15 +66,11 @@ const server = http.createServer(async (req, res) => {
       res.end(data)
     })
   }
-
   else if (req.method === "GET" && req.url === "/posts") {
     getPosts(req, res)
   }
-  //
+
   ///for single post
-  //
-
-
   else if (req.url.startsWith("/post/")) {
     const filePath = path.join(__dirname, "public/views", "post.html")
 
@@ -119,8 +114,7 @@ const server = http.createServer(async (req, res) => {
     })
   }
   ///
-  ////serve profile pega
-  ///
+  ////serve profile page
   else if (req.method === "GET" && req.url === "/profile") {
     const filePath = path.join(__dirname, "public/views", "profile.html")
     fs.readFile(filePath, "utf8", (err, data) => {
@@ -140,7 +134,11 @@ const server = http.createServer(async (req, res) => {
 
     profileRoute(req, res, userId)
   }
-
+  ///update user
+  else if (req.method === 'PUT' && req.url.startsWith("/update")) {
+    profileRoute(req, res, userId)
+  }
+  //AUTH
   else if (req.url.startsWith("/register") || req.url.startsWith("/login")) {
     authRoutes(req, res);
   }
@@ -164,10 +162,7 @@ const server = http.createServer(async (req, res) => {
   else if (req.method === 'DELETE' && req.url.startsWith("/post_delete")) {
     deletePost(req, res);  // Call the deletePost function
   }
-  ///update user
-  else if (req.method === 'POST' && req.url.startsWith("/update")) {
-    updateUser(req, res);  // 
-  }
+
   ///add comment
   else if (req.method === 'POST' && req.url.startsWith("/add-comment")) {
     addComment(req, res);  // 
@@ -176,7 +171,7 @@ const server = http.createServer(async (req, res) => {
     interactComment(req, res);  //  
 
   }
-  else if (req.method === "POST" && req.url.startsWith('/get-user-posts')){
+  else if (req.method === "POST" && req.url.startsWith('/get-user-posts')) {
 
     getUserPosts(req, res)
   }
