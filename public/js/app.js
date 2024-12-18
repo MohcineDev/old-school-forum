@@ -41,6 +41,7 @@ function getPosts() {
 fetch('/categories')
     .then(response => response.json())
     .then(categories => {
+        console.log(categories)
         ////category Tags used in the form for post creation 
         const categoryTags = document.querySelector(".category-tags")
         ///categories used for filtering posts
@@ -48,11 +49,12 @@ fetch('/categories')
 
         appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }, { class: ['active'] }], 'All')
         categories.forEach(category => {
-            appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }], category.name)
+            appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }, { title: [category.description] },], category.name)
 
             if (userId) {
                 const label = document.createElement('label')
                 label.setAttribute("for", category.name)
+                label.setAttribute("title", category.description)
                 label.textContent = category.name
 
                 const check = document.createElement('input')
@@ -141,7 +143,8 @@ function handleFormSubmition(z) {
 }
 window.handleFormSubmition = handleFormSubmition
 
-const btnDown = (e) => {
+//// filter posts by category, likes or dislike
+const filterPosts = (e) => {
     removeClass(aside.querySelectorAll('button'))
     e.target.classList.add('active')
 
@@ -157,7 +160,7 @@ const aa = () => {
     //postsData.posts, postsData.likesIds, postsData.dislikesIds
 }
 
-window.btnDown = btnDown
+window.filterPosts = filterPosts
 
 function listPosts(posts) {
     postsWrapper.innerHTML = ''

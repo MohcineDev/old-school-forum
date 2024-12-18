@@ -1,7 +1,7 @@
 const { db } = require("../db/init");
 
 const getCategories = (req, res) => {
-  const query = "SELECT id, name FROM categories"; // Fetch all categories
+  const query = "SELECT * FROM categories"; // Fetch all categories
 
   db.all(query, (err, rows) => {
     if (err) {
