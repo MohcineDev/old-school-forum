@@ -14,6 +14,9 @@ a {
     color: inherit;
 }
 
+textarea {
+    resize: none;
+}
 body {
     font-family: 'Courier New', Courier, monospace;
     margin: 0;
@@ -24,10 +27,6 @@ body {
     min-height: 100vh;
 }
 
-h2, h3 {
-    font-family: "Josefin Sans", sans-serif;
-    color: #eee;
-}
 
 .theme {
     position: absolute;
@@ -157,32 +156,29 @@ input, textarea {
     padding: 10px;
 }
 
-textarea {
-    resize: none;
-}
 
-.bxtn {
-    background-color: #555;
-    color: #eee;
+/* .bxtn {
     padding: 10px 20px;
     border: none;
     cursor: pointer;
     font-size: 1.1em;
+    background-color: #555;
+    color: #eee;
     text-transform: uppercase;
     font-family: 'Arial', sans-serif;
-}
+} */
 
 /* Button Styles */
 .btn {
-    background-color: #444;
-    color: #eee;
-    padding: 10px 15px;
     border: none;
+    padding: 8px 12px;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 14px;
+    margin-top: 5px;
+    color: #eee;
+    background-color: #444;
     text-transform: uppercase;
     border: 2px solid #fafafa;
-    margin-top: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 

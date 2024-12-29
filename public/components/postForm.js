@@ -4,7 +4,7 @@ function postForm(myCats) {
 
   return (
     `
-        <h2>Create a Post</h2>
+        <h2 class="heading">Create a Post</h2>
         <form id="createPostForm" onsubmit="handleFormSubmition(event)">
           <label for="title">Title:</label><br>
           <input type="text" id="title" value="for testing purposes" name="title" placeholder="Post Title" required><br>
