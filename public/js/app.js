@@ -47,9 +47,9 @@ fetch('/categories')
         ///categories used for filtering posts
         //  asideCategories = document.querySelector(".categories")
 
-        appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }, { class: ['active'] }], 'All')
+        appendBtns(asideCategories, 'button', [{ onclick: ['filterPosts(event)'] }, { class: ['active'] }], 'All')
         categories.forEach(category => {
-            appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }, { title: [category.description] },], category.name)
+            appendBtns(asideCategories, 'button', [{ onclick: ['filterPosts(event)'] }, { title: [category.description] },], category.name)
 
             if (userId) {
                 const label = document.createElement('label')
@@ -65,7 +65,7 @@ fetch('/categories')
                 categoryTags.appendChild(label)
             }
         })
-        appendBtns(asideCategories, 'button', [{ onclick: ['btnDown(event)'] }], 'uncategorised')
+        appendBtns(asideCategories, 'button', [{ onclick: ['filterPosts(event)'] }], 'uncategorised')
     })
     .catch(error => console.error("Error fetching categories:", error))
 
