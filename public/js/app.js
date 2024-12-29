@@ -5,14 +5,11 @@ const createPost = document.getElementById("postFormContainer")
 let asideCategories = document.querySelector("aside .categories")
 let aside = document.querySelector("aside ")
 
-
-
 if (userId) {
     // Add post form for logged-in users
     //
-    ////create post 
-    // Handle post submission
-    createPost.innerHTML = postForm([])
+
+    // createPost.innerHTML = postForm([])
     // 
 }
 else {
@@ -41,28 +38,37 @@ function getPosts() {
 fetch('/categories')
     .then(response => response.json())
     .then(categories => {
-        console.log(categories)
         ////category Tags used in the form for post creation 
         const categoryTags = document.querySelector(".category-tags")
         ///categories used for filtering posts
         //  asideCategories = document.querySelector(".categories")
 
         appendBtns(asideCategories, 'button', [{ onclick: ['filterPosts(event)'] }, { class: ['active'] }], 'All')
+
+        if (userId) {
+            // Add post form for logged-in users
+            //
+
+            // createPost.innerHTML = postForm([])
+            // 
+            createPost.innerHTML = postForm(categories)
+            console.log(categories)
+        }
         categories.forEach(category => {
             appendBtns(asideCategories, 'button', [{ onclick: ['filterPosts(event)'] }, { title: [category.description] },], category.name)
 
             if (userId) {
-                const label = document.createElement('label')
-                label.setAttribute("for", category.name)
-                label.setAttribute("title", category.description)
-                label.textContent = category.name
-
-                const check = document.createElement('input')
-                check.type = "checkbox"
-                check.id = category.name
-                check.value = category.id
-                categoryTags.appendChild(check)
-                categoryTags.appendChild(label)
+                /*  const label = document.createElement('label')
+                  label.setAttribute("for", category.name)
+                  label.setAttribute("title", category.description)
+                  label.textContent = category.name
+  
+                  const check = document.createElement('input')
+                  check.type = "checkbox"
+                  check.id = category.name
+                  check.value = category.id
+                  categoryTags.appendChild(check)
+                  categoryTags.appendChild(label)*/
             }
         })
         appendBtns(asideCategories, 'button', [{ onclick: ['filterPosts(event)'] }], 'uncategorised')

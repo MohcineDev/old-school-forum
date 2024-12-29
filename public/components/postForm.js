@@ -14,11 +14,11 @@ function postForm(myCats) {
 
           <label for="categories">Categories:</label><br>
           <div class="category-tags">
-          ${myCats.map(cat => {
-      `
-              <label for=${cat.name}>${cat.name}</label>
-              <input type="checkbox" id=${cat.name} value=${cat.id}>        `
-    })}
+          ${myCats.map(cat => `
+            <input type="checkbox" id="${cat.name}" value="${cat.id}">        
+              <label for="${cat.name}" title="${cat.description}">${cat.name}</label>
+              `
+    ).join('')}
           </div>
           <button type="submit" class="btn">Submit Post</button>
         </form>
