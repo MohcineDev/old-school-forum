@@ -1,22 +1,26 @@
 openapi: 3.0.0
 info:
-  title: Your API Title
+  title: Your API Name
   description: Your API Description
   version: 1.0.0
 servers:
   - url: http://localhost:5000
-    description: Local Development Server
+    description: Development server
 paths:
-  /api/test:
+  /posts:
     get:
-      summary: Test endpoint
+      summary: Get all posts
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string

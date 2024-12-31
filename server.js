@@ -6,10 +6,17 @@ const { parse } = require('yaml');
 
 const PORT = process.env.PORT || 5000;
 // Read and parse swagger.yaml file
-const swaggerDocument = fs.readFileSync(path.join(__dirname, 'swagger.yaml'), 'utf8');
-const swaggerSpec = parse(swaggerDocument);
 
-console.log('Loaded Swagger Spec:', swaggerSpec); // Debug log
+let swaggerSpec;
+try {
+  const swaggerDocument = fs.readFileSync(path.join(__dirname, 'swagger.yaml'), 'utf8');
+  console.log('Raw YAML content:', swaggerDocument); // Debug the raw YAML
+  swaggerSpec = parse(swaggerDocument);
+  console.log('Parsed Swagger Spec:', swaggerSpec); // Debug the parsed object
+} catch (error) {
+  console.error('Error loading or parsing swagger.yaml:', error);
+  process.exit(1);
+}
 
 // Import the database initialization and the db instance
 const { db, initializeDatabase } = require("./db/init")
@@ -59,43 +66,69 @@ const server = http.createServer((req, res) => {
       'utf-8'
     );
 
+    // Create the modified HTML with proper SwaggerUI configuration
     const html = indexHtml.replace(
-      '<script id="swagger-ui-config">',
-      `<script id="swagger-ui-config">
-            window.onload = function() {
-                const ui = SwaggerUIBundle({
-                    url : ${JSON.stringify(swaggerSpec)}, // Directly inject the parsed YAML
-                    dom_id: '#swagger-ui',
-                    deepLinking: true,
-                    presets: [
-                        SwaggerUIBundle.presets.apis,
-                        SwaggerUIBundle.SwaggerUIStandalonePreset
-                    ],
-                    plugins: [
-                        SwaggerUIBundle.plugins.DownloadUrl
-                    ],
-                    layout: "BaseLayout"
-                });
-            };
-        </script>`
+      '<div id="swagger-ui"></div>',
+      `<link rel="stylesheet" type="text/css" href="/swagger-ui-dist/swagger-ui.css" />
+      <link rel="stylesheet" type="text/css" href="/swagger-ui-dist/index.css" />
+      <div id="swagger-ui"></div>
+      <script src="/swagger-ui-dist/swagger-ui-bundle.js"></script>
+      <script src="/swagger-ui-dist/swagger-ui-standalone-preset.js"></script>
+      <script>
+          window.onload = function() {
+              const ui = SwaggerUIBundle({
+                  spec: ${JSON.stringify(swaggerSpec)},
+                  dom_id: '#swagger-ui',
+                  deepLinking: true,
+                  presets: [
+                      SwaggerUIBundle.presets.apis,
+                      SwaggerUIStandalonePreset
+                  ],
+                  plugins: [
+                      SwaggerUIBundle.plugins.DownloadUrl
+                  ],
+                  layout: "BaseLayout"
+              });
+          };
+      </script>`
     );
 
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end(html);
     return;
   }
- 
 
-  // Serve Swagger UI static files
-  if (req.url.startsWith('/s')) {
-    const filePath = path.join(swaggerUiDist.getAbsoluteFSPath(), req.url);
-    const contentType = getContentType(req.url);
+  // Improved static file serving for Swagger UI assets
+  if (req.url.startsWith('/swagger-ui-dist/')) {
+    const requestedFile = req.url.replace('/swagger-ui-dist/', '');
+    console.log('Requested Swagger file:', requestedFile);
+    const filePath = path.join(swaggerUiDist.getAbsoluteFSPath(), requestedFile);
 
-    try {
-      const content = fs.readFileSync(filePath);
-      res.writeHead(200, { 'Content-Type': contentType });
-      res.end(content);
-    } catch (error) {
+    // List of allowed files to serve
+    const allowedFiles = [
+      'swagger-ui.css',
+      'index.css',
+      'swagger-ui-bundle.js',
+      'swagger-ui-standalone-preset.js',
+      'swagger-ui.js',
+      'absolute-path.js',
+      'swagger-initializer.js'
+      // Add any other required files here
+    ];
+
+    if (allowedFiles.includes(requestedFile)) {
+      try {
+        const content = fs.readFileSync(filePath);
+        const contentType = getContentType(filePath);
+        res.writeHead(200, { 'Content-Type': contentType });
+        res.end(content);
+      } catch (error) {
+        console.error(`Error serving ${requestedFile}:`, error);
+        res.writeHead(404);
+        res.end('Not Found');
+      }
+    } else {
+      console.warn(`Attempted to access unauthorized file: ${requestedFile}`);
       res.writeHead(404);
       res.end('Not Found');
     }
