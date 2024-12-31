@@ -1,9 +1,15 @@
 const http = require("http")
-
 const fs = require("fs")
 const path = require("path")
+const swaggerUiDist = require('swagger-ui-dist');
+const { parse } = require('yaml');
 
 const PORT = process.env.PORT || 5000;
+// Read and parse swagger.yaml file
+const swaggerDocument = fs.readFileSync(path.join(__dirname, 'swagger.yaml'), 'utf8');
+const swaggerSpec = parse(swaggerDocument);
+
+console.log('Loaded Swagger Spec:', swaggerSpec); // Debug log
 
 // Import the database initialization and the db instance
 const { db, initializeDatabase } = require("./db/init")
@@ -18,12 +24,86 @@ const profileRoute = require('./routes/profileRoute');
 const addComment = require("./controllers/addComment");
 const interactComment = require('./routes/interactCommentRoutes');
 const getUserPosts = require("./routes/getUserPosts");
+
 // Initialize the database tables
 initializeDatabase()
 
+// Helper function to determine content type
+function getContentType(filePath) {
+  const ext = path.extname(filePath).toLowerCase();
+  const contentTypes = {
+    '.html': 'text/html',
+    '.css': 'text/css',
+    '.js': 'application/javascript',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.gif': 'image/gif',
+    '.svg': 'image/svg+xml',
+    '.json': 'application/json'
+  };
+  return contentTypes[ext] || 'text/plain';
+}
+
 // Create the server
 const server = http.createServer((req, res) => {
+
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  // Serve Swagger UI at /api-docs
+  if (req.url === '/api-docs' || req.url === '/api-docs/') {
+    const indexHtml = fs.readFileSync(
+      path.join(swaggerUiDist.getAbsoluteFSPath(), 'index.html'),
+      'utf-8'
+    );
+
+    const html = indexHtml.replace(
+      '<script id="swagger-ui-config">',
+      `<script id="swagger-ui-config">
+            window.onload = function() {
+                const ui = SwaggerUIBundle({
+                    url : ${JSON.stringify(swaggerSpec)}, // Directly inject the parsed YAML
+                    dom_id: '#swagger-ui',
+                    deepLinking: true,
+                    presets: [
+                        SwaggerUIBundle.presets.apis,
+                        SwaggerUIBundle.SwaggerUIStandalonePreset
+                    ],
+                    plugins: [
+                        SwaggerUIBundle.plugins.DownloadUrl
+                    ],
+                    layout: "BaseLayout"
+                });
+            };
+        </script>`
+    );
+
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(html);
+    return;
+  }
+ 
+
+  // Serve Swagger UI static files
+  if (req.url.startsWith('/s')) {
+    const filePath = path.join(swaggerUiDist.getAbsoluteFSPath(), req.url);
+    const contentType = getContentType(req.url);
+
+    try {
+      const content = fs.readFileSync(filePath);
+      res.writeHead(200, { 'Content-Type': contentType });
+      res.end(content);
+    } catch (error) {
+      res.writeHead(404);
+      res.end('Not Found');
+    }
+    return;
+  }
+  //end swagger
   const staticFiles = ["css", "js", "imgs", 'components'];
+
   for (const fileType of staticFiles) {
     const fileRegex = new RegExp(`^\/${fileType}\/(.*)`);
     const match = req.url.match(fileRegex);
@@ -42,6 +122,8 @@ const server = http.createServer((req, res) => {
           contentType = "text/css";
         } else if (fileType === "js" || fileType === 'components') {
           contentType = "application/javascript";
+        } else if (fileType === "yaml") {
+          contentType = "application/x-yaml";
         }
 
         res.writeHead(200, { "Content-Type": contentType });
@@ -49,7 +131,6 @@ const server = http.createServer((req, res) => {
       });
       return;
     }
-
   }
 
   if (req.method === "GET" && req.url === "/") {
@@ -184,4 +265,5 @@ const server = http.createServer((req, res) => {
 // Start the server
 server.listen(PORT, "0.0.0.0", () => {
   console.log(`API running on http://localhost:${PORT}`)
+  console.log(`Swagger UI at http://localhost:${PORT}/api-docs`);
 })
