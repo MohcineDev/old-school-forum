@@ -9,7 +9,7 @@
 }
 
 h2.heading {
-    color: #eee;
+    color: var(--dark);
 }
 
 
@@ -18,7 +18,7 @@ form {
 }
 
 form, article {
-    background-color: #fafafa;
+    background-color: #e6e6e6;
     transition: background-color 0.5s;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 15px;

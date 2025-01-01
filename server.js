@@ -10,11 +10,8 @@ const PORT = process.env.PORT || 5000;
 let swaggerSpec;
 try {
   const swaggerDocument = fs.readFileSync(path.join(__dirname, 'swagger.yaml'), 'utf8');
-  console.log('Raw YAML content:', swaggerDocument); // Debug the raw YAML
   swaggerSpec = parse(swaggerDocument);
-  console.log('Parsed Swagger Spec:', swaggerSpec); // Debug the parsed object
 } catch (error) {
-  console.error('Error loading or parsing swagger.yaml:', error);
   process.exit(1);
 }
 

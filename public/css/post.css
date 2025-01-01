@@ -8,7 +8,7 @@ h1 {
 article {
     max-width: var(--m-width);
     box-sizing: border-box;
-    background-color: #eee;
+    background-color: var(--article);
     border-top: 15px solid #41597b;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);

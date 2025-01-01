@@ -7,6 +7,8 @@
     --dark: #222;
     --like: #66f466;
     --dislike: crimson;
+    --light: #fafafa;
+    --article: #e6e6e6;
 }
 
 a {
@@ -17,16 +19,26 @@ a {
 textarea {
     resize: none;
 }
+
 body {
     font-family: 'Courier New', Courier, monospace;
     margin: 0;
     padding: 0;
     color: #333;
-    background-color: var(--dark);
     line-height: 1.6;
     min-height: 100vh;
+    transition: background-color 0.5s;
 }
 
+body.light {
+
+    background-color: var(--light);
+}
+
+body.dark {
+    background-color: var(--dark);
+
+}
 
 .theme {
     position: absolute;
@@ -186,69 +198,10 @@ input, textarea {
     background-color: #222;
 }
 
-footer {
-    margin-top: 10rem;
-    font-size: 12px;
-    user-select: none;
-}
 
 .stats {
     font-size: 13px;
 }
-
-/* Footer Styling */
-.footer {
-    background-color: #333;
-    color: white;
-    padding: 20px 0;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-}
-
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.footer-links {
-    list-style-type: none;
-    padding: 0;
-    margin-bottom: 10px;
-}
-
-.footer-links li {
-    display: inline;
-    margin-right: 20px;
-    font-size: 14px;
-}
-
-footer p {
-    margin: 0;
-    font-size: 0.9em;
-}
-
-.footer-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s ease;
-}
-
-.footer-links a:hover {
-    color: #ffcc00;
-    /* Highlight color */
-}
-
-footer p {
-    font-size: 14px;
-    margin-top: 10px;
-    color: #bbb;
-    /* Lighter text for the copyright */
-}
-
 
 .liked {
     border-color: var(--like) !important;
@@ -258,6 +211,65 @@ footer p {
 .disliked {
     color: var(--dislike) !important;
     border-color: var(--dislike) !important;
+}
+
+
+
+/* Footer Styling */
+footer {
+    color: white;
+    padding: 20px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    margin-top: 10rem;
+    font-size: 12px;
+    user-select: none;
+}
+
+footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+footer .footer-links {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+footer .footer-links li {
+    display: inline;
+    margin-right: 20px;
+    font-size: 14px;
+}
+
+
+footer .footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+footer .footer-links a:hover {
+    color: #ffcc00;
+}
+
+
+footer p {
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #bbb;
+}
+
+
+.light footer p {
+    color: var(--dark);
+
 }
 
 
@@ -273,5 +285,6 @@ footer p {
         margin: 0 10px;
     }
 }
+
 
 @media (prefers-color-scheme: dark) {}
