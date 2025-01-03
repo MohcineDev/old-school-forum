@@ -52,10 +52,10 @@ function getContentType(filePath) {
 // Create the server
 const server = http.createServer((req, res) => {
 
-  // Enable CORS
+/*  // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');*/
   // Serve Swagger UI at /api-docs
   if (req.url === '/api-docs' || req.url === '/api-docs/') {
     const indexHtml = fs.readFileSync(
