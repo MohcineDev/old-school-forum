@@ -44,13 +44,15 @@ input {
     background-color: #456282;
     padding: 10px 10px 0px;
     border-radius: 10px;
-    box-shadow: 2px 4px 6px #121b24;
+    box-shadow: 2px 2px 10px #121b24;
     position: relative;
     /* to keep the details at the bottom */
     display: grid;
     grid-template-rows: 1fr auto;
     transition: background-color 0.5s ease-in-out;
-    overflow: hidden;}
+    overflow: hidden;
+    border: 2px solid #ffffff;
+}
 
 .posts .wrapper .post:hover {
     background-color: #283c53;
@@ -60,6 +62,10 @@ input {
     top: 5px;
 }
 
+.post h3{
+    margin-top: 10px;
+    text-align: center;
+}
 .details {
     display: flex;
     align-items: center;

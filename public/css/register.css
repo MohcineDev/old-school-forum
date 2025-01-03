@@ -1,9 +1,9 @@
 
 
 /* Container for the registration form */
-.container {
+section {
 
-    min-height: 100vh;
+    min-height: 60vh;
 
 }
 .wrapper{
@@ -66,4 +66,10 @@ p a {
 
 p a:hover {
     text-decoration: underline;
+}
+
+
+
+footer {
+    color: #000;
 }

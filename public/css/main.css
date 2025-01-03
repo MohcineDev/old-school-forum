@@ -105,7 +105,6 @@ header, footer {
     max-width: var(--m-width);
     margin: auto;
 }
-
 section.container {
     max-width: var(--m-width);
     margin: auto;
@@ -248,7 +247,6 @@ footer .footer-links li {
 
 
 footer .footer-links a {
-    color: white;
     text-decoration: none;
     font-size: 16px;
     transition: color 0.3s ease;
@@ -259,11 +257,13 @@ footer .footer-links a:hover {
 }
 
 
+.light footer {
+    color: var(--dark);
+}
 footer p {
     font-size: 14px;
     margin-top: 10px;
     margin-bottom: 10px;
-    color: #bbb;
 }
 
 
